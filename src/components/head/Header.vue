@@ -11,7 +11,7 @@
         <div class="search">
           <input type="text" placeholder="给你推荐  最美的期待"/>
         </div>
-        <router-link :to="{name: 'playing'}">
+        <router-link to="/player">
           <div class="head-opt">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-p7zhengzaibofangzhong"></use>

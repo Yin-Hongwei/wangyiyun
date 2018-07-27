@@ -1,13 +1,18 @@
 <template>
   <div id="app">
+    <song-audio/>
     <router-view/>
   </div>
 </template>
 
 <script>
-
+import SongAudio from './components/audio/SongAudio'
 export default {
+  components: {SongAudio},
   name: 'App',
+  component: {
+    SongAudio
+  },
   data () {
     return {
       selected: 0

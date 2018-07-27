@@ -75,15 +75,18 @@
             <use xlink:href="#icon-bofang"></use>
           </svg>
         </div>
-        播放全部(共{{playnum}}首)
+        播放全部(共{{playnum - 1}}首)
       </div>
       <div class="item-r">+收藏({{collect}})</div>
     </div>
     <div class="item-top-wire"></div>
     <div class="song-list-dic">
-      <div class="song-item" v-for="(item,index) in playlist" :key="index" @click="toplay(item.id,index)">
+      <div class="song-item" v-for="(item,index) in playlist" :key="index" @click="toplay(item.id, index)" >
         <div class="line-l">{{index + 1}}</div>
-        <div class="line-m">{{item.name}}</div>
+        <div class="line-m">
+          <span>{{item.name}}</span>
+          <p>{{item.ar[0].name}} - {{item.al.name}}</p>
+        </div>
         <div class="line-r">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-unie644"></use>
@@ -136,17 +139,19 @@ export default {
           _this.nickname = res.data.playlist.creator.nickname
           _this.commentCount = res.data.playlist.commentCount
           _this.shareCount = res.data.playlist.shareCount
+          _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
           _this.playlist = res.data.playlist.tracks
+          // console.log(res.data.playlist.tracks)
         })
         .catch(function (error) {
           console.log(error)
         })
     },
     toplay: function (id, index) {
-      this.$store.commit('setSongList', this.songlist)
+      this.$store.commit('setSongsList', this.songslist)
       this.$store.commit('setListIndex', index)
-      this.$router.push({path: 'playing/' + id})
+      this.$router.push({path: 'player/' + id})
     }
   }
 }
@@ -154,6 +159,12 @@ export default {
 
 <style scoped>
 /*--------------背景-----------------*/
+.song-list {
+  width: 100%;
+  height: 100%;
+  background-color: darkgray;
+  z-index: -100;
+}
 .bac-bur {
   position: absolute;
   overflow: hidden;
@@ -311,8 +322,9 @@ export default {
 }
 .item-top-wire {
   height: 1px;
-  width: 100%;
+  width: 88%;
   margin-left: 45px;
+  margin-right: 0px;
   background-color: #e3e4e5;
   position: absolute;
 }
@@ -321,7 +333,7 @@ export default {
   height: 800px;
   width: 100%;
 }
-.song-item {
+.song-list-dic .song-item {
   height: 60px;
   width: 100%;
   background-color: white;
@@ -329,18 +341,24 @@ export default {
   flex-wrap: nowrap;
   flex-grow: 1;
 }
-.song-item .line-l,
-.song-item .line-r {
+.song-list-dic .song-item .line-l,
+.song-list-dic .song-item .line-r {
   width: 60px;
   text-align: center;
   color: #a1a2a2;
   line-height: 60px;
 }
-.song-item .line-m {
+.song-list-dic .song-item .line-m {
   width: 90%;
-  line-height: 60px;
+  overflow: hidden;
+  font-size: 1.1em;
+  padding-top: 10px;
 }
-.song-item .icon {
+.song-list-dic .song-item .line-m p {
+  font-size: 0.8em;
+  color: #959696;
+}
+.song-list-dic .song-item .icon {
   color: #a1a2a2;
 }
 /*-----------共性----------*/

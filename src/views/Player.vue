@@ -1,12 +1,15 @@
 <template>
-  <div class="playing">
+  <div class="player">
     <div class="playing-header">
       <div class="back">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-fanhui"></use>
         </svg>
       </div>
-      <div class="playing-title"></div>
+      <div class="playing-title">
+        <p>{{ title}}</p>
+        <p>{{artist}}</p>
+      </div>
       <div class="forwarding">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-zhuanfa"></use>
@@ -88,7 +91,7 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 export default {
-  name: 'playing',
+  name: 'player',
   data () {
     return {
       curLength: 0,
@@ -97,7 +100,20 @@ export default {
       progressLength: 0
     }
   },
+  computed: {
+    ...mapGetters([
+      'isPlay', // 播放状态
+      'playButtonUrl', // 播放状态的图标
+      'id', // 音乐id
+      'title', // 歌名
+      'artist', // 歌手名
+      'picUrl', // 歌曲图片
+      'curTime', // 当前音乐的播放位置
+      'duration' // 音乐时长
+    ])
+  },
   watch: {
+    // 切换播放状态的图标
     isPlay: function (val) {
       if (val) {
         this.$store.commit('setPlayButtonUrl', '#icon-zanting1')
@@ -105,43 +121,22 @@ export default {
         this.$store.commit('setPlayButtonUrl', '#icon-bofang')
       }
     },
+    // 播放时间的开始和结束
     curTime: function () {
       this.nowTime = this.formatSeconds(this.curTime)
       this.songTime = this.formatSeconds(this.duration - this.curTime)
-      this.curLength = (this.curTime / this.duration) * 100
-      if (this.lrc.length !== 0) {
-        for (var i = 0; i < this.lrc.length; i++) {
-          if (this.curTime >= this.lrc[i][0]) {
-            for (var j = 0; j < this.lrc.length; j++) {
-              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(145,145,145,0.5)'
-            }
-            if (i >= 0) {
-              this.lrcTop = -i * 31 + 180 + 'px'
-              document.querySelectorAll('.lrc li')[i].style.color = '#ffffff'
-            }
-          }
-        }
-      }
     }
   },
-  computed: {
-    ...mapGetters([
-      'picUrl',
-      'curTime',
-      'isPlay',
-      'playButtonUrl'
-    ])
-  },
   mounted () {
-    this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    document.onmouseup = this.up
+    // this.progressLength = this.$refs.progress.getBoundingClientRect().width
+    // document.onmouseup = this.up
     if (this.$route.params.id && this.id !== this.$route.params.id) {
       this.$store.commit('setId', this.$route.params.id)
       this.getSongDetail()
     }
   },
   methods: {
-    //  暂停\播放
+    //  控制音乐播放/暂停
     togglePlay () {
       if (this.isPlay) {
         this.$store.commit('setIsPlay', false)
@@ -149,17 +144,35 @@ export default {
         this.$store.commit('setIsPlay', true)
       }
     },
-    //  解析时间
+    //  获取歌曲详情
+    getSongDetail () {
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/song/detail', {
+        params: {
+          ids: _this.id
+        }
+      }).then(function (res) {
+        console.log('获取歌曲详情：')
+        console.log(res.data.songs[0])
+        // _this.getLyric()
+        _this.$store.commit('setTitle', res.data.songs[0].name)
+        _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
+        _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
+        // console.log(_this.duration)
+      })
+    },
+    //  解析播放时间
     formatSeconds (value) {
       var theTime = parseInt(value)
       var theTime1 = 0
       var theTime2 = 0
       if (theTime > 60) {
-        theTime1 = parseInt(theTime / 60)
-        theTime = parseInt(theTime % 60)
+        theTime1 = parseInt(theTime / 60) // 分
+        theTime = parseInt(theTime % 60) // 秒
+        // 是否超过一个小时
         if (theTime1 > 60) {
-          theTime2 = parseInt(theTime1 / 60)
-          theTime1 = parseInt(theTime1 % 60)
+          theTime2 = parseInt(theTime1 / 60) // 小时
+          theTime1 = 60 // 分
         }
       }
       if (parseInt(theTime) < 10) {
@@ -167,6 +180,7 @@ export default {
       } else {
         result = '0:' + parseInt(theTime) + ''
       }
+      // 多少分钟时
       if (theTime1 > 0) {
         if (parseInt(theTime) < 10) {
           result = '0' + parseInt(theTime)
@@ -175,48 +189,23 @@ export default {
         }
         result = '0' + parseInt(theTime1) + ':' + result
       }
-      return result
-    },
-    getLyric () {
-      this.$store.commit('setLyric', [])
-      this.$store.commit('setLrc', [])
-      if (!this.id) {
-        return false
+      // 多少小时时
+      if (theTime2 > 0) {
+        if (parseInt(theTime) < 10) {
+          result = '0' + parseInt(theTime)
+        } else {
+          result = parseInt(theTime)
+        }
+        result = parseInt(theTime2) + ':' + parseInt(theTime1) + ':' + result
       }
-      var _this = this
-      axios.get(this.host + '/lyric', {
-        params: {
-          id: _this.id
-        }
-      }).then(function(res) {
-        console.log('获取歌词：')
-        console.log(res.data)
-        var lrc = _this.parseLyric(res.data.lrc.lyric)
-        _this.$store.commit('setLyric', res.data.lrc.lyric)
-        _this.$store.commit('setLrc', lrc)
-      })
-    },
-    getSongDetail () {
-      var _this = this
-      axios.get(this.host + '/song/detail', {
-        params: {
-          ids: _this.id
-        }
-      }).then(function (res) {
-        console.log('获取歌曲详情：')
-        console.log(res.data.songs[0])
-        _this.getLyric()
-        _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
-        _this.$store.commit('setTitle', res.data.songs[0].name)
-        _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
-      })
+      return result
     },
     toPlay (id) {
       if (id && id !== this.id) {
         this.$router.replace({path: '/player/' + id})
         this.$store.commit('setId', id)
         this.$store.commit('setIsPlay', false)
-        this.getSongDetail()
+        // this.getSongDetail()
       }
       this.showSongsList = false
     }
@@ -226,7 +215,7 @@ export default {
 
 <style scoped>
 /*----------------------背景-----------------------------*/
-.playing {
+.player {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -242,6 +231,11 @@ export default {
 .playing-header>.playing-title {
   width: 80%;
   flex-grow: 1;
+  color: white;
+  text-align: center;
+}
+.playing-header>.playing-title>p:nth-child(2) {
+  font-size: 0.6em;
 }
 .playing-header>.back,
 .playing-header>.forwarding {
@@ -284,6 +278,11 @@ export default {
   margin: 0 auto;
   top: 14%;
   text-align: center;
+}
+.playing-body>.pic-box>img {
+  width: 200px;
+  border-radius: 90px;
+  margin-top: 15%;
 }
 .playing-body>.pic-box>div {
   position: absolute;
