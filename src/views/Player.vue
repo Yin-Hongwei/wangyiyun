@@ -51,7 +51,7 @@
         <div class="progress-box">
           <div ref="progress" class="progress">
             <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
-            <div class="idot" :style="{left: curLength+'%'}"></div>
+            <div class="idot" :style="{left: curLength+'%'}" @mousedown="down" @mousemove="move" @touchstart="touchstart" @touchmove="touchmove"></div>
           </div>
         </div>
         <div class="left-time">{{ songTime }}</div>
@@ -62,7 +62,7 @@
               <use xlink:href="#icon-xunhuanbofang01"></use>
             </svg>
           </div>
-          <div>
+          <div @click="prev">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-shangyishou"></use>
             </svg>
@@ -72,7 +72,7 @@
               <use :xlink:href="playButtonUrl"></use>
             </svg>
           </div>
-          <div>
+          <div @click="next">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-next1"></use>
             </svg>
@@ -97,7 +97,10 @@ export default {
       curLength: 0,
       nowTime: '00.00',
       songTime: '00.00',
-      progressLength: 0
+      progressLength: 0,
+      isDown: false,
+      lrcTop: 200 + 'px',
+      touchStartX: 0
     }
   },
   computed: {
@@ -109,7 +112,11 @@ export default {
       'artist', // 歌手名
       'picUrl', // 歌曲图片
       'curTime', // 当前音乐的播放位置
-      'duration' // 音乐时长
+      'duration', // 音乐时长
+      'lrc',
+      'songsList',
+      'listIndex',
+      'autoNext'
     ])
   },
   watch: {
@@ -124,12 +131,29 @@ export default {
     // 播放时间的开始和结束
     curTime: function () {
       this.nowTime = this.formatSeconds(this.curTime)
-      this.songTime = this.formatSeconds(this.duration - this.curTime)
+      this.songTime = this.formatSeconds(this.duration)
+      this.curLength = (this.curTime / this.duration) * 100
+      if (this.lrc.length !== 0) {
+        for (var i = 0; i < this.lrc.length; i++) {
+          if (this.curTime >= this.lrc[i][0]) {
+            for (var j = 0; j < this.lrc.length; j++) {
+              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(145,145,145,0.5)'
+            }
+            if (i >= 0) {
+              this.lrcTop = -i * 31 + 180 + 'px'
+              document.querySelectorAll('.lrc li')[i].style.color = '#ffffff'
+            }
+          }
+        }
+      }
+    },
+    autoNext: function () {
+      this.next()
     }
   },
   mounted () {
-    // this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    // document.onmouseup = this.up
+    this.progressLength = this.$refs.progress.getBoundingClientRect().width
+    document.onmouseup = this.up
     if (this.$route.params.id && this.id !== this.$route.params.id) {
       this.$store.commit('setId', this.$route.params.id)
       this.getSongDetail()
@@ -200,14 +224,82 @@ export default {
       }
       return result
     },
+    // 鼠标事件
+    down () {
+      this.isDown = true
+    },
+    move (e) {
+      if (this.isDown) {
+        var curLength = this.$refs.curProgress.getBoundingClientRect().width
+        var newLength = ((curLength + e.movementX) / this.progressLength) * 100
+        if (newLength > 100) {
+          newLength = 100
+        } else if (newLength < 0) {
+          newLength = 0
+        }
+        this.curLength = newLength
+      }
+    },
+    //  松开鼠标
+    up () {
+      this.isDown = false
+    },
+    touchstart (e) {
+      this.touchStartX = e.touches[0].pageX
+    },
+    touchmove (e) {
+      if (!this.duration) {
+        return false
+      }
+      var movementX = e.touches[0].pageX - this.touchStartX
+      var curLength = this.$refs.curProgress.getBoundingClientRect().width
+      //  计算出百分比
+      var newPercent = ((curLength + movementX) / this.progressLength) * 100
+      if (newPercent > 100) {
+        newLength = 100
+      }
+      this.curLength = newPercent
+      this.touchStartX = e.touches[0].pageX
+      //  根据百分比推出对应的播放时间
+      this.changeTime(newPercent)
+    },
+    changeTime (percent) {
+      let newCurTime = this.duration * (percent * 0.01)
+      this.$store.commit('setChangeTime', newCurTime)
+    },
     toPlay (id) {
       if (id && id !== this.id) {
         this.$router.replace({path: '/player/' + id})
         this.$store.commit('setId', id)
         this.$store.commit('setIsPlay', false)
-        // this.getSongDetail()
+        this.getSongDetail()
       }
       this.showSongsList = false
+    },
+    // 上一首
+    prev () {
+      if (this.listIndex !== -1 && this.songsList.length > 1) {
+        if (this.listIndex > 0) {
+          this.$store.commit('setListIndex', this.listIndex - 1)
+          this.toPlay(this.songsList[this.listIndex].id)
+        } else {
+          this.$store.commit('setListIndex', this.songsList.length - 1)
+          this.toPlay(this.songsList[this.listIndex].id)
+        }
+      }
+    },
+    next () {
+      if (this.listIndex !== -1 && this.songsList.length > 1) {
+        console.log(666)
+        if (this.listIndex < (this.songsList.length - 1)) {
+          this.toPlay(this.songsList[this.listIndex + 1].id)
+          this.$store.commit('setListIndex', this.listIndex + 1)
+          console.log(666)
+        } else {
+          this.$store.commit('setListIndex', 0)
+          this.toPlay(this.songsList[0].id)
+        }
+      }
     }
   }
 }

@@ -11,17 +11,18 @@ const store = new Vuex.Store({
       songsList: [], // 当前歌单列表
       id: null, // 音乐ID
       url: '', // 歌曲URL
-      curTime: 0, // 当前音乐的播放位置
       duration: 0, //  音乐时长
+      curTime: 0, // 当前音乐的播放位置
+      changeTime: 0, //  指定播放时刻
       title: '', //  歌名
       artist: '', //  歌手名
       picUrl: null, // 歌曲图片
+      autoNext: true, // 用于触发自动播放下一首
       //
       lyric: '', // 未处理的歌词数据
       lrc: [], //  处理的歌词数据
-      changeTime: 0, //  指定播放时刻
-      listIndex: -1, // 当前歌曲在歌曲列表的位置
-      autoNext: true // 用于触发自动播放下一首(需改进)
+      listIndex: -1 // 当前歌曲在歌曲列表的位置
+
     }
   },
   getters: {

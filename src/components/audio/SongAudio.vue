@@ -16,9 +16,9 @@ export default {
       'url', // 音乐链接
       'songsList', // 存放的音乐
       'isPlay', // 播放状态
-      'curTime' // 当前音乐的播放位置
-      // 'changeTime'
-      // 'autoNext'
+      'curTime', // 当前音乐的播放位置
+      'changeTime', // 指定播放时刻
+      'autoNext' // 用于触发自动播放下一首
     ])
   },
   watch: {
@@ -29,12 +29,12 @@ export default {
     // 监听播放还是暂停
     isPlay: function () {
       this.togglePlay()
+    },
+    changeTime: function () {
+      //  跳到指定时刻播放
+      let player = document.querySelector('#player')
+      player.currentTime = this.changeTime
     }
-    // changeTime: function () {
-    //   //  跳到指定时刻播放
-    //   var player = document.querySelector('#player')
-    //   player.currentTime = this.changeTime
-    // }
   },
   methods: {
     // 得到id后获取歌曲
@@ -56,7 +56,7 @@ export default {
         _this.$store.commit('setUrl', res.data.data[0].url)
       })
     },
-    //  开始/暂停
+    // 开始/暂停
     togglePlay () {
       let player = document.querySelector('#player')
       if (this.isPlay) {

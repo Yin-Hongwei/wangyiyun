@@ -81,7 +81,7 @@
     </div>
     <div class="item-top-wire"></div>
     <div class="song-list-dic">
-      <div class="song-item" v-for="(item,index) in playlist" :key="index" @click="toplay(item.id, index)" >
+      <div class="song-item" v-for="(item,index) in songslist" :key="index" @click="toplay(item.id, index)" >
         <div class="line-l">{{index + 1}}</div>
         <div class="line-m">
           <span>{{item.name}}</span>
@@ -100,6 +100,7 @@
 </template>
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 import Find from '../components/foot/Footer'
 export default {
   name: 'song-list',
@@ -116,8 +117,13 @@ export default {
       shareCount: 0, // 转发数
       playnum: '0', // 歌曲数量
       collect: '0', // 收藏数
-      playlist: [] // 歌曲
+      songslist: [] // 歌曲
     }
+  },
+  computed: {
+    ...mapGetters([
+      'songsList'
+    ])
   },
   mounted: function () {
     this.getRec()
@@ -141,8 +147,8 @@ export default {
           _this.shareCount = res.data.playlist.shareCount
           _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
-          _this.playlist = res.data.playlist.tracks
-          // console.log(res.data.playlist.tracks)
+          _this.songslist = res.data.playlist.tracks
+          // console.log(res.data.songslist.tracks)
         })
         .catch(function (error) {
           console.log(error)
@@ -151,7 +157,7 @@ export default {
     toplay: function (id, index) {
       this.$store.commit('setSongsList', this.songslist)
       this.$store.commit('setListIndex', index)
-      this.$router.push({path: 'player/' + id})
+      this.$router.push({path: '/player/' + id})
     }
   }
 }
