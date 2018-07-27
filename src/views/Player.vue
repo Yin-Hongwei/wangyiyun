@@ -1,7 +1,7 @@
 <template>
   <div class="player">
     <div class="playing-header">
-      <div class="back">
+      <div class="back" @click="goback(-1)">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-fanhui"></use>
         </svg>
@@ -84,6 +84,7 @@
           </div>
       </div>
     </div>
+    <div class="picbg" :style='{background: "url(" + picUrl + ")"}'></div>
   </div>
 </template>
 
@@ -114,8 +115,8 @@ export default {
       'curTime', // 当前音乐的播放位置
       'duration', // 音乐时长
       'lrc',
-      'songsList',
-      'listIndex',
+      'songsList', // 当前歌单列表
+      'listIndex', // 当前歌曲在歌曲列表的位置
       'autoNext'
     ])
   },
@@ -147,6 +148,7 @@ export default {
         }
       }
     },
+    // 自动播放下一首
     autoNext: function () {
       this.next()
     }
@@ -267,15 +269,6 @@ export default {
       let newCurTime = this.duration * (percent * 0.01)
       this.$store.commit('setChangeTime', newCurTime)
     },
-    toPlay (id) {
-      if (id && id !== this.id) {
-        this.$router.replace({path: '/player/' + id})
-        this.$store.commit('setId', id)
-        this.$store.commit('setIsPlay', false)
-        this.getSongDetail()
-      }
-      this.showSongsList = false
-    },
     // 上一首
     prev () {
       if (this.listIndex !== -1 && this.songsList.length > 1) {
@@ -288,6 +281,7 @@ export default {
         }
       }
     },
+    // 下一首
     next () {
       if (this.listIndex !== -1 && this.songsList.length > 1) {
         console.log(666)
@@ -300,6 +294,20 @@ export default {
           this.toPlay(this.songsList[0].id)
         }
       }
+    },
+    // 选中播放
+    toPlay (id) {
+      if (id && id !== this.id) {
+        this.$router.replace({path: '/player/' + id})
+        this.$store.commit('setId', id)
+        this.$store.commit('setIsPlay', false)
+        this.getSongDetail()
+      }
+      this.showSongsList = false
+    },
+    // 返回
+    goback (index) {
+      this.$router.go(index)
     }
   }
 }
@@ -315,6 +323,23 @@ export default {
   right: 0;
   background: rgba(0,0,0,0.6);
   z-index: -1;
+}
+.picbg {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -2;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  -webkit-filter: blur(30px);
+  -moz-filter: blur(30px);
+  -ms-filter: blur(30px);
+  -o-filter: blur(30px);
+  filter: blur(30px);
 }
 /*-------------------------header--------------------*/
 .playing-header {

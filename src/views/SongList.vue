@@ -15,12 +15,15 @@
             <use xlink:href="#icon-unie644"></use>
           </svg>
       </div>
+      <router-link :to="{path: '/player/'}">
         <div class="forwarding">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
           </svg>
         </div>
+      </router-link>
       </div>
+    <!--<div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>-->
     <div class="song-search">
       <input type="text" placeholder="搜索歌单内歌曲"/>
     </div>
@@ -68,7 +71,7 @@
         <div>多选</div>
       </div>
     </div>
-    <div class="item-top">
+    <div id="item-top">
       <div class="item-l">
         <div>
           <svg class="icon" aria-hidden="true">
@@ -122,11 +125,26 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'songsList'
+      'songsList',
+      'id'
     ])
   },
   mounted: function () {
     this.getRec()
+    window.onscroll = function () {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+      var p
+      var t
+      if (scrollTop > 270) {
+        p = 'fixed'
+        t = '60px'
+      } else {
+        p = 'relative'
+        t = '0px'
+      }
+      document.querySelector('#item-top').style.position = p
+      document.querySelector('#item-top').style.top = t
+    }
   },
   methods: {
     // 获取推荐歌单
@@ -168,11 +186,10 @@ export default {
 .song-list {
   width: 100%;
   height: 100%;
-  background-color: darkgray;
   z-index: -100;
 }
 .bac-bur {
-  position: absolute;
+  position: fixed;
   overflow: hidden;
   top: 0;
   left: 0;
@@ -183,19 +200,23 @@ export default {
   background-position: center top;
   background-size: 100%;
   background-attachment: fixed;
-  -webkit-filter: blur(30px);
-  -moz-filter: blur(30px);
-  -ms-filter: blur(30px);
-  -o-filter: blur(30px);
   filter: blur(30px);
 }
 /*--------------header------------------*/
-.song-head {
+/*.bu-kong {*/
   /*position: fixed;*/
+  /*height:60px;*/
+  /*width: 100%;*/
+/*}*/
+.song-head {
+  position: fixed;
   height:60px;
+  width: 100%;
   display: flex;
   align-items: center;
   text-align: center;
+  z-index: 10;
+  background-color: #d7463f;
 }
 .song-head>.song-title {
   flex-grow: 1;
@@ -211,6 +232,7 @@ export default {
 }
 /*-----------------搜索框-----------------------*/
 .song-search {
+  padding-top: 70px;
   display: flex;
   justify-content: center;
   height: 40px;
@@ -295,31 +317,34 @@ export default {
   font-size: 0.8em;
 }
 /*------------------白红框框----------------------*/
-.item-top {
+#item-top {
   display: flex;
+  position: relative;
+  width: 100%;
+  z-index: 100;
 }
-.item-top>.item-l,
-.item-top>.item-r {
+#item-top>.item-l,
+#item-top>.item-r {
   line-height: 60px;
   vertical-align: middle;
   height: 60px;
 }
-.item-top>.item-l {
+#item-top>.item-l {
   width: 60%;
   background-color: #fcfdfe;
   border-radius: 20px 0px 0px 0px;
 }
-.item-top>.item-l>div {
+#item-top>.item-l>div {
   display: inline-block;
   width: 30px;
   height: 49px;
   margin-left: 15px;
   vertical-align:middle;
 }
-.item-top>.item-l .icon {
+#item-top>.item-l .icon {
   color: black;
 }
-.item-top>.item-r {
+#item-top>.item-r {
   width: 40%;
   background-color: #d7463f;
   color: white;
