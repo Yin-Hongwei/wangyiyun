@@ -2,31 +2,31 @@
   <div class="footer-item">
     <div class="kong"></div>
     <div id="opt">
-      <div id="发现">
+      <div id="find" @click="gofind">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-wangyiyunyinlezizhi"></use>
         </svg>
         <p>发现</p>
       </div>
-      <div id="视频">
+      <div class="video" @click="govideo">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-bofang"></use>
         </svg>
         <p>视频</p>
       </div>
-      <div id="我的">
+      <div id="my" @click="gomy">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-yinyue"></use>
         </svg>
         <p>我的</p>
       </div>
-      <div id="朋友">
+      <div id="friend" @click="gofriend">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-19"></use>
         </svg>
         <p>朋友</p>
       </div>
-      <div id="账号">
+      <div id="account" @click="goaccount">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-zhanghao"></use>
         </svg>
@@ -38,7 +38,24 @@
 
 <script>
 export default {
-  name: 'footer-item'
+  name: 'footer-item',
+  methods: {
+    gofind: function () {
+      this.$router.push({path: '/'})
+    },
+    govideo: function () {
+      this.$router.push({path: '/videos'})
+    },
+    gomy: function () {
+      this.$router.push({path: '/my'})
+    },
+    gofriend: function () {
+      this.$router.push({path: '/friends'})
+    },
+    goaccount: function () {
+      this.$router.push({path: '/account'})
+    }
+  }
 }
 </script>
 
@@ -57,7 +74,7 @@ export default {
   background-color: rgba(236,234,232,0.98);
   align-items: center;
 }
-#opt>div{
+#opt div{
   width: 20%;
   height: 50px;
   color: #a5a5a5;
@@ -68,7 +85,7 @@ export default {
   width: 1em;
   height: 1em;
   fill: currentColor;
-  color: #d7463f;
+  color: #a5a5a5;
   font-size: 1.6em;
 }
 </style>
