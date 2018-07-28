@@ -399,7 +399,7 @@ export default {
 .playing-body>.pic-box>img {
   width: 200px;
   border-radius: 90px;
-  margin-top: 15%;
+  margin-top: 5%;
 }
 .playing-body>.pic-box>div {
   position: absolute;

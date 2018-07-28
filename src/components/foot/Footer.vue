@@ -8,7 +8,7 @@
         </svg>
         <p>发现</p>
       </div>
-      <div class="video" @click="govideo">
+      <div id="video" @click="govideo">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-bofang"></use>
         </svg>
@@ -37,22 +37,42 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'footer-item',
+  computed: {
+    ...mapGetters([
+      'page'
+    ])
+  },
+  mounted: function () {
+    this.nextPage()
+  },
   methods: {
+    nextPage: function () {
+      let i = this.page
+      // console.log(i)
+      document.getElementById(i).style.color = '#d73e39'
+      document.getElementById(i).getElementsByClassName('icon')[0].style.color = '#d73e39'
+    },
     gofind: function () {
+      this.$store.commit('setPage', 'find')
       this.$router.push({path: '/'})
     },
     govideo: function () {
+      this.$store.commit('setPage', 'video')
       this.$router.push({path: '/videos'})
     },
     gomy: function () {
+      this.$store.commit('setPage', 'my')
       this.$router.push({path: '/my'})
     },
     gofriend: function () {
+      this.$store.commit('setPage', 'friend')
       this.$router.push({path: '/friends'})
     },
     goaccount: function () {
+      this.$store.commit('setPage', 'account')
       this.$router.push({path: '/account'})
     }
   }

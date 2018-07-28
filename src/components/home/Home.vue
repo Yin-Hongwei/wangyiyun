@@ -4,28 +4,22 @@
     <div class="redBac"></div>
     <swipe-pic/>
     <div class="tags">
-      <img src="../assets/img/IMG_4224_01.jpg"/>
-      <img src="../assets/img/IMG_4224_02.jpg"/>
-      <img src="../assets/img/IMG_4224_03.jpg"/>
-      <img src="../assets/img/IMG_4224_04.jpg"/>
+      <img src="../../assets/img/IMG_4224_01.jpg"/>
+      <img src="../../assets/img/IMG_4224_02.jpg"/>
+      <img src="../../assets/img/IMG_4224_03.jpg"/>
+      <img src="../../assets/img/IMG_4224_04.jpg"/>
     </div>
     <hr>
-    <find/>
-    <footer-item/>
   </div>
 </template>
 
 <script>
-import Find from '../components/Home/Find'
-import HeaderItem from '../components/head/Header'
-import FooterItem from '../components/foot/Footer'
-import SwipePic from '../components/swipe/Swipe'
+import HeaderItem from '../head/Header'
+import SwipePic from '../swipe/Swipe'
 export default {
   name: 'home',
   components: {
-    Find,
     HeaderItem,
-    FooterItem,
     SwipePic
   }
 }

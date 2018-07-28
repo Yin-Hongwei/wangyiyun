@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/views/Home'
+import Find from '@/views/Find'
+import Broad from '@/views/Broad'
 import Player from '@/views/Player'
 import SongList from '@/views/SongList'
 import Search from '@/views/Search'
@@ -15,8 +16,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'find',
+      component: Find
+    },
+    {
+      path: '/broad',
+      name: 'broad',
+      component: Broad
     },
     {
       path: '/player',

@@ -2,7 +2,7 @@
   <div class="song-list">
     <div class="bac-bur" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-head">
-      <router-link :to="{name: 'home'}">
+      <router-link :to="{name: 'find'}">
         <div class="back">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-fanhui"></use>
@@ -15,15 +15,8 @@
             <use xlink:href="#icon-unie644"></use>
           </svg>
       </div>
-      <router-link :to="{path: '/player/'}">
-        <div class="forwarding">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
-          </svg>
-        </div>
-      </router-link>
       </div>
-    <!--<div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>-->
+    <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-search">
       <input type="text" placeholder="搜索歌单内歌曲"/>
     </div>
@@ -38,7 +31,7 @@
           </div>
           <div class="song-author">
             <img class='author-pic' :src="avatarUrl" alt="">
-            <span class="author-name">{{ nickname }} ></span>
+            <span class="author-name">{{ nickname }}</span>
           </div>
         </div>
       </div>
@@ -104,6 +97,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { Indicator } from 'mint-ui'
 import Find from '../components/foot/Footer'
 export default {
   name: 'song-list',
@@ -131,32 +125,22 @@ export default {
   },
   mounted: function () {
     this.getRec()
-    window.onscroll = function () {
-      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-      var p
-      var t
-      if (scrollTop > 270) {
-        p = 'fixed'
-        t = '60px'
-      } else {
-        p = 'relative'
-        t = '0px'
-      }
-      document.getElementById('item-top').style.position = p
-      document.getElementById('item-top').style.top = t
-    }
   },
   methods: {
     // 获取推荐歌单
     getRec: function () {
       let _this = this
+      Indicator.open({
+        text: '加载中...',
+        spinnerType: 'fading-circle'
+      })
       axios.get(_this.$store.state.HOST + '/playlist/detail', {
         params: {
           id: _this.$route.params.id
         }
       })
         .then(function (res) {
-          console.log(res.data)
+          console.log(res.data.playlist)
           _this.coverImgUrl = res.data.playlist.coverImgUrl
           _this.name = res.data.playlist.name
           _this.avatarUrl = res.data.playlist.creator.avatarUrl
@@ -166,7 +150,7 @@ export default {
           _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
           _this.songslist = res.data.playlist.tracks
-          // console.log(res.data.songslist.tracks)
+          Indicator.close()
         })
         .catch(function (error) {
           console.log(error)
@@ -183,11 +167,6 @@ export default {
 
 <style scoped>
 /*--------------背景-----------------*/
-.song-list {
-  width: 100%;
-  height: 100%;
-  z-index: -100;
-}
 .bac-bur {
   position: fixed;
   overflow: hidden;
@@ -203,28 +182,36 @@ export default {
   filter: blur(30px);
 }
 /*--------------header------------------*/
-/*.bu-kong {*/
-  /*position: fixed;*/
-  /*height:60px;*/
-  /*width: 100%;*/
-/*}*/
-.song-head {
+.bu-kong {
   position: fixed;
   height:60px;
+  width: 100%;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-position: center top;
+  background-size: 100%;
+  background-attachment: fixed;
+  filter: blur(10px);
+  z-index: 1;
+}
+.song-head {
+  position: fixed;
+  height:50px;
   width: 100%;
   display: flex;
   align-items: center;
   text-align: center;
-  z-index: 10;
-  background-color: #d7463f;
+  z-index: 2;
 }
 .song-head>.song-title {
   flex-grow: 1;
   color: white;
   font-size: 1.3em;
 }
-.song-head .back,
-.song-head .forwarding {
+.song-head div{
   width: 50px;
 }
 .song-head .icon {
@@ -232,7 +219,7 @@ export default {
 }
 /*-----------------搜索框-----------------------*/
 .song-search {
-  padding-top: 70px;
+  padding-top: 60px;
   display: flex;
   justify-content: center;
   height: 40px;
@@ -319,9 +306,7 @@ export default {
 /*------------------白红框框----------------------*/
 #item-top {
   display: flex;
-  position: relative;
   width: 100%;
-  z-index: 100;
 }
 #item-top>.item-l,
 #item-top>.item-r {
@@ -332,7 +317,7 @@ export default {
 #item-top>.item-l {
   width: 60%;
   background-color: #fcfdfe;
-  border-radius: 20px 0px 0px 0px;
+  border-radius: 20px 0 0 0;
 }
 #item-top>.item-l>div {
   display: inline-block;
@@ -348,20 +333,18 @@ export default {
   width: 40%;
   background-color: #d7463f;
   color: white;
-  border-radius: 0px 20px 0px 0px;
+  border-radius: 0 20px 0 0;
   text-align:center;
 }
 .item-top-wire {
   height: 1px;
-  width: 88%;
+  width: 85%;
   margin-left: 45px;
-  margin-right: 0px;
   background-color: #e3e4e5;
   position: absolute;
 }
 /*--------------------歌曲列表--------------------------*/
 .song-list-dic {
-  height: 800px;
   width: 100%;
 }
 .song-list-dic .song-item {
@@ -380,7 +363,7 @@ export default {
   line-height: 60px;
 }
 .song-list-dic .song-item .line-m {
-  width: 90%;
+  width: 80%;
   overflow: hidden;
   font-size: 1.1em;
   padding-top: 10px;
@@ -392,13 +375,4 @@ export default {
 .song-list-dic .song-item .icon {
   color: #a1a2a2;
 }
-/*-----------共性----------*/
-.icon {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  color: white;
-  font-size: 1.6em;
-}
-
 </style>

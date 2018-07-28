@@ -5,6 +5,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     HOST: 'http://123.207.59.80:3000',
+    headIndex: 0,
+    page: 'find',
     playing: {
       isPlay: false, // 播放状态
       playButtonUrl: '#icon-bofang', // 播放状态的图标
@@ -22,10 +24,11 @@ const store = new Vuex.Store({
       lyric: '', // 未处理的歌词数据
       lrc: [], //  处理的歌词数据
       listIndex: -1 // 当前歌曲在歌曲列表的位置
-
     }
   },
   getters: {
+    headIndex: state => state.headIndex,
+    page: state => state.page,
     id: state => state.playing.id,
     artist: state => state.playing.artist,
     isPlay: state => state.playing.isPlay,
@@ -43,6 +46,8 @@ const store = new Vuex.Store({
     autoNext: state => state.playing.autoNext
   },
   mutations: {
+    setHheadIndex: (state, headIndex) => { state.headIndex = headIndex },
+    setPage: (state, page) => { state.page = page },
     setId: (state, id) => { state.playing.id = id },
     setUrl: (state, url) => { state.playing.url = url },
     setTitle: (state, title) => { state.playing.title = title },

@@ -5,7 +5,11 @@
         <span @click="dongtai">动态</span>
         <span @click="fujin">附近</span>
       </div>
-      <div id="head-item"></div></div>
+      <div id="head-item"></div>
+      <div class="friend-content">
+        🐦。。。
+      </div>
+    </div>
     <foot/>
   </div>
 </template>
@@ -74,5 +78,10 @@ export default {
   z-index: 0;
   top: 21px;
   left: 28%;
+}
+.friend-content {
+  text-align: center;
+  margin-top: 100px;
+  color: black;
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <song-audio/>
-    <router-view/>
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
   </div>
 </template>
 
@@ -31,5 +33,12 @@ body{
 }
 ul {
   list-style: none;
+}
+.icon {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  color: white;
+  font-size: 1.6em;
 }
 </style>

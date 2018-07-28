@@ -1,5 +1,6 @@
 <template>
   <div class="find">
+    <home/>
     <div class="title">推荐歌单 ＞</div>
     <div class="body-group">
       <div class="body-item" v-for="(item,index) in personalized" :key="index">
@@ -14,7 +15,7 @@
     <div class="body-group">
       <div class="body-item" v-for="(item,index) in newsong" :key="index">
         <!--<router-link :to="{name: 'songlist'}">-->
-          <img class="item-img" :src="item.song.album.picUrl"/>
+        <img class="item-img" :src="item.song.album.picUrl"/>
         <!--</router-link>-->
         <p class="item-title">{{ item.name }}</p>
         <span class="item-span">{{item.song.artists[0].name}}</span>
@@ -25,16 +26,19 @@
     <div class="body-group">
       <div class="body-item" v-for="(item,index) in dj" :key="index">
         <!--<router-link :to="{name: 'songlist'}">-->
-          <img class="item-img" :src="item.picUrl"/>
+        <img class="item-img" :src="item.picUrl"/>
         <!--</router-link>-->
         <span class="item-span">{{item.rcmdtext}}</span>
       </div>
     </div>
+    <footer-item/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Home from '../components/home/Home'
+import FooterItem from '../components/foot/Footer'
 export default {
   name: 'find',
   data () {
@@ -43,6 +47,10 @@ export default {
       newsong: [],
       dj: []
     }
+  },
+  components: {
+    Home,
+    FooterItem
   },
   mounted: function () {
     this.getRec()

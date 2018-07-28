@@ -30,22 +30,42 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'header-item',
+  computed: {
+    ...mapGetters([
+      'headIndex'
+    ])
+  },
+  mounted: function () {
+    this.nextNav()
+  },
   methods: {
+    nextNav: function () {
+      var div = document.getElementById('bor')
+      var index = this.headIndex
+      // console.log(index)
+      switch (index) {
+        case 0:
+          div.style.left = 20 + '%'
+          break
+        case 1:
+          div.style.left = 70 + '%'
+          break
+      }
+    },
     search: function () {
       this.$router.push({path: '/search'})
     },
     rec: function () {
-      var div = document.getElementById('bor')
-      // var h = document.getElementById('rec')
-      div.style.left = 20 + '%'
-      // h.style.color = '#d7463f'
+      this.$store.commit('setHheadIndex', 0)
+      this.$router.push({path: '/'})
     },
     sta: function () {
-      var div = document.getElementById('bor')
+      this.$store.commit('setHheadIndex', 1)
+      this.$router.push({path: '/broad'})
       // var h = document.getElementById('rec')
-      div.style.left = 70 + '%'
       // h.style.color = '#d7463f'
     }
   }
@@ -106,13 +126,5 @@ export default {
   position: absolute;
   left: 20%;
   top: 82px;
-}
-/**/
-.icon {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  color: white;
-  font-size: 1.6em;
 }
 </style>
