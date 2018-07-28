@@ -142,8 +142,8 @@ export default {
         p = 'relative'
         t = '0px'
       }
-      document.querySelector('#item-top').style.position = p
-      document.querySelector('#item-top').style.top = t
+      document.getElementById('item-top').style.position = p
+      document.getElementById('item-top').style.top = t
     }
   },
   methods: {

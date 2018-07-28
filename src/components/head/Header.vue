@@ -21,9 +21,9 @@
       </div>
       <!--个性推荐，主播电台-->
       <div class="tag">
-        <div id="rec">个性推荐</div>
-        <div id="sta">主播电台</div>
-        <div class="bor"></div>
+        <div id="rec" @click="rec">个性推荐</div>
+        <div id="sta" @click="sta">主播电台</div>
+        <div id="bor"></div>
       </div>
     </div>
   </div>
@@ -35,6 +35,18 @@ export default {
   methods: {
     search: function () {
       this.$router.push({path: '/search'})
+    },
+    rec: function () {
+      var div = document.getElementById('bor')
+      // var h = document.getElementById('rec')
+      div.style.left = 20 + '%'
+      // h.style.color = '#d7463f'
+    },
+    sta: function () {
+      var div = document.getElementById('bor')
+      // var h = document.getElementById('rec')
+      div.style.left = 70 + '%'
+      // h.style.color = '#d7463f'
     }
   }
 }
@@ -53,7 +65,6 @@ export default {
   height: 50px;
   width: 100%;
   display: flex;
-  /*justify-content: center;*/
 }
 /*搜索框*/
 .search{
@@ -86,13 +97,15 @@ export default {
   float: left;
   width: 50%;
 }
-.bor{
+#bor{
   clear: both;
   width: 10%;
   height:4px;
   background-color: white;
-  margin-left: 20%;
   border-radius: 25px;
+  position: absolute;
+  left: 20%;
+  top: 82px;
 }
 /**/
 .icon {
