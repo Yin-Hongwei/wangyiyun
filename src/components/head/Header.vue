@@ -8,8 +8,8 @@
             <use xlink:href="#icon-tinggeshiqu"></use>
           </svg>
         </div>
-        <div class="search">
-          <input type="text" placeholder="给你推荐  最美的期待"/>
+        <div class="search" >
+          <input type="text" placeholder="给你推荐  最美的期待" @click="search"/>
         </div>
         <router-link to="/player">
           <div class="head-opt">
@@ -31,7 +31,12 @@
 
 <script>
 export default {
-  name: 'header-item'
+  name: 'header-item',
+  methods: {
+    search: function () {
+      this.$router.push({path: '/search'})
+    }
+  }
 }
 </script>
 
