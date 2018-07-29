@@ -5,17 +5,25 @@
       <router-link :to="{name: 'find'}">
         <div class="back">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-fanhui"></use>
+            <use xlink:href="#icon-fanhui01"></use>
           </svg>
         </div>
       </router-link>
-        <div class="song-title">歌单</div>
-        <div class="san-dian">
+      <div class="song-title">歌单</div>
+      <div class="san-dian">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-unie644"></use>
+            <use xlink:href="#icon-unie6c7"></use>
           </svg>
       </div>
-      </div>
+      <router-link :to="{name: '/player'}">
+        <div>
+          <svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
+          </svg>
+        </div>
+        </router-link>
+
+    </div>
     <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-search">
       <input type="text" placeholder="搜索歌单内歌曲"/>
@@ -38,7 +46,7 @@
       <div class="song-opt">
         <div>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pinglun"></use>
+            <use xlink:href="#icon-pinglunguanli"></use>
           </svg>
         </div>
         <div>
@@ -53,7 +61,7 @@
         </div>
         <div>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-shoucang"></use>
+            <use xlink:href="#icon-duoxuankuang"></use>
           </svg>
         </div>
       </div>
@@ -85,7 +93,7 @@
         </div>
         <div class="line-r">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-unie644"></use>
+            <use xlink:href="#icon-unie6c7"></use>
           </svg>
         </div>
         <div class="item-top-wire"></div>
@@ -210,6 +218,7 @@ export default {
   flex-grow: 1;
   color: white;
   font-size: 1.3em;
+  padding-left: 10%;
 }
 .song-head div{
   width: 50px;
@@ -217,7 +226,11 @@ export default {
 .song-head .icon {
   font-size: 2em;
 }
-/*-----------------搜索框-----------------------*/
+.song-head div:nth-child(4) .icon {
+  font-size: 1.5em;
+  color: white
+}
+  /*-----------------搜索框-----------------------*/
 .song-search {
   padding-top: 60px;
   display: flex;
@@ -299,6 +312,11 @@ export default {
   width: 25%;
   text-align: center;
   color: white;
+}
+.song-box>.song-opt .icon {
+  color: white;
+  fill: currentColor;
+  overflow: hidden;
 }
 .song-box>.opt-detail>div {
   font-size: 0.8em;

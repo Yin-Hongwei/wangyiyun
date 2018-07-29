@@ -3,7 +3,7 @@
     <div class="playing-header">
       <div class="back" @click="goback(-1)">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-fanhui"></use>
+          <use xlink:href="#icon-fanhui01"></use>
         </svg>
       </div>
       <div class="playing-title">
@@ -37,7 +37,7 @@
         </div>
         <div>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pinglun"></use>
+            <use xlink:href="#icon-pinglunguanli"></use>
           </svg>
         </div>
         <div>
@@ -59,7 +59,7 @@
       <div class="playing-butt">
           <div>
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-xunhuanbofang01"></use>
+              <use xlink:href="#icon-icon-test"></use>
             </svg>
           </div>
           <div @click="prev">
@@ -74,7 +74,7 @@
           </div>
           <div @click="next">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-next1"></use>
+              <use xlink:href="#icon-xiayishouxianxing"></use>
             </svg>
           </div>
           <div>
@@ -124,7 +124,7 @@ export default {
     // 切换播放状态的图标
     isPlay: function (val) {
       if (val) {
-        this.$store.commit('setPlayButtonUrl', '#icon-zanting1')
+        this.$store.commit('setPlayButtonUrl', '#icon-zanting')
       } else {
         this.$store.commit('setPlayButtonUrl', '#icon-bofang')
       }
@@ -472,10 +472,16 @@ export default {
 .playing-footer>.playing-butt .icon {
   font-size: 2em;
 }
+.playing-footer .playing-butt>div:nth-child(1) .icon {
+  font-size: 2.5em;
+}
 .playing-footer .playing-butt>div:nth-child(3) .icon{
   font-size: 3.3em;
   position: relative;
   left: -10px;
+}
+.playing-footer .playing-butt>div:nth-child(5) .icon {
+  font-size: 1.8em;
 }
 /*------------------------共性---------------------------------*/
 .playing-header,

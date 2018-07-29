@@ -1,6 +1,13 @@
 <template>
   <div class="my">
-    <div class="my-head">我的音乐</div>
+    <div class="my-head">
+      <div>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-yun"></use>
+        </svg>
+      </div>
+      <span>我的音乐</span>
+    </div>
     <div class="my-item">
       <ul>
         <li>
@@ -51,10 +58,20 @@ export default {
 .my-head {
   width: 100%;
   height: 60px;
-  text-align: center;
   background-color: #d7463f;
   color: white;
   line-height: 60px;
+  display: flex;
+}
+.my-head div {
+  width: 50px;
+  margin-top: 5px;
+  text-align: center;
+}
+.my-head span {
+  flex-grow: 1;
+  padding-left: 30%;
+  font-size: 1.2em;
 }
 /*-----------------item------------------------*/
 .my-item ul li{

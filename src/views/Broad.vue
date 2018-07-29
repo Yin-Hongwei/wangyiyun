@@ -68,6 +68,7 @@ export default {
 .body-item{
   display: inline-block;
   margin: 5px;
+  margin-bottom: 15px;
   height: auto;
   width: 30%;
   vertical-align: top;

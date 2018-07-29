@@ -4,13 +4,13 @@
     <div id="opt">
       <div id="find" @click="gofind">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-wangyiyunyinlezizhi"></use>
+          <use xlink:href="#icon-wangyiyunyinle"></use>
         </svg>
         <p>发现</p>
       </div>
       <div id="video" @click="govideo">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-bofang"></use>
+          <use xlink:href="#icon-shiping"></use>
         </svg>
         <p>视频</p>
       </div>
@@ -22,13 +22,13 @@
       </div>
       <div id="friend" @click="gofriend">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-19"></use>
+          <use xlink:href="#icon-pengyou"></use>
         </svg>
         <p>朋友</p>
       </div>
       <div id="account" @click="goaccount">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-zhanghao"></use>
+          <use xlink:href="#icon-zhanghaoguanli"></use>
         </svg>
         <p>账号</p>
       </div>
@@ -91,7 +91,7 @@ export default {
   display: flex;
   justify-content: center;
   bottom: 0;
-  background-color: rgba(236,234,232,0.98);
+  background-color: #eceae8;
   align-items: center;
 }
 #opt div{

@@ -8,6 +8,7 @@ import store from './store/index'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import '@/assets/js/iconfont.js'
+import '@/assets/css/static.css'
 Vue.use(MintUI)
 
 Vue.config.productionTip = false

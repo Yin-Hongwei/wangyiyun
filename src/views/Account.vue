@@ -111,6 +111,7 @@ export default {
   color: white;
   text-align: center;
   line-height: 60px;
+  font-size: 1.2em;
 }
 /*--------------------load---------------------------*/
 .acc-box {

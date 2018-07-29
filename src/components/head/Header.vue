@@ -5,7 +5,7 @@
       <div class="search-nav">
         <div class="head-opt">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-tinggeshiqu"></use>
+            <use xlink:href="#icon-tinggeshiqu40x40"></use>
           </svg>
         </div>
         <div class="search" >
