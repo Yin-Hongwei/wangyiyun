@@ -15,8 +15,8 @@
             <use xlink:href="#icon-unie6c7"></use>
           </svg>
       </div>
-      <router-link :to="{name: '/player'}">
-        <div>
+      <router-link :to="{name: 'player'}">
+        <div class="song-item4">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
           </svg>
@@ -226,8 +226,8 @@ export default {
 .song-head .icon {
   font-size: 2em;
 }
-.song-head div:nth-child(4) .icon {
-  font-size: 1.5em;
+.song-head .song-item4 .icon {
+  font-size: 1.4em;
   color: white
 }
   /*-----------------搜索框-----------------------*/
