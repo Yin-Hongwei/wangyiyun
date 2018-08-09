@@ -112,6 +112,8 @@ export default {
 .search-content ul li p {
   padding-left: 20px;
   overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 .search-content ul li p:nth-child(1) {
   font-size: 1.1em;

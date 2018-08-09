@@ -356,7 +356,8 @@ export default {
 }
 .item-top-wire {
   height: 1px;
-  width: 85%;
+  right: 0;
+  left: 0;
   margin-left: 45px;
   background-color: #e3e4e5;
   position: absolute;
@@ -372,6 +373,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   flex-grow: 1;
+  justify-content: space-between;
 }
 .song-list-dic .song-item .line-l,
 .song-list-dic .song-item .line-r {

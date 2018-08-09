@@ -1,3 +1,7 @@
+div p ul li{
+  margin: 0;
+  padding: 0;
+}
 *{
   margin: 0;
   padding: 0;
@@ -14,4 +18,8 @@ ul {
   fill: currentColor;
   color: white;
   font-size: 1.6em;
+}
+a {
+  text-decoration:none;
+  color: black;
 }

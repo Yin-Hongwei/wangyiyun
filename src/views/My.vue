@@ -86,9 +86,9 @@ export default {
 }
 .my-item ul li:after {
   content:"";
-  width: 88%;
-  left: 30px;
+  left: 0;
   right: 0;
+  margin-left: 43px;
   height:1px;
   background-color:#eceae8;
   position:absolute;

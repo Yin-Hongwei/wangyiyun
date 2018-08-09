@@ -27,7 +27,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .redBac{
-  /*background-color: #d73e39;*/
+  background-color: #d73e39;
   width: 100%;
   height: 200px;
 }

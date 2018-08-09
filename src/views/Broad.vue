@@ -3,11 +3,11 @@
     <home/>
     <div class="title">精彩节目推荐 ＞</div>
     <div class="body-group">
-      <div class="body-item" v-for="(item,index) in recommend" :key="index">
-        <!--<router-link :to="{name: 'songlist', params:{id:item.id}}">-->
+      <div>
+        <div class="body-item" v-for="(item,index) in recommend" :key="index">
           <img class="item-img" :src="item.coverUrl"/>
           <span class="item-span">{{item.reason}}</span>
-        <!--</router-link>-->
+        </div>
       </div>
     </div>
     <footer-item/>
@@ -63,21 +63,23 @@ export default {
 .body-group{
   width: 100%;
   display: flex;
+  justify-content: center;
+}
+.body-group>div {
+  width: 96%;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 .body-item{
   display: inline-block;
   margin: 5px;
   margin-bottom: 15px;
   height: auto;
-  width: 30%;
-  vertical-align: top;
+  flex: 0 0 30%;
 }
 .item-img,.item-span{
   width: 100%;
 }
-a {
-  text-decoration:none;
-  color: black;
-}
+
 </style>

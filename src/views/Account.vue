@@ -138,6 +138,7 @@ export default {
   background-color: white;
   display: flex;
   width: 100%;
+  justify-content: space-between;
 }
 .acc-item ul li p {
   width: 90%;
@@ -150,9 +151,9 @@ export default {
 }
 .acc-item ul li:after {
   content:"";
-  width: 88%;
-  left: 30px;
+  left: 0;
   right: 0;
+  margin-left: 43px;
   height:1px;
   background-color:#eceae8;
   position:absolute;

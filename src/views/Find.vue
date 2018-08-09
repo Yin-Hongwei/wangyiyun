@@ -3,32 +3,34 @@
     <home/>
     <div class="title">推荐歌单 ＞</div>
     <div class="body-group">
-      <div class="body-item" v-for="(item,index) in personalized" :key="index">
-        <router-link :to="{name: 'songlist', params:{id:item.id}}">
-          <img class="item-img" :src="attachImageUrl(item.picUrl)"/>
-          <span class="item-span">{{item.name}}</span>
-        </router-link>
+      <div>
+        <div class="body-item" v-for="(item,index) in personalized" :key="index">
+          <router-link :to="{name: 'songlist', params:{id:item.id}}">
+            <img class="item-img" :src="attachImageUrl(item.picUrl)"/>
+            <span class="item-span">{{item.name}}</span>
+          </router-link>
+        </div>
       </div>
     </div>
 
     <div class="title">最新音乐 ＞</div>
     <div class="body-group">
-      <div class="body-item" v-for="(item,index) in newsong" :key="index">
-        <!--<router-link :to="{name: 'songlist'}">-->
-        <img class="item-img" :src="item.song.album.picUrl"/>
-        <!--</router-link>-->
-        <p class="item-title">{{ item.name }}</p>
-        <span class="item-span">{{item.song.artists[0].name}}</span>
+      <div>
+        <div class="body-item" v-for="(item,index) in newsong" :key="index">
+          <img class="item-img" :src="item.song.album.picUrl"/>
+          <p class="item-title">{{ item.name }}</p>
+          <span class="item-span">{{item.song.artists[0].name}}</span>
+        </div>
       </div>
     </div>
 
     <div class="title">主播电台 ＞</div>
     <div class="body-group">
-      <div class="body-item" v-for="(item,index) in dj" :key="index">
-        <!--<router-link :to="{name: 'songlist'}">-->
-        <img class="item-img" :src="item.picUrl"/>
-        <!--</router-link>-->
-        <span class="item-span">{{item.rcmdtext}}</span>
+      <div>
+        <div class="body-item" v-for="(item,index) in dj" :key="index">
+          <img class="item-img" :src="item.picUrl"/>
+          <span class="item-span">{{item.rcmdtext}}</span>
+        </div>
       </div>
     </div>
     <footer-item/>
@@ -113,15 +115,20 @@ export default {
 .body-group{
   width: 100%;
   display: flex;
+  justify-content: center;
+}
+.body-group>div {
+  width: 96%;
+  display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 .body-item{
   display: inline-block;
   margin: 5px;
   margin-bottom: 15px;
   height: auto;
-  width: 30%;
-  vertical-align: top;
+  flex: 0 0 30%;
 }
 .item-img,.item-span{
   width: 100%;

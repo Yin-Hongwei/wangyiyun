@@ -397,9 +397,14 @@ export default {
   text-align: center;
 }
 .playing-body>.pic-box>img {
-  width: 200px;
-  border-radius: 90px;
-  margin-top: 5%;
+  width: 75%;
+  max-height: 250px;
+  border-radius: 50%;
+  margin-top: 15%;
+}
+@-webkit-keyframes rotate{
+  from { -webkit-transform:rotate(0deg) }
+  to { -webkit-transform:rotate(360deg) }
 }
 .playing-body>.pic-box>div {
   position: absolute;
