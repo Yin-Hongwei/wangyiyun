@@ -17,11 +17,27 @@
       </div>
     </div>
     <div class="playing-body">
-      <img class='player-top' src="../assets/img/player-needle.png" alt="">
-      <div class="pic-box" :style='{"animation": (isPlay?" 25s linear 0s normal none infinite rotate":"none")}'>
-        <img :src="picUrl" alt="" class="album-pic">
-        <div></div>
-      </div>
+      <transition name="fade">
+        <div v-if="!showLrc" @click="showLrc = true">
+          <img class='player-top' src="../assets/img/player-needle.png" alt="">
+          <div class="pic-box" :style='{"animation": (isPlay?" 25s linear 0s normal none infinite rotate":"none")}'>
+            <img :src="picUrl" alt="" class="album-pic">
+            <div></div>
+          </div>
+        </div>
+      </transition>
+      <transition name="fade">
+        <div v-show="showLrc" class="showLrc-box" @click="showLrc = false">
+          <ul v-show="lrc.length" v-bind:style="{top:lrcTop}" class="lrc">
+            <li v-for="(item, index) in lrc" :key="index">
+              {{ item[1] }}
+            </li>
+          </ul>
+          <ul v-show="!lrc.length" style="margin-top:40%;">
+            <span class="no-lrc">暂无歌词</span>
+          </ul>
+        </div>
+      </transition>
     </div>
     <div class="playing-footer">
       <div class="playing-opt">
@@ -95,13 +111,15 @@ export default {
   name: 'player',
   data () {
     return {
+      showSongsList: false,
+      showLrc: false,
       curLength: 0,
       nowTime: '00.00',
       songTime: '00.00',
       progressLength: 0,
       isDown: false,
       lrcTop: 200 + 'px',
-      touchStartX: 0
+      touchStartX: 0,
     }
   },
   computed: {
@@ -178,20 +196,58 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
-        console.log('获取歌曲详情：')
-        console.log(res.data.songs[0])
-        // _this.getLyric()
+        // console.log(res.data)
+        _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
         _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
         // console.log(_this.duration)
       })
     },
+    getLyric () {
+      this.$store.commit('setLyric', [])
+      this.$store.commit('setLrc', [])
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/lyric', {
+        params: {
+          id: _this.id
+        }
+      }).then(function (res) {
+        console.log(res.data.lrc.lyric)
+        let lrc = _this.parseLyric(res.data.lrc.lyric)
+        _this.$store.commit('setLyric', res.data.lrc.lyric)
+        _this.$store.commit('setLrc', lrc)
+        console.log(lrc)
+      })
+    },
+    parseLyric (text) {
+      var lines = text.split('\n'),
+        pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
+        result = []
+      while (!pattern.test(lines[0])) {
+        lines = lines.slice(1)
+      };
+      lines[lines.length - 1].length === 0 && lines.pop()
+      lines.forEach(function (v, i, a) {
+        var time = v.match(pattern),
+          value = v.replace(pattern, '')
+        time.forEach(function (v1, i1, a1) {
+          var t = v1.slice(1, -1).split(':')
+          if (value !== '' && value !== '') {
+            result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
+          }
+        })
+      })
+      result.sort(function (a, b) {
+        return a[0] - b[0]
+      })
+      return result
+    },
     //  解析播放时间
     formatSeconds (value) {
-      var theTime = parseInt(value)
-      var theTime1 = 0
-      var theTime2 = 0
+      let theTime = parseInt(value)
+      let theTime1 = 0
+      let theTime2 = 0
       if (theTime > 60) {
         theTime1 = parseInt(theTime / 60) // 分
         theTime = parseInt(theTime % 60) // 秒
@@ -232,8 +288,8 @@ export default {
     },
     move (e) {
       if (this.isDown) {
-        var curLength = this.$refs.curProgress.getBoundingClientRect().width
-        var newLength = ((curLength + e.movementX) / this.progressLength) * 100
+        let curLength = this.$refs.curProgress.getBoundingClientRect().width
+        let newLength = ((curLength + e.movementX) / this.progressLength) * 100
         if (newLength > 100) {
           newLength = 100
         } else if (newLength < 0) {
@@ -253,10 +309,10 @@ export default {
       if (!this.duration) {
         return false
       }
-      var movementX = e.touches[0].pageX - this.touchStartX
-      var curLength = this.$refs.curProgress.getBoundingClientRect().width
+      let movementX = e.touches[0].pageX - this.touchStartX
+      let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
-      var newPercent = ((curLength + movementX) / this.progressLength) * 100
+      let newPercent = ((curLength + movementX) / this.progressLength) * 100
       if (newPercent > 100) {
         newLength = 100
       }
@@ -345,17 +401,17 @@ export default {
 .playing-header {
   height:60px;
 }
-.playing-header>.playing-title {
+.playing-header .playing-title {
   width: 80%;
   flex-grow: 1;
   color: white;
   text-align: center;
 }
-.playing-header>.playing-title>p:nth-child(2) {
+.playing-header .playing-title>p:nth-child(2) {
   font-size: 0.6em;
 }
-.playing-header>.back,
-.playing-header>.forwarding {
+.playing-header .back,
+.playing-header .forwarding {
   width: 35px;
 }
 .playing-header .icon {
@@ -375,17 +431,23 @@ export default {
   transform-origin: 0 0;
 }
 /*-----------------------body-----------------------------*/
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
 .playing-body {
   position: relative;
   height:380px;
 }
-.playing-body>.player-top {
+.playing-body .player-top {
   width: 20%;
   position: fixed;
   left: 45%;
   z-index: 20;
 }
-.playing-body>.pic-box {
+.playing-body .pic-box {
   position: relative;
   width: 70%;
   height: 0;
@@ -396,7 +458,7 @@ export default {
   top: 14%;
   text-align: center;
 }
-.playing-body>.pic-box>img {
+.playing-body .pic-box>img {
   width: 75%;
   max-height: 250px;
   border-radius: 50%;
@@ -406,7 +468,7 @@ export default {
   from { -webkit-transform:rotate(0deg) }
   to { -webkit-transform:rotate(360deg) }
 }
-.playing-body>.pic-box>div {
+.playing-body .pic-box>div {
   position: absolute;
   width: 105%;
   height: 105%;
@@ -425,39 +487,39 @@ export default {
   width: 100%;
   bottom: 0;
 }
-.playing-footer>.playing-opt {
+.playing-footer .playing-opt {
   height:60px;
 }
-.playing-footer>.playing-opt>div {
+.playing-footer .playing-opt>div {
   width: 35px;
   margin: 0 6%;
 }
 /*--------第二行控件-----------*/
-.playing-footer>.playing-speed {
+.playing-footer .playing-speed {
   height: 50px;
 }
-.playing-footer>.playing-speed>.current-time,
-.playing-footer>.playing-speed>.left-time {
+.playing-footer .playing-speed>.current-time,
+.playing-footer .playing-speed>.left-time {
   width: 70px;
   text-align: center;
   font-size: 13px;
   color: #ffffff;
   top: -10px;
 }
-.playing-footer>.playing-speed>.progress-box {
+.playing-footer .playing-speed>.progress-box {
   flex: 1;
 }
-.playing-footer>.playing-speed>.progress-box .progress {
+.playing-footer .playing-speed>.progress-box .progress {
   width: 100%;
   background: #ffffff;
   height: 2px;
 }
-.playing-footer>.playing-speed>.progress-box .cur-progress {
+.playing-footer .playing-speed>.progress-box .cur-progress {
   width: 20%;
   height: 100%;
   background: #D23023;
 }
-.playing-footer>.playing-speed>.progress-box .idot {
+.playing-footer .playing-speed>.progress-box .idot {
   width: 16px;
   height: 16px;
   position: relative;
@@ -467,14 +529,14 @@ export default {
   vertical-align: middle;
 }
 /*--------第三行控件-----------*/
-.playing-footer>.playing-butt {
+.playing-footer .playing-butt {
   height: 80px;
 }
-.playing-footer>.playing-butt>div {
+.playing-footer .playing-butt>div {
   width: 30px;
   margin: 0 6%;
 }
-.playing-footer>.playing-butt .icon {
+.playing-footer .playing-butt .icon {
   font-size: 2em;
 }
 .playing-footer .playing-butt>div:nth-child(1) .icon {
@@ -490,9 +552,9 @@ export default {
 }
 /*------------------------共性---------------------------------*/
 .playing-header,
-.playing-footer>.playing-opt,
-.playing-footer>.playing-speed,
-.playing-footer>.playing-butt {
+.playing-footer .playing-opt,
+.playing-footer .playing-speed,
+.playing-footer .playing-butt {
   display: flex;
   flex-grow: 1;
   justify-content: center;
@@ -505,5 +567,24 @@ export default {
   overflow: hidden;
   color: white;
   font-size: 1.6em;
+}
+
+.showLrc-box {
+  position: relative;
+  height: 320px;
+  width: 100%;
+  padding: 40px 0;
+  overflow: hidden;
+  transition: all 1s;
+}
+.showLrc-box ul{
+  padding-top: 20px;
+  position: absolute;
+  width:100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 30px;
+  color: rgba(145,145,145,0.7);
+  transition: all 0.5s;
 }
 </style>

@@ -27,9 +27,9 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/banner')
         .then(function (response) {
-          // console.log(response.data.banners)
+          console.log(response.data.banners)
           _this.banners = response.data.banners
-          // console.log(_this.banners[0])
+          console.log(_this.banners[0])
         })
         .catch(function (error) {
           console.log(error)

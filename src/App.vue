@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <song-audio/>
-    <keep-alive>
+    <!--<keep-alive>-->
       <router-view/>
-    </keep-alive>
+    <!--</keep-alive>-->
   </div>
 </template>
 
