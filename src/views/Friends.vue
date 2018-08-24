@@ -10,13 +10,14 @@
         <div id="head-but">
           <span @click="dongtai">动态</span>
           <span @click="fujin">附近</span>
+          <div id="head-item"></div>
         </div>
         <div class="item-icon">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
           </svg>
         </div>
-        <div id="head-item"></div>
+
       </div>
       <div class="head-bottom">
         <div class="writer-icon">
@@ -49,18 +50,18 @@ export default {
   },
   methods: {
     dongtai: function () {
-      var h = document.getElementById('head-but')
-      var div = document.getElementById('head-item')
-      div.style.left = 33 + '%'
+      const h = document.getElementById('head-but')
+      const div = document.getElementById('head-item')
+      div.style.left = 0 + '%'
       h.firstChild.style.color = '#d7463f'
-      h.lastChild.style.color = 'white'
+      h.children[1].style.color = 'white'
     },
     fujin: function () {
-      var h = document.getElementById('head-but')
-      var div = document.getElementById('head-item')
-      div.style.left = 51 + '%'
+      const h = document.getElementById('head-but')
+      const div = document.getElementById('head-item')
+      div.style.left = 50 + '%'
       h.firstChild.style.color = 'white'
-      h.lastChild.style.color = '#d7463f'
+      h.children[1].style.color = '#d7463f'
     }
   }
 }
@@ -74,7 +75,7 @@ export default {
   color: white;
 }
 /*------------------head第一行-----------------------*/
-.friend-head .head-top{
+.head-top{
   width: 100%;
   height: 40px;
   line-height: 60px;
@@ -82,7 +83,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.friend-head .head-top .item-icon {
+.head-top .item-icon {
   width: 40px;
   margin-top: -10px;
 }
@@ -93,8 +94,8 @@ export default {
   width: 140px;
   height: 30px;
   line-height: 30px;
-  position: absolute;
-  left: 33%;
+  position: relative;
+  left: 5%;
   z-index: 1;
 }
 #head-but span {
@@ -117,15 +118,13 @@ export default {
 }
 /*--------------------内容区---------------------*/
 #head-item {
-  border-radius: 25px;
   width: 70px;
   height: 30px;
-  line-height: 30px;
+  border-radius: 25px;
   background-color: white;
   position: absolute;
-  z-index: 0;
-  top: 16px;
-  left: 33%;
+  z-index: -1;
+  top: 0;
 }
 .friend-content {
   text-align: center;

@@ -62,7 +62,7 @@ export default {
 
 <style scoped>
 .search-head {
-  height: 40px;
+  height: 60px;
   background-color: #d7463f;
   display: flex;
   flex-grow: 1;
@@ -84,6 +84,7 @@ export default {
 .search-cancel {
   width: 50px;
   text-align: center;
+  line-height: 28px;
 }
 /**/
 .search-content ul li{

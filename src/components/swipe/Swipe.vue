@@ -28,8 +28,8 @@ export default {
       axios.get(_this.$store.state.HOST + '/banner')
         .then(function (response) {
           console.log(response.data.banners)
+          // API 轮播图没有啦
           _this.banners = response.data.banners
-          console.log(_this.banners[0])
         })
         .catch(function (error) {
           console.log(error)

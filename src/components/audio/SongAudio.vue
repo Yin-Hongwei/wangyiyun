@@ -47,14 +47,16 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        // console.log('获取歌曲信息：')
         console.log(res.data)
-        if (!res.data.data[0].url) {
-          _this.$store.commit('setUrl', '')
-          return false
-        }
-        _this.$store.commit('setUrl', res.data.data[0].url)
+        // _this.$store.commit('setUrl',res.data.data[0].url);
+        // 上面这个数据 res.data 出问题了，所以下面换了种方式传入歌曲地址
+        let temp = ' http://music.163.com/song/media/outer/url?id=' + _this.$route.params.id
+        _this.$store.commit('setUrl', temp)
       })
+        .catch(function (error) {
+          _this.$store.commit('setUrl', '')
+          console.log(error)
+        })
     },
     // 开始/暂停
     togglePlay () {

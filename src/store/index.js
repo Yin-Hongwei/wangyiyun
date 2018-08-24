@@ -20,7 +20,6 @@ const store = new Vuex.Store({
       artist: '', //  歌手名
       picUrl: null, // 歌曲图片
       autoNext: true, // 用于触发自动播放下一首
-      //
       lyric: '', // 未处理的歌词数据
       lrc: [], //  处理的歌词数据
       listIndex: -1 // 当前歌曲在歌曲列表的位置

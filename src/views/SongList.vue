@@ -131,10 +131,32 @@ export default {
       'id'
     ])
   },
+  beforeRouteEnter (to, form, next) {
+    next(function (vm) {
+      window.onscroll = function () {
+        let rHead = document.getElementById('item-top')
+        if (vm.scrollTop() >= 250) {
+          rHead.style.position = 'fixed'
+          rHead.style.top = 60 + 'px'
+        } else {
+          rHead.style.position = 'static'
+        }
+      }
+    })
+  },
+  beforeRouteLeave (to, from, next) {
+    window.onscroll = null
+    next()
+  },
   mounted: function () {
     this.getRec()
   },
   methods: {
+    // 获得滚动高度
+    scrollTop () {
+      return Math.max(document.body.scrollTop, document.documentElement.scrollTop)
+      // chrome                                 // firefox/IE
+    },
     // 获取推荐歌单
     getRec: function () {
       let _this = this
@@ -148,7 +170,7 @@ export default {
         }
       })
         .then(function (res) {
-          console.log(res.data.playlist)
+          // console.log(res.data.playlist)
           _this.coverImgUrl = res.data.playlist.coverImgUrl
           _this.name = res.data.playlist.name
           _this.avatarUrl = res.data.playlist.creator.avatarUrl
@@ -158,6 +180,7 @@ export default {
           _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
           _this.songslist = res.data.playlist.tracks
+          console.log(_this.songslist[0])
           Indicator.close()
         })
         .catch(function (error) {
@@ -233,12 +256,10 @@ export default {
   /*-----------------搜索框-----------------------*/
 .song-search {
   padding-top: 60px;
-  display: flex;
-  justify-content: center;
-  height: 40px;
+  text-align: center;
 }
 .song-search>input {
-  width: 95%;
+  width: 90%;
   height: 24px;
   border: 0;
   border-radius: 25px;
@@ -294,60 +315,61 @@ export default {
   font-size: 0.9em;
 }
 /*---------------------评论，分享，下载，多选------------------------------*/
-.song-box>.song-opt,
-.song-box>.opt-detail {
+.song-box .song-opt,
+.song-box .opt-detail {
   display: flex;
   width: 100%;
   flex-grow: 1;
   justify-content: center;
 }
-.song-box>.song-opt {
+.song-box .song-opt {
   margin-top: 10px;
 }
-.song-box>.opt-detail {
+.song-box .opt-detail {
   margin-bottom: 10px;
 }
-.song-box>.song-opt>div,
-.song-box>.opt-detail>div {
+.song-box .song-opt>div,
+.song-box .opt-detail>div {
   width: 25%;
   text-align: center;
   color: white;
 }
-.song-box>.song-opt .icon {
+.song-box .song-opt .icon {
   color: white;
   fill: currentColor;
   overflow: hidden;
 }
-.song-box>.opt-detail>div {
+.song-box .opt-detail>div {
   font-size: 0.8em;
 }
 /*------------------白红框框----------------------*/
 #item-top {
   display: flex;
   width: 100%;
+  z-index: 10;
 }
-#item-top>.item-l,
-#item-top>.item-r {
+#item-top .item-l,
+#item-top .item-r {
   line-height: 60px;
   vertical-align: middle;
   height: 60px;
 }
-#item-top>.item-l {
+#item-top .item-l {
   width: 60%;
   background-color: #fcfdfe;
   border-radius: 20px 0 0 0;
 }
-#item-top>.item-l>div {
+#item-top .item-l>div {
   display: inline-block;
   width: 30px;
   height: 49px;
   margin-left: 15px;
   vertical-align:middle;
 }
-#item-top>.item-l .icon {
+#item-top .item-l .icon {
   color: black;
 }
-#item-top>.item-r {
+#item-top .item-r {
   width: 40%;
   background-color: #d7463f;
   color: white;
@@ -365,6 +387,7 @@ export default {
 /*--------------------歌曲列表--------------------------*/
 .song-list-dic {
   width: 100%;
+  position: relative;
 }
 .song-list-dic .song-item {
   height: 60px;
@@ -387,6 +410,7 @@ export default {
   overflow: hidden;
   font-size: 1.1em;
   padding-top: 10px;
+  white-space: nowrap;
 }
 .song-list-dic .song-item .line-m p {
   font-size: 0.8em;

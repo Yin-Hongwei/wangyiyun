@@ -7,7 +7,7 @@
         </svg>
       </div>
       <div class="playing-title">
-        <p>{{ title}}</p>
+        <p>{{title}}</p>
         <p>{{artist}}</p>
       </div>
       <div class="forwarding">
@@ -16,11 +16,10 @@
         </svg>
       </div>
     </div>
-    <div class="playing-body">
       <transition name="fade">
-        <div v-if="!showLrc" @click="showLrc = true">
+        <div class="playing-body" v-if="!showLrc" @click="showLrc = true">
           <img class='player-top' src="../assets/img/player-needle.png" alt="">
-          <div class="pic-box" :style='{"animation": (isPlay?" 25s linear 0s normal none infinite rotate":"none")}'>
+          <div class="pic-box" :class='{circle: isPlay}'>
             <img :src="picUrl" alt="" class="album-pic">
             <div></div>
           </div>
@@ -38,7 +37,6 @@
           </ul>
         </div>
       </transition>
-    </div>
     <div class="playing-footer">
       <div class="playing-opt">
         <div>
@@ -119,7 +117,7 @@ export default {
       progressLength: 0,
       isDown: false,
       lrcTop: 200 + 'px',
-      touchStartX: 0,
+      touchStartX: 0
     }
   },
   computed: {
@@ -132,10 +130,10 @@ export default {
       'picUrl', // 歌曲图片
       'curTime', // 当前音乐的播放位置
       'duration', // 音乐时长
-      'lrc',
+      'lrc', // 歌词
       'songsList', // 当前歌单列表
       'listIndex', // 当前歌曲在歌曲列表的位置
-      'autoNext'
+      'autoNext' // 用于触发自动播放下一首
     ])
   },
   watch: {
@@ -156,10 +154,10 @@ export default {
         for (var i = 0; i < this.lrc.length; i++) {
           if (this.curTime >= this.lrc[i][0]) {
             for (var j = 0; j < this.lrc.length; j++) {
-              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(145,145,145,0.5)'
+              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(155,155,155,0.7)'
             }
             if (i >= 0) {
-              this.lrcTop = -i * 31 + 180 + 'px'
+              this.lrcTop = -i * 30 + 180 + 'px'
               document.querySelectorAll('.lrc li')[i].style.color = '#ffffff'
             }
           }
@@ -201,7 +199,6 @@ export default {
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
         _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
-        // console.log(_this.duration)
       })
     },
     getLyric () {
@@ -213,34 +210,45 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        console.log(res.data.lrc.lyric)
+        // console.log(res.data.lrc.lyric)
         let lrc = _this.parseLyric(res.data.lrc.lyric)
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
-        console.log(lrc)
+        // console.log(lrc)
       })
     },
     parseLyric (text) {
+      // console.log(typeof text)
       var lines = text.split('\n'),
         pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
         result = []
-      while (!pattern.test(lines[0])) {
-        lines = lines.slice(1)
-      };
+      // console.log(lines)
+      // while (!pattern.test(lines[0])) {
+      //   lines = lines.slice(1)
+      // };
+      // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
-      lines.forEach(function (v, i, a) {
-        var time = v.match(pattern),
-          value = v.replace(pattern, '')
-        time.forEach(function (v1, i1, a1) {
-          var t = v1.slice(1, -1).split(':')
-          if (value !== '' && value !== '') {
+      lines.forEach(function (item, index, array) {
+        let time = item.match(pattern) // 存前面的时间段
+        let value = item.replace(pattern, '') // 存歌词
+        // console.log(time)
+        // console.log(value)
+        time.forEach(function (item1, i1, a1) {
+          var t = item1.slice(1, -1).split(':')
+          // 测试
+          // console.log(item1)
+          // console.log(item1.slice(1, -1))
+          // console.log(t)
+          if (value !== '') {
             result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
           }
         })
       })
+      // console.log(result)
       result.sort(function (a, b) {
         return a[0] - b[0]
       })
+      // console.log(result)
       return result
     },
     //  解析播放时间
@@ -340,11 +348,10 @@ export default {
     // 下一首
     next () {
       if (this.listIndex !== -1 && this.songsList.length > 1) {
-        console.log(666)
+        // console.log('下一首')
         if (this.listIndex < (this.songsList.length - 1)) {
           this.toPlay(this.songsList[this.listIndex + 1].id)
           this.$store.commit('setListIndex', this.listIndex + 1)
-          console.log(666)
         } else {
           this.$store.commit('setListIndex', 0)
           this.toPlay(this.songsList[0].id)
@@ -377,7 +384,7 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0,0,0,0.6);
+  background-color: rgba(0,0,0,0.7);
   z-index: -1;
 }
 .picbg {
@@ -391,7 +398,7 @@ export default {
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
-  -webkit-filter: blur(30px);
+  -webkit-filter: blur(20px);
   -moz-filter: blur(30px);
   -ms-filter: blur(30px);
   -o-filter: blur(30px);
@@ -430,7 +437,7 @@ export default {
   -webkit-transform-origin: 0 0;
   transform-origin: 0 0;
 }
-/*-----------------------body-----------------------------*/
+/*-----------------------中间唱片-----------------------------*/
 .fade-enter-active, .fade-leave-active {
   transition: opacity .5s
 }
@@ -438,8 +445,7 @@ export default {
   opacity: 0
 }
 .playing-body {
-  position: relative;
-  height:380px;
+  height: 100%;
 }
 .playing-body .player-top {
   width: 20%;
@@ -447,39 +453,57 @@ export default {
   left: 45%;
   z-index: 20;
 }
-.playing-body .pic-box {
+.pic-box {
   position: relative;
   width: 70%;
-  height: 0;
-  padding-bottom: 70%;
-  border-radius: 50%;
-  border: 10px solid rgba(255,255,255,0.2);
   margin: 0 auto;
-  top: 14%;
-  text-align: center;
-}
-.playing-body .pic-box>img {
-  width: 75%;
-  max-height: 250px;
+  border: 10px solid rgba(255,255,255,0.2);
   border-radius: 50%;
-  margin-top: 15%;
+  text-align: center;
+  top: 8%;
+  height: 0;
+  padding-bottom: 66%;
+}
+.circle {
+  animation:rotate 9.5s linear 0s normal none infinite;
 }
 @-webkit-keyframes rotate{
   from { -webkit-transform:rotate(0deg) }
   to { -webkit-transform:rotate(360deg) }
 }
-.playing-body .pic-box>div {
-  position: absolute;
-  width: 105%;
-  height: 105%;
+.pic-box>img {
+  width: 75%;
   border-radius: 50%;
-  overflow: hidden;
-  top: -3px;
-  left: -3px;
+  margin: 12%;
+}
+.pic-box>div {
+  position: absolute;
   background: url('../assets/img/coverall.png') no-repeat;
-  background-position: -5px -7px;
-  background-size: 102%;
-  z-index:10;
+  background-size: 100%;
+  width: 106%;
+  height: 106%;
+  border-radius: 50%;
+  top: -7px;
+  left: -7px;
+}
+/*-----------------------------歌词-------------------------*/
+.showLrc-box {
+  position: relative;
+  height: 56%;
+  width: 100%;
+  overflow: hidden;
+  transition: all 1s;
+  padding: 40px 0;
+  top: 10px;
+}
+.showLrc-box ul{
+  position: absolute;
+  width:100%;
+  text-align: center;
+  font-size: 16px;
+  line-height: 30px;
+  transition: all 0.5s;
+  padding-top: 20px;
 }
 /*---------------------footer---------------------------*/
 .playing-footer {
@@ -568,23 +592,13 @@ export default {
   color: white;
   font-size: 1.6em;
 }
-
-.showLrc-box {
-  position: relative;
-  height: 320px;
-  width: 100%;
-  padding: 40px 0;
-  overflow: hidden;
-  transition: all 1s;
-}
-.showLrc-box ul{
-  padding-top: 20px;
-  position: absolute;
-  width:100%;
-  text-align: center;
-  font-size: 16px;
-  line-height: 30px;
-  color: rgba(145,145,145,0.7);
-  transition: all 0.5s;
+.picbg:before {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,1);
+  z-index: 10000;
 }
 </style>
