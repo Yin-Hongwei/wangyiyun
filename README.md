@@ -10,6 +10,7 @@ vuejs仿写网易云音乐webapp
 
 项目主要截图：
 ----
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun1.png" width="600"/>
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun1.png)<br></br>
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun2.png)<br></br>
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun3.png)<br></br>
