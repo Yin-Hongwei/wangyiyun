@@ -1,20 +1,20 @@
 <template>
   <div class="find">
     <home/>
-    <div class="title">推荐歌单 ＞</div>
+    <h3 class="title">推荐歌单 ＞</h3>
     <div class="body-group">
       <div>
         <div class="body-item" v-for="(item,index) in personalized" :key="index">
           <router-link :to="{name: 'songlist', params:{id:item.id}}">
-            <img class="item-img" :src="attachImageUrl(item.picUrl)"/>
+            <img class="item-img" :src="item.picUrl"/>
             <span class="item-span">{{item.name}}</span>
           </router-link>
         </div>
       </div>
     </div>
 
-    <div class="title">最新音乐 ＞</div>
-    <div class="body-group">
+    <h3 class="title">最新音乐 ＞</h3>
+    <div class="body-group line2">
       <div>
         <div class="body-item" v-for="(item,index) in newsong" :key="index">
           <img class="item-img" :src="item.song.album.picUrl"/>
@@ -24,7 +24,7 @@
       </div>
     </div>
 
-    <div class="title">主播电台 ＞</div>
+    <h3 class="title">主播电台 ＞</h3>
     <div class="body-group">
       <div>
         <div class="body-item" v-for="(item,index) in dj" :key="index">
@@ -95,12 +95,6 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
-    },
-    // 修改图片链接
-    attachImageUrl: function (srcUrl) {
-      if (srcUrl !== undefined) {
-        return srcUrl.replace(/http\w{0,1}:\/\/p/g, 'https://images.weserv.nl/?url=p')
-      }
     }
   }
 }
@@ -108,9 +102,9 @@ export default {
 
 <style scoped>
 .title{
-  height:30px;
+  height:40px;
+  line-height: 40px;
   margin-left: 3%;
-  padding-top: 10px
 }
 .body-group{
   width: 100%;
@@ -125,10 +119,27 @@ export default {
 }
 .body-item{
   display: inline-block;
-  margin: 5px;
+  margin: 0 5px 5px 5px;
   margin-bottom: 15px;
   height: auto;
   flex: 0 0 30%;
+  font-size: 14px;
+}
+.item-span {
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+.line2 .item-span {
+  font-size: 12px;
+  color: rgba(0, 0 ,0 ,0.5);
+}
+.line2 .body-item {
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow: hidden;
 }
 .item-img,.item-span{
   width: 100%;

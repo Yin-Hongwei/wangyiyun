@@ -27,6 +27,7 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/banner')
         .then(function (response) {
+          console.log('轮播图API有问题了，拉回来的数据是空数组。。。')
           console.log(response.data.banners)
           // API 轮播图没有啦
           _this.banners = response.data.banners

@@ -23,6 +23,28 @@
             <img :src="picUrl" alt="" class="album-pic">
             <div></div>
           </div>
+          <div class="playing-item">
+            <div>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-shoucang"></use>
+              </svg>
+            </div>
+            <div>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-xiazai"></use>
+              </svg>
+            </div>
+            <div>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-pinglunguanli"></use>
+              </svg>
+            </div>
+            <div>
+              <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-sandiancaidan"></use>
+              </svg>
+            </div>
+          </div>
         </div>
       </transition>
       <transition name="fade">
@@ -38,28 +60,6 @@
         </div>
       </transition>
     <div class="playing-footer">
-      <div class="playing-opt">
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-shoucang"></use>
-          </svg>
-        </div>
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xiazai"></use>
-          </svg>
-        </div>
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pinglunguanli"></use>
-          </svg>
-        </div>
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-sandiancaidan"></use>
-          </svg>
-        </div>
-      </div>
       <div class="playing-speed">
         <div class="current-time">{{ nowTime }}</div>
         <div class="progress-box">
@@ -99,6 +99,7 @@
       </div>
     </div>
     <div class="picbg" :style='{background: "url(" + picUrl + ")"}'></div>
+    <div class="picbg2"></div>
   </div>
 </template>
 
@@ -194,6 +195,7 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
+        // console.log('歌曲详情')
         // console.log(res.data)
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
@@ -210,7 +212,8 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        // console.log(res.data.lrc.lyric)
+        // console.log('歌词')
+        // console.log(res.data.lrc)
         let lrc = _this.parseLyric(res.data.lrc.lyric)
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
@@ -223,9 +226,9 @@ export default {
         pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
         result = []
       // console.log(lines)
-      // while (!pattern.test(lines[0])) {
-      //   lines = lines.slice(1)
-      // };
+      while (!pattern.test(lines[0])) {
+        lines = lines.slice(1)
+      };
       // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
       lines.forEach(function (item, index, array) {
@@ -377,6 +380,18 @@ export default {
 </script>
 
 <style scoped>
+  @media screen and (min-width: 320px) {
+    html {font-size: 16px;}
+    body {font-size: 16px;}
+  }
+  @media screen and (min-width: 481px) and (max-width:640px) {
+    html {font-size: 320px}
+    body {font-size: 16px;}
+  }
+  @media screen and (min-width: 641px) {
+    html {font-size: 640px;}
+    body {font-size: 16px;}
+  }
 /*----------------------背景-----------------------------*/
 .player {
   position: fixed;
@@ -398,15 +413,28 @@ export default {
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
-  -webkit-filter: blur(20px);
+  -webkit-filter: blur(30px);
   -moz-filter: blur(30px);
   -ms-filter: blur(30px);
   -o-filter: blur(30px);
   filter: blur(30px);
 }
+.picbg2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: rgba(0,0,0,0.2);
+}
 /*-------------------------header--------------------*/
 .playing-header {
   height:60px;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 .playing-header .playing-title {
   width: 80%;
@@ -455,14 +483,15 @@ export default {
 }
 .pic-box {
   position: relative;
+  display: flex;
   width: 70%;
   margin: 0 auto;
-  border: 10px solid rgba(255,255,255,0.2);
+  border: 12px solid rgba(255,255,255,0.2);
   border-radius: 50%;
   text-align: center;
   top: 8%;
-  height: 0;
-  padding-bottom: 66%;
+  justify-content: center;
+  align-items: center;
 }
 .circle {
   animation:rotate 9.5s linear 0s normal none infinite;
@@ -474,27 +503,39 @@ export default {
 .pic-box>img {
   width: 75%;
   border-radius: 50%;
-  margin: 12%;
+  margin: 13%;
 }
 .pic-box>div {
   position: absolute;
   background: url('../assets/img/coverall.png') no-repeat;
   background-size: 100%;
-  width: 106%;
-  height: 106%;
+  width: 107%;
+  height: 107%;
   border-radius: 50%;
-  top: -7px;
-  left: -7px;
+}
+/*----------------------第一行控件----------------------------------*/
+.playing-item {
+  height:60px;
+  width: 100%;
+  display: flex;
+  position: absolute;
+  bottom: 130px;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+}
+.playing-item>div {
+  width: 30%;
+  margin: 0 10%;
 }
 /*-----------------------------歌词-------------------------*/
 .showLrc-box {
-  position: relative;
-  height: 56%;
+  position: absolute;
+  top: 80px;
+  bottom: 130px;
   width: 100%;
   overflow: hidden;
   transition: all 1s;
-  padding: 40px 0;
-  top: 10px;
 }
 .showLrc-box ul{
   position: absolute;
@@ -503,7 +544,7 @@ export default {
   font-size: 16px;
   line-height: 30px;
   transition: all 0.5s;
-  padding-top: 20px;
+  color:rgba(155,155,155,0.7);
 }
 /*---------------------footer---------------------------*/
 .playing-footer {
@@ -511,39 +552,36 @@ export default {
   width: 100%;
   bottom: 0;
 }
-.playing-footer .playing-opt {
-  height:60px;
-}
-.playing-footer .playing-opt>div {
-  width: 35px;
-  margin: 0 6%;
-}
-/*--------第二行控件-----------*/
-.playing-footer .playing-speed {
+/*-----------------------控制速度-----------*/
+.playing-speed {
   height: 50px;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
-.playing-footer .playing-speed>.current-time,
-.playing-footer .playing-speed>.left-time {
+.playing-speed .current-time,
+.playing-speed .left-time {
   width: 70px;
   text-align: center;
   font-size: 13px;
   color: #ffffff;
   top: -10px;
 }
-.playing-footer .playing-speed>.progress-box {
+.playing-speed .progress-box {
   flex: 1;
 }
-.playing-footer .playing-speed>.progress-box .progress {
+.playing-speed .progress-box .progress {
   width: 100%;
   background: #ffffff;
   height: 2px;
 }
-.playing-footer .playing-speed>.progress-box .cur-progress {
+.playing-speed .progress-box .cur-progress {
   width: 20%;
   height: 100%;
   background: #D23023;
 }
-.playing-footer .playing-speed>.progress-box .idot {
+.playing-speed>.progress-box .idot {
   width: 16px;
   height: 16px;
   position: relative;
@@ -552,53 +590,31 @@ export default {
   top: -9px;
   vertical-align: middle;
 }
-/*--------第三行控件-----------*/
-.playing-footer .playing-butt {
+/*------------------------控制播放---------------------------*/
+.playing-butt {
   height: 80px;
-}
-.playing-footer .playing-butt>div {
-  width: 30px;
-  margin: 0 6%;
-}
-.playing-footer .playing-butt .icon {
-  font-size: 2em;
-}
-.playing-footer .playing-butt>div:nth-child(1) .icon {
-  font-size: 2.5em;
-}
-.playing-footer .playing-butt>div:nth-child(3) .icon{
-  font-size: 3.3em;
-  position: relative;
-  left: -10px;
-}
-.playing-footer .playing-butt>div:nth-child(5) .icon {
-  font-size: 1.8em;
-}
-/*------------------------共性---------------------------------*/
-.playing-header,
-.playing-footer .playing-opt,
-.playing-footer .playing-speed,
-.playing-footer .playing-butt {
   display: flex;
   flex-grow: 1;
   justify-content: center;
   align-items: center;
 }
-.icon {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  overflow: hidden;
-  color: white;
-  font-size: 1.6em;
+.playing-butt>div {
+  width: 30px;
+  margin: 0 6%;
 }
-.picbg:before {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,1);
-  z-index: 10000;
+.playing-butt .icon {
+  font-size: 2em;
 }
+.playing-butt>div:nth-child(1) .icon {
+  font-size: 2.5em;
+}
+.playing-butt>div:nth-child(3) .icon{
+  font-size: 3.3em;
+  position: relative;
+  left: -10px;
+}
+.playing-butt>div:nth-child(5) .icon {
+  font-size: 1.8em;
+}
+
 </style>

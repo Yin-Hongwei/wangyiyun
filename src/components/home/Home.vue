@@ -34,9 +34,13 @@ export default {
 .tags{
   margin-top:10%;
   width: 100%;
+  overflow: hidden;
 }
 .tags>img{
   width: 25%;
   float: left;
+}
+hr{
+  opacity: 0.4;
 }
 </style>

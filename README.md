@@ -14,11 +14,12 @@ vuejs仿写网易云音乐webapp
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun2.png)<br></br>
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun3.png)<br></br>
 ![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun4.png)<br></br>
+![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun5.png)<br></br>
 
 功能实现
 ----
 
-音乐播放，搜索及主要页面的展示，用户登录部分及登录后才能获取的数据还未实现
+音乐播放，歌词显示，搜索及主要页面的展示。最近轮播图的API出现问题所以轮播图显示不了。。。
 
 技术栈：
 ----

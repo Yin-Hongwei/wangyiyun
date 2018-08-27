@@ -15,7 +15,7 @@
             <use xlink:href="#icon-unie6c7"></use>
           </svg>
       </div>
-      <router-link :to="{name: 'player'}">
+      <router-link to="/player">
         <div class="song-item4">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
@@ -170,6 +170,7 @@ export default {
         }
       })
         .then(function (res) {
+          // console.log('一个歌曲的信息')
           // console.log(res.data.playlist)
           _this.coverImgUrl = res.data.playlist.coverImgUrl
           _this.name = res.data.playlist.name
@@ -180,7 +181,6 @@ export default {
           _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
           _this.songslist = res.data.playlist.tracks
-          console.log(_this.songslist[0])
           Indicator.close()
         })
         .catch(function (error) {
