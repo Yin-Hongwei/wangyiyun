@@ -10,12 +10,11 @@ vuejs仿写网易云音乐webapp
 
 项目主要截图：
 ----
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun1.png" width="400"/>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun1.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun2.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun3.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun4.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun5.png)<br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun1.png" width="350"/><br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun2.png" width="350"/><br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun3.png" width="350"/><br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun4.png" width="350"/><br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/kong/wangyiyun5.png" width="350"/><br></br>
 
 功能实现
 ----
