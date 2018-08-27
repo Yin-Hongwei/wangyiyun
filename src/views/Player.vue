@@ -380,18 +380,6 @@ export default {
 </script>
 
 <style scoped>
-  @media screen and (min-width: 320px) {
-    html {font-size: 16px;}
-    body {font-size: 16px;}
-  }
-  @media screen and (min-width: 481px) and (max-width:640px) {
-    html {font-size: 320px}
-    body {font-size: 16px;}
-  }
-  @media screen and (min-width: 641px) {
-    html {font-size: 640px;}
-    body {font-size: 16px;}
-  }
 /*----------------------背景-----------------------------*/
 .player {
   position: fixed;
