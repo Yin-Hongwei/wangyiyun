@@ -3,6 +3,11 @@
     <div class="search-head">
       <input type="text" placeholder="猜你喜欢，猜不到..." v-model="keywords" @keyup.enter="search"/>
       <div class="search-cancel" @click="goback(-1)">取消</div>
+      <div class="head-sear">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-fangdajing"></use>
+        </svg>
+      </div>
     </div>
     <div class="search-content">
       <ul v-for="(item, index) in songs" :key="index">
@@ -76,6 +81,7 @@ export default {
   border: 0;
   margin-left: 10px;
   background-color:rgba(225, 225, 225,0.4);
+  color: white;
   text-indent:30px;
 }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
@@ -85,6 +91,15 @@ export default {
   width: 50px;
   text-align: center;
   line-height: 28px;
+}
+.head-sear{
+  position: absolute;
+  top: 25px;
+  left:20px;
+}
+.head-sear .icon {
+  font-size: 1.2em;
+  opacity: 0.6;
 }
 /**/
 .search-content ul li{

@@ -268,10 +268,11 @@ export default {
           theTime1 = 60 // 分
         }
       }
+      // 多少秒
       if (parseInt(theTime) < 10) {
-        var result = '0:0' + parseInt(theTime) + ''
+        var result = '0:0' + parseInt(theTime)
       } else {
-        result = '0:' + parseInt(theTime) + ''
+        result = '0:' + parseInt(theTime)
       }
       // 多少分钟时
       if (theTime1 > 0) {
@@ -280,7 +281,7 @@ export default {
         } else {
           result = parseInt(theTime)
         }
-        result = '0' + parseInt(theTime1) + ':' + result
+        result = parseInt(theTime1) + ':' + result
       }
       // 多少小时时
       if (theTime2 > 0) {

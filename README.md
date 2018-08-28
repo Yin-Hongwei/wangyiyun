@@ -10,11 +10,11 @@ vuejs仿写网易云音乐webapp
 
 项目主要截图：
 ----
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun1.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun2.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun3.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun4.png)<br></br>
-![](https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun5.png)<br></br>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun1.png" width="300"/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun2.png" width="300"/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun3.png" width="300"/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun4.png" width="300"/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun5.png" width="300"/>
 
 功能实现
 ----

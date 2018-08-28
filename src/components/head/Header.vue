@@ -10,6 +10,11 @@
         </div>
         <div class="search" >
           <input type="text" placeholder="给你推荐  最美的期待" @click="search"/>
+          <div class="head-sear">
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-fangdajing"></use>
+            </svg>
+          </div>
         </div>
         <router-link to="/player">
           <div class="head-opt">
@@ -90,6 +95,7 @@ export default {
 .search{
   flex-grow: 1;
   margin-top: 10px;
+  position: relative;
 }
 .search>input{
   height:28px;
@@ -101,6 +107,15 @@ export default {
 }
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color: rgba(255,255,255,0.6);
+}
+.head-sear{
+  position: absolute;
+  top: 7px;
+  left:7px;
+}
+.head-sear .icon {
+  font-size: 1.2em;
+  opacity: 0.6;
 }
 .search-nav .head-opt{
   margin-top: 10px;
