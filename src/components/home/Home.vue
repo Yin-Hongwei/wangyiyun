@@ -2,7 +2,7 @@
   <div class="hello">
     <header-item/>
     <div class="redBac"></div>
-    <swipe-pic/>
+      <swipe-pic/>
     <div class="tags">
       <img src="../../assets/img/IMG_4224_01.jpg"/>
       <img src="../../assets/img/IMG_4224_02.jpg"/>
@@ -32,7 +32,8 @@ export default {
   height: 200px;
 }
 .tags{
-  margin-top:10%;
+  position: relative;
+  margin-top:20vw;
   width: 100%;
   overflow: hidden;
 }

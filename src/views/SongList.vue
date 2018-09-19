@@ -2,6 +2,7 @@
   <div class="song-list">
     <div class="bac-bur" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-head">
+      <!--返回-->
       <router-link :to="{name: 'find'}">
         <div class="back">
           <svg class="icon" aria-hidden="true">
@@ -15,24 +16,27 @@
             <use xlink:href="#icon-unie6c7"></use>
           </svg>
       </div>
-      <router-link to="/player">
+      <router-link :to="{path: '/player/' + id}">
         <div class="song-item4">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
           </svg>
         </div>
         </router-link>
-
     </div>
     <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
+    <!--搜索框-->
     <div class="song-search">
       <input type="text" placeholder="搜索歌单内歌曲"/>
     </div>
+    <!--歌单信息-->
     <div class="song-box">
       <div class="song-dic">
+        <!--左侧图片-->
         <div class="dic-l">
           <img :src="coverImgUrl" alt="">
         </div>
+        <!--右侧信息-->
         <div class="dic-r">
           <div class="song-name">
             {{name}}
@@ -170,8 +174,8 @@ export default {
         }
       })
         .then(function (res) {
-          // console.log('一个歌曲的信息')
-          // console.log(res.data.playlist)
+          console.log('一个歌曲的信息')
+          console.log(res.data.playlist)
           _this.coverImgUrl = res.data.playlist.coverImgUrl
           _this.name = res.data.playlist.name
           _this.avatarUrl = res.data.playlist.creator.avatarUrl

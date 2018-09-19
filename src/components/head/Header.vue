@@ -8,6 +8,7 @@
             <use xlink:href="#icon-tinggeshiqu40x40"></use>
           </svg>
         </div>
+        <!--搜索框-->
         <div class="search" >
           <input type="text" placeholder="给你推荐  最美的期待" @click="search"/>
           <div class="head-sear">
@@ -16,6 +17,7 @@
             </svg>
           </div>
         </div>
+        <!--播放界面-->
         <router-link to="/player">
           <div class="head-opt">
             <svg class="icon" aria-hidden="true">
@@ -140,6 +142,6 @@ export default {
   border-radius: 25px;
   position: absolute;
   left: 20%;
-  top: 82px;
+  top: 85px;
 }
 </style>

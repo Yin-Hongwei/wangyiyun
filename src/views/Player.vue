@@ -1,96 +1,121 @@
 <template>
   <div class="player">
+    <!--标题栏-->
     <div class="playing-header">
+      <!--返回-->
       <div class="back" @click="goback(-1)">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-fanhui01"></use>
         </svg>
       </div>
+      <!--标题-->
       <div class="playing-title">
         <p>{{title}}</p>
         <p>{{artist}}</p>
       </div>
+      <!--分享-->
       <div class="forwarding">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-zhuanfa"></use>
         </svg>
       </div>
     </div>
-      <transition name="fade">
-        <div class="playing-body" v-if="!showLrc" @click="showLrc = true">
-          <img class='player-top' src="../assets/img/player-needle.png" alt="">
-          <div class="pic-box" :class='{circle: isPlay}'>
-            <img :src="picUrl" alt="" class="album-pic">
-            <div></div>
+    <transition name="fade">
+      <div class="playing-body" v-if="!showLrc" @click="showLrc = true">
+        <img class='player-top ' :class="{pause: isPlay}" src="../assets/img/swith.png" alt="">
+        <!--唱片-->
+        <div class="pic-box" :class="isPlay ? 'circle ' : ''">
+          <img :src="picUrl" alt="" class="album-pic">
+          <div></div>
+        </div>
+        <!--第一行控件-->
+        <div class="playing-item">
+          <!--收藏-->
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-shoucang"></use>
+            </svg>
           </div>
-          <div class="playing-item">
-            <div>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-shoucang"></use>
-              </svg>
-            </div>
-            <div>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-xiazai"></use>
-              </svg>
-            </div>
-            <div>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-pinglunguanli"></use>
-              </svg>
-            </div>
-            <div>
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-sandiancaidan"></use>
-              </svg>
-            </div>
+          <!--下载-->
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-xiazai"></use>
+            </svg>
+          </div>
+          <!--评论-->
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-pinglunguanli"></use>
+            </svg>
+          </div>
+          <!--编辑-->
+          <div>
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-sandiancaidan"></use>
+            </svg>
           </div>
         </div>
-      </transition>
-      <transition name="fade">
+      </div>
+    </transition>
+    <!--歌词-->
+    <transition name="fade">
         <div v-show="showLrc" class="showLrc-box" @click="showLrc = false">
           <ul v-show="lrc.length" v-bind:style="{top:lrcTop}" class="lrc">
             <li v-for="(item, index) in lrc" :key="index">
               {{ item[1] }}
             </li>
           </ul>
+          <!--没歌词的情况-->
           <ul v-show="!lrc.length" style="margin-top:40%;">
             <span class="no-lrc">暂无歌词</span>
           </ul>
         </div>
       </transition>
+    <!--歌词 end -->
     <div class="playing-footer">
       <div class="playing-speed">
+        <!--播放开始时间-->
         <div class="current-time">{{ nowTime }}</div>
         <div class="progress-box">
           <div ref="progress" class="progress">
+            <!--进度条-->
             <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
+            <!--进度条 end -->
+            <!--拖动的点点-->
             <div class="idot" :style="{left: curLength+'%'}" @mousedown="down" @mousemove="move" @touchstart="touchstart" @touchmove="touchmove"></div>
+            <!--拖动的点点 end -->
           </div>
         </div>
+        <!--播放结束时间-->
         <div class="left-time">{{ songTime }}</div>
       </div>
+      <!--最底层控件-->
       <div class="playing-butt">
+        <!--模式-->
           <div>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-icon-test"></use>
             </svg>
           </div>
+        <!--上一首-->
           <div @click="prev">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-shangyishou"></use>
             </svg>
           </div>
+        <!--播放-->
           <div @click="togglePlay">
             <svg class="icon" aria-hidden="true">
               <use :xlink:href="playButtonUrl"></use>
             </svg>
           </div>
+        <!--下一首-->
           <div @click="next">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xiayishouxianxing"></use>
             </svg>
           </div>
+        <!--选择-->
           <div>
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-mulu"></use>
@@ -98,6 +123,7 @@
           </div>
       </div>
     </div>
+    <!--背景-->
     <div class="picbg" :style='{background: "url(" + picUrl + ")"}'></div>
     <div class="picbg2"></div>
   </div>
@@ -195,8 +221,8 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
-        // console.log('歌曲详情')
-        // console.log(res.data)
+        console.log('歌曲详情')
+        console.log(res.data)
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
@@ -212,12 +238,15 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        // console.log('歌词')
-        // console.log(res.data.lrc)
+        console.log('歌词')
+        console.log(res.data.lrc)
         let lrc = _this.parseLyric(res.data.lrc.lyric)
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
         // console.log(lrc)
+      }).catch(function (error) {
+        _this.$store.commit('setLyric', '')
+        console.log(error)
       })
     },
     parseLyric (text) {
@@ -424,6 +453,8 @@ export default {
   flex-grow: 1;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 10;
 }
 .playing-header .playing-title {
   width: 80%;
@@ -462,18 +493,29 @@ export default {
   opacity: 0
 }
 .playing-body {
-  height: 100%;
+  height: 90%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
 }
-.playing-body .player-top {
-  width: 20%;
-  position: fixed;
+.player-top {
+  width: 90px;
+  height: 130px;
+  position: absolute;
+  top:-15px;
   left: 45%;
-  z-index: 20;
+  z-index: 5;
+  transition:all 0.3s;
+  transform-origin:14px 16px;
+}
+.pause{
+  transform: rotateZ(-30deg);
 }
 .pic-box {
   position: relative;
   display: flex;
-  width: 70%;
+  width: 44vh;
+  height: 44vh;
   margin: 0 auto;
   border: 12px solid rgba(255,255,255,0.2);
   border-radius: 50%;
@@ -483,14 +525,22 @@ export default {
   align-items: center;
 }
 .circle {
-  animation:rotate 9.5s linear 0s normal none infinite;
+  animation:rotate 16s linear infinite 0.1s;;
 }
 @-webkit-keyframes rotate{
-  from { -webkit-transform:rotate(0deg) }
-  to { -webkit-transform:rotate(360deg) }
+  0%{
+    transform: rotate(0)
+  }
+  50%{
+    transform: rotate(180deg)
+  }
+  100%{
+    transform: rotate(360deg)
+  }
 }
 .pic-box>img {
-  width: 75%;
+  width:44vh;
+  height:44vh;
   border-radius: 50%;
   margin: 13%;
 }
@@ -578,6 +628,7 @@ export default {
   background-color: #fff;
   top: -9px;
   vertical-align: middle;
+  /*cursor: pointer;*/
 }
 /*------------------------控制播放---------------------------*/
 .playing-butt {

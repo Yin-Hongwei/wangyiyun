@@ -4,7 +4,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    HOST: 'http://123.207.59.80:3000',
+    HOST: 'http://localhost:3000',
     headIndex: 0,
     page: 'find',
     playing: {

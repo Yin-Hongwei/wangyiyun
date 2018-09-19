@@ -1,6 +1,12 @@
 <template>
   <div class="song-audio">
     <audio :src="url" controls="controls" id="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
+      <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
+      <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
+      <!--preload：属性规定是否在页面加载后载入音频-->
+      <!--canplay：当音频/视频处于加载过程中时，会发生的事件-->
+      <!--timeupdate：当目前的播放位置已更改时-->
+      <!--ended：当目前的播放列表已结束时-->
     </audio>
   </div>
 </template>
@@ -49,10 +55,10 @@ export default {
       }).then(function (res) {
         console.log('得到id后获取歌曲')
         console.log(res.data)
-        // _this.$store.commit('setUrl',res.data.data[0].url);
-        // 上面这个数据 res.data 出问题了，所以下面换了种方式传入歌曲地址
-        let temp = ' http://music.163.com/song/media/outer/url?id=' + _this.$route.params.id
-        _this.$store.commit('setUrl', temp)
+        _this.$store.commit('setUrl', res.data.data[0].url)
+        // 上面这个数据 res.data 出问题了，所以下面换了种方式传入歌曲地址...弄好了
+        // let temp = ' http://music.163.com/song/media/outer/url?id=' + _this.$route.params.id
+        // _this.$store.commit('setUrl', temp)
       })
         .catch(function (error) {
           _this.$store.commit('setUrl', '')
@@ -72,6 +78,8 @@ export default {
     startPlay () {
       let player = document.querySelector('#player')
       //  记录音乐时长
+      // console.log('-----play-----')
+      // console.log(player)
       this.$store.commit('setDuration', player.duration)
       //  开始播放
       player.play()

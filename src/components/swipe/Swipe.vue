@@ -1,9 +1,9 @@
 <template>
   <div class="swipe-pic">
     <div class="banner">
-      <mt-swipe :atuo="4000" class="swipe" :show-indicators="false">
+      <mt-swipe :atuo="4000" class="swipe">
         <mt-swipe-item v-for="(item,index) in banners" :key="index">
-          <img :src="item.pic"/>
+          <img :src="item.picUrl"/>
         </mt-swipe-item>
       </mt-swipe>
     </div>
@@ -27,7 +27,7 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/banner')
         .then(function (response) {
-          console.log('轮播图API有问题了，拉回来的数据是空数组。。。')
+          console.log('轮播图--->')
           console.log(response.data.banners)
           // API 轮播图没有啦
           _this.banners = response.data.banners
@@ -49,15 +49,17 @@ export default {
 .banner{
   position: relative;
   top: -100px;
+  padding: 0 2%;
 }
 .swipe{
   position: absolute;
-  height: 150px;
-  width:98%;
-  margin: 0 1%;
+  height: 42vw;
+  width:96%;
+  margin: 0 auto;
+  border-radius: 8px;
+  overflow: hidden;
 }
 .swipe img{
-  border-radius: 8px;
   width:100%;
 }
 </style>
