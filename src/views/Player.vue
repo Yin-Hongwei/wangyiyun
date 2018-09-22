@@ -20,10 +20,10 @@
         </svg>
       </div>
     </div>
+    <!--唱片-->
     <transition name="fade">
       <div class="playing-body" v-if="!showLrc" @click="showLrc = true">
         <img class='player-top ' :class="{pause: isPlay}" src="../assets/img/swith.png" alt="">
-        <!--唱片-->
         <div class="pic-box" :class="isPlay ? 'circle ' : ''">
           <img :src="picUrl" alt="" class="album-pic">
           <div></div>
@@ -82,7 +82,7 @@
             <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
             <!--进度条 end -->
             <!--拖动的点点-->
-            <div class="idot" :style="{left: curLength+'%'}" @mousedown="down" @mousemove="move" @touchstart="touchstart" @touchmove="touchmove"></div>
+            <div class="idot" :style="{left: curLength+'%'}" @mousedown="down" @mousemove="move" @mouseup="up" @touchstart="touchstart" @touchmove="touchmove"></div>
             <!--拖动的点点 end -->
           </div>
         </div>
@@ -136,14 +136,13 @@ export default {
   name: 'player',
   data () {
     return {
-      showSongsList: false,
-      showLrc: false,
-      curLength: 0,
-      nowTime: '00.00',
-      songTime: '00.00',
-      progressLength: 0,
-      isDown: false,
-      lrcTop: 200 + 'px',
+      showLrc: false, // 切换唱片和歌词
+      lrcTop: 200 + 'px', // 歌词滑动
+      nowTime: '00.00', // 播放开始时间
+      songTime: '00.00', // 播放结束时间
+      curLength: 0, // 进度条的位置
+      progressLength: 0, // 进度条长度
+      isDown: false, // 判断鼠标是否点了那个点点
       touchStartX: 0
     }
   },
@@ -176,12 +175,14 @@ export default {
     curTime: function () {
       this.nowTime = this.formatSeconds(this.curTime)
       this.songTime = this.formatSeconds(this.duration)
+      // 移动进度条
       this.curLength = (this.curTime / this.duration) * 100
+      // 处理歌词位置及颜色
       if (this.lrc.length !== 0) {
         for (var i = 0; i < this.lrc.length; i++) {
           if (this.curTime >= this.lrc[i][0]) {
             for (var j = 0; j < this.lrc.length; j++) {
-              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(155,155,155,0.7)'
+              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(65,65,65,0.8)'
             }
             if (i >= 0) {
               this.lrcTop = -i * 30 + 180 + 'px'
@@ -197,15 +198,16 @@ export default {
     }
   },
   mounted () {
+    // 获取进度条的长度
     this.progressLength = this.$refs.progress.getBoundingClientRect().width
-    document.onmouseup = this.up
+    // 调用歌曲
     if (this.$route.params.id && this.id !== this.$route.params.id) {
       this.$store.commit('setId', this.$route.params.id)
       this.getSongDetail()
     }
   },
   methods: {
-    //  控制音乐播放/暂停
+    // 控制音乐播放/暂停
     togglePlay () {
       if (this.isPlay) {
         this.$store.commit('setIsPlay', false)
@@ -213,7 +215,7 @@ export default {
         this.$store.commit('setIsPlay', true)
       }
     },
-    //  获取歌曲详情
+    // 获取歌曲详情
     getSongDetail () {
       let _this = this
       axios.get(_this.$store.state.HOST + '/song/detail', {
@@ -221,7 +223,7 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
-        console.log('歌曲详情')
+        console.log('<---歌曲详情--->')
         console.log(res.data)
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
@@ -229,6 +231,7 @@ export default {
         _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
       })
     },
+    // 获取歌词
     getLyric () {
       this.$store.commit('setLyric', [])
       this.$store.commit('setLrc', [])
@@ -238,17 +241,18 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        console.log('歌词')
-        console.log(res.data.lrc)
         let lrc = _this.parseLyric(res.data.lrc.lyric)
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
+        // console.log('<---歌词--->')
+        // console.log(res.data.lrc.lyric)
         // console.log(lrc)
       }).catch(function (error) {
         _this.$store.commit('setLyric', '')
         console.log(error)
       })
     },
+    // 处理歌词，按行保存到数组
     parseLyric (text) {
       // console.log(typeof text)
       var lines = text.split('\n'),
@@ -260,12 +264,12 @@ export default {
       };
       // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
-      lines.forEach(function (item, index, array) {
+      lines.forEach(function (item) {
         let time = item.match(pattern) // 存前面的时间段
         let value = item.replace(pattern, '') // 存歌词
-        // console.log(time)
-        // console.log(value)
-        time.forEach(function (item1, i1, a1) {
+        // console.log(time) // 时间
+        // console.log(value) // 歌词数据
+        time.forEach(function (item1) {
           var t = item1.slice(1, -1).split(':')
           // 测试
           // console.log(item1)
@@ -323,10 +327,11 @@ export default {
       }
       return result
     },
-    // 鼠标事件
+    // 按下鼠标
     down () {
       this.isDown = true
     },
+    // 移动鼠标
     move (e) {
       if (this.isDown) {
         let curLength = this.$refs.curProgress.getBoundingClientRect().width
@@ -343,9 +348,11 @@ export default {
     up () {
       this.isDown = false
     },
+    //  触屏开始
     touchstart (e) {
       this.touchStartX = e.touches[0].pageX
     },
+    //  触屏拖拽
     touchmove (e) {
       if (!this.duration) {
         return false
@@ -362,6 +369,7 @@ export default {
       //  根据百分比推出对应的播放时间
       this.changeTime(newPercent)
     },
+    // 更改歌曲进度
     changeTime (percent) {
       let newCurTime = this.duration * (percent * 0.01)
       this.$store.commit('setChangeTime', newCurTime)
@@ -396,10 +404,8 @@ export default {
       if (id && id !== this.id) {
         this.$router.replace({path: '/player/' + id})
         this.$store.commit('setId', id)
-        this.$store.commit('setIsPlay', false)
         this.getSongDetail()
       }
-      this.showSongsList = false
     },
     // 返回
     goback (index) {

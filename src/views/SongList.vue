@@ -48,21 +48,25 @@
         </div>
       </div>
       <div class="song-opt">
+        <!--评论-->
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-pinglunguanli"></use>
           </svg>
         </div>
+        <!--分享-->
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-zhuanfa"></use>
           </svg>
         </div>
+        <!--下载-->
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-xiazai"></use>
           </svg>
         </div>
+        <!--多选-->
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-duoxuankuang"></use>
@@ -76,8 +80,10 @@
         <div>多选</div>
       </div>
     </div>
+    <!--歌单列表的头-->
     <div id="item-top">
       <div class="item-l">
+        <!--播放-->
         <div>
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-bofang"></use>
@@ -90,11 +96,14 @@
     <div class="item-top-wire"></div>
     <div class="song-list-dic">
       <div class="song-item" v-for="(item,index) in songslist" :key="index" @click="toplay(item.id, index)" >
+        <!--序号-->
         <div class="line-l">{{index + 1}}</div>
+        <!--歌曲-->
         <div class="line-m">
           <span>{{item.name}}</span>
           <p>{{item.ar[0].name}} - {{item.al.name}}</p>
         </div>
+        <!--三个点-->
         <div class="line-r">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-unie6c7"></use>
@@ -118,8 +127,8 @@ export default {
   },
   data () {
     return {
-      coverImgUrl: null, // 图片
-      name: '', // 标题
+      coverImgUrl: null, // 左侧图片 / 背景图片
+      name: '', // 歌单名称
       avatarUrl: null, // 作者头像
       nickname: '', // 作者昵称
       commentCount: 0, // 评论数
@@ -174,8 +183,8 @@ export default {
         }
       })
         .then(function (res) {
-          console.log('一个歌曲的信息')
-          console.log(res.data.playlist)
+          console.log('<--- 一个歌的信息 --->')
+          console.log(res.data.playlist.tracks)
           _this.coverImgUrl = res.data.playlist.coverImgUrl
           _this.name = res.data.playlist.name
           _this.avatarUrl = res.data.playlist.creator.avatarUrl
@@ -241,7 +250,7 @@ export default {
   text-align: center;
   z-index: 2;
 }
-.song-head>.song-title {
+.song-head .song-title {
   flex-grow: 1;
   color: white;
   font-size: 1.3em;

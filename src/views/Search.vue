@@ -45,7 +45,7 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/search?keywords=' + _this.keywords)
         .then(function (res) {
-          console.log(res.data.result.songs)
+          // console.log(res.data.result.songs)
           _this.songs = res.data.result.songs
           _this.$store.commit('setTitle', res.data.result.songs)
         })
