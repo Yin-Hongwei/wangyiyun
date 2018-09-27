@@ -142,7 +142,7 @@ export default {
       songTime: '00.00', // 播放结束时间
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条长度
-      touchStartX: 0 //
+      touchStartX: 0 // 拖拽开始位置
     }
   },
   computed: {
@@ -326,16 +326,16 @@ export default {
       }
       return result
     },
-    //  触屏开始
+    //  拖拽开始
     touchstart (e) {
       this.touchStartX = e.touches[0].pageX
     },
-    //  触屏拖拽
+    //  拖拽ing
     touchmove (e) {
       if (!this.duration) {
         return false
       }
-      console.log(e.touches)
+      // console.log(e.touches)
       let movementX = e.touches[0].pageX - this.touchStartX
       let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
