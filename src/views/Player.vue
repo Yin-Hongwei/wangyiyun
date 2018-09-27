@@ -82,7 +82,7 @@
             <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
             <!--进度条 end -->
             <!--拖动的点点-->
-            <div class="idot" :style="{left: curLength+'%'}" @mousedown="down" @mousemove="move" @mouseup="up" @touchstart="touchstart" @touchmove="touchmove"></div>
+            <div class="idot" :style="{left: curLength+'%'}" @touchstart="touchstart" @touchmove="touchmove"></div>
             <!--拖动的点点 end -->
           </div>
         </div>
@@ -142,8 +142,7 @@ export default {
       songTime: '00.00', // 播放结束时间
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条长度
-      isDown: false, // 判断鼠标是否点了那个点点
-      touchStartX: 0
+      touchStartX: 0 //
     }
   },
   computed: {
@@ -182,7 +181,7 @@ export default {
         for (var i = 0; i < this.lrc.length; i++) {
           if (this.curTime >= this.lrc[i][0]) {
             for (var j = 0; j < this.lrc.length; j++) {
-              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(65,65,65,0.8)'
+              document.querySelectorAll('.lrc li')[j].style.color = 'rgba(165,165,165,0.7)'
             }
             if (i >= 0) {
               this.lrcTop = -i * 30 + 180 + 'px'
@@ -327,27 +326,6 @@ export default {
       }
       return result
     },
-    // 按下鼠标
-    down () {
-      this.isDown = true
-    },
-    // 移动鼠标
-    move (e) {
-      if (this.isDown) {
-        let curLength = this.$refs.curProgress.getBoundingClientRect().width
-        let newLength = ((curLength + e.movementX) / this.progressLength) * 100
-        if (newLength > 100) {
-          newLength = 100
-        } else if (newLength < 0) {
-          newLength = 0
-        }
-        this.curLength = newLength
-      }
-    },
-    //  松开鼠标
-    up () {
-      this.isDown = false
-    },
     //  触屏开始
     touchstart (e) {
       this.touchStartX = e.touches[0].pageX
@@ -357,12 +335,13 @@ export default {
       if (!this.duration) {
         return false
       }
+      console.log(e.touches)
       let movementX = e.touches[0].pageX - this.touchStartX
       let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
       let newPercent = ((curLength + movementX) / this.progressLength) * 100
       if (newPercent > 100) {
-        newLength = 100
+        newPercent = 100
       }
       this.curLength = newPercent
       this.touchStartX = e.touches[0].pageX
