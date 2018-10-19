@@ -144,23 +144,23 @@ export default {
       'id'
     ])
   },
-  beforeRouteEnter (to, form, next) {
-    next(function (vm) {
-      window.onscroll = function () {
-        let rHead = document.getElementById('item-top')
-        if (vm.scrollTop() >= 250) {
-          rHead.style.position = 'fixed'
-          rHead.style.top = 60 + 'px'
-        } else {
-          rHead.style.position = 'static'
-        }
-      }
-    })
-  },
-  beforeRouteLeave (to, from, next) {
-    window.onscroll = null
-    next()
-  },
+  // beforeRouteEnter (to, form, next) {
+  //   next(function (vm) {
+  //     window.onscroll = function () {
+  //       let rHead = document.getElementById('item-top')
+  //       if (vm.scrollTop() >= 250) {
+  //         rHead.style.position = 'fixed'
+  //         rHead.style.top = 60 + 'px'
+  //       } else {
+  //         rHead.style.position = 'static'
+  //       }
+  //     }
+  //   })
+  // },
+  // beforeRouteLeave (to, from, next) {
+  //   window.onscroll = null
+  //   next()
+  // },
   mounted: function () {
     this.getRec()
   },
@@ -357,6 +357,8 @@ export default {
 }
 /*------------------白红框框----------------------*/
 #item-top {
+  top:60px;
+  position: sticky;
   display: flex;
   width: 100%;
   z-index: 10;
