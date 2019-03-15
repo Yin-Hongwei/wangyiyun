@@ -1,0 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (theme) {
+  return "\n  .mu-slide-picker{\n    background: " + theme.background.paper + ";\n  }\n  .mu-slide-picker-center-highlight {\n    border-top-color: " + theme.divider + ";\n    border-bottom-color: " + theme.divider + ";\n  }\n  .mu-slide-picker-slot.mu-slide-picker-slot-divider{\n    color: " + theme.text.primary + ";\n  }\n  .mu-slide-picker-item{\n    color: " + theme.text.secondary + ";\n  }\n  .mu-slide-picker-item.selected {\n    color: " + theme.text.primary + ";\n  }\n  ";
+};

@@ -1,0 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (theme) {
+  return "\n  .mu-switch.disabled input[type=\"checkbox\"]:checked+.mu-switch-wrapper .mu-switch-track{\n    background-color: " + theme.track + ";\n  }\n  .mu-switch-checked {\n    color: " + theme.primary + ";\n  }\n  .mu-switch.disabled .mu-switch-label {\n    color: " + theme.text.disabled + ";\n  }\n  .mu-switch-label {\n    color: " + theme.text.primary + ";\n  }\n  .mu-switch.disabled .mu-switch-track {\n    background-color: " + theme.track + ";\n  }\n  .mu-switch-track {\n    background-color: " + theme.track + ";\n  }\n  .mu-switch-thumb {\n    background-color: " + theme.background.paper + ";\n  }\n  ";
+};

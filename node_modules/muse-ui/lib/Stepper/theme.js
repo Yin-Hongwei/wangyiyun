@@ -1,0 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (theme) {
+  return "\n  .mu-step-label {\n    color: " + theme.text.primary + ";\n  }\n  .mu-step-label.disabled {\n    color: " + theme.text.disabled + ";\n  }\n  .mu-step-label.completed .mu-step-label-icon,\n  .mu-step-label.active .mu-step-label-icon {\n    color: " + theme.primary + ";\n  }\n  .mu-step-label-circle {\n    color: " + theme.text.alternate + ";\n  }\n  .mu-step-label.completed .mu-step-label-circle,\n  .mu-step-label.active .mu-step-label-circle {\n    background-color: " + theme.primary + ";\n  }\n  ";
+};

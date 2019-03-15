@@ -102,6 +102,6 @@ export default {
 
 <style>
   #player {
-    display: none;
+    /*display: none;*/
   }
 </style>

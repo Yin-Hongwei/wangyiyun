@@ -65,7 +65,7 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/personalized')
         .then(function (response) {
-          // console.log(response.data.result)
+          console.log(response.data.result)
           _this.personalized = response.data.result
         })
         .catch(function (error) {

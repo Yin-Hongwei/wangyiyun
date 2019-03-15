@@ -1,0 +1,84 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _select = require('../internal/mixins/select');
+
+var _select2 = _interopRequireDefault(_select);
+
+var _Icon = require('../Icon');
+
+var _Icon2 = _interopRequireDefault(_Icon);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+exports.default = {
+  name: 'mu-checkbox',
+  mixins: [(0, _select2.default)('checkbox')],
+  props: {
+    inputValue: [Boolean, Array]
+  },
+  computed: {
+    checked: function checked() {
+      if (!this.inputValue) return false;
+      var inputValue = this.inputValue;
+      var value = this.$attrs.value;
+      if (inputValue instanceof Array) return inputValue.indexOf(value) !== -1;
+      return inputValue;
+    }
+  },
+  methods: {
+    toggle: function toggle() {
+      var inputValue = this.inputValue;
+      var value = this.$attrs.value;
+      if (!inputValue || typeof inputValue === 'boolean') {
+        this.$emit('change', !inputValue);
+        return;
+      }
+      if (this.checked) {
+        inputValue.splice(inputValue.indexOf(value), 1);
+        this.$emit('change', inputValue);
+      } else {
+        this.$emit('change', [].concat(_toConsumableArray(inputValue), [value]));
+      }
+    }
+  },
+  render: function render(h) {
+    var defaultSvgUnCheckIcon = h('svg', {
+      staticClass: 'mu-checkbox-icon-uncheck mu-checkbox-svg-icon',
+      attrs: {
+        viewBox: '0 0 24 24'
+      }
+    }, [h('path', {
+      attrs: {
+        d: 'M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z'
+      }
+    })]);
+    var defaultSvgCheckedIcon = h('svg', {
+      staticClass: 'mu-checkbox-icon-checked mu-checkbox-svg-icon',
+      attrs: {
+        viewBox: '0 0 24 24'
+      }
+    }, [h('path', {
+      attrs: {
+        d: 'M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.11 0 2-.9 2-2V5c0-1.1-.89-2-2-2zm-9 14l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'
+      }
+    })]);
+    var view = this.createRipple(h, 'mu-checkbox-icon', [this.uncheckIcon ? h(_Icon2.default, {
+      staticClass: 'mu-checkbox-icon-uncheck',
+      props: {
+        value: this.uncheckIcon
+      }
+    }) : defaultSvgUnCheckIcon, this.checkedIcon ? h(_Icon2.default, {
+      staticClass: 'mu-checkbox-icon-checked',
+      props: {
+        value: this.checkedIcon
+      }
+    }) : defaultSvgCheckedIcon]);
+    return this.createSelect(h, view);
+  }
+};

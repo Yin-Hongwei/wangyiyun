@@ -70,7 +70,7 @@
             <span class="no-lrc">暂无歌词</span>
           </ul>
         </div>
-      </transition>
+    </transition>
     <!--歌词 end -->
     <div class="playing-footer">
       <div class="playing-speed">
@@ -232,8 +232,6 @@ export default {
     },
     // 获取歌词
     getLyric () {
-      this.$store.commit('setLyric', [])
-      this.$store.commit('setLrc', [])
       let _this = this
       axios.get(_this.$store.state.HOST + '/lyric', {
         params: {
@@ -243,11 +241,10 @@ export default {
         let lrc = _this.parseLyric(res.data.lrc.lyric)
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
-        // console.log('<---歌词--->')
-        // console.log(res.data.lrc.lyric)
+        console.log('<---歌词--->')
+        console.log(res.data.lrc)
         // console.log(lrc)
       }).catch(function (error) {
-        _this.$store.commit('setLyric', '')
         console.log(error)
       })
     },
@@ -337,6 +334,7 @@ export default {
       }
       // console.log(e.touches)
       let movementX = e.touches[0].pageX - this.touchStartX
+      console.log(movementX)
       let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
       let newPercent = ((curLength + movementX) / this.progressLength) * 100
@@ -510,7 +508,7 @@ export default {
   align-items: center;
 }
 .circle {
-  animation:rotate 16s linear infinite 0.1s;;
+  animation:rotate 16s linear infinite 0.1s;
 }
 @-webkit-keyframes rotate{
   0%{
@@ -601,7 +599,7 @@ export default {
   height: 2px;
 }
 .playing-speed .progress-box .cur-progress {
-  width: 20%;
+  /*width: 20%;*/
   height: 100%;
   background: #D23023;
 }
@@ -613,7 +611,6 @@ export default {
   background-color: #fff;
   top: -9px;
   vertical-align: middle;
-  /*cursor: pointer;*/
 }
 /*------------------------控制播放---------------------------*/
 .playing-butt {

@@ -18,7 +18,7 @@
           </div>
           <div class="san-dian">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-unie644"></use>
+              <use xlink:href="#icon-unie6c7"></use>
             </svg>
           </div>
         </li>
@@ -47,7 +47,7 @@ export default {
         .then(function (res) {
           // console.log(res.data.result.songs)
           _this.songs = res.data.result.songs
-          _this.$store.commit('setTitle', res.data.result.songs)
+          // _this.$store.commit('setTitle', res.data.result.songs)
         })
         .catch(function (error) {
           console.log(error)
@@ -109,7 +109,8 @@ export default {
   flex-grow: 1;
 }
 .search-content ul li .san-dian {
-  width: 40px;
+  width: 30px;
+  margin: auto;
 }
 .search-content ul li .san-dian .icon{
   color: #929294;

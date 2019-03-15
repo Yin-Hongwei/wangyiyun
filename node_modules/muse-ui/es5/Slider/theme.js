@@ -1,0 +1,3 @@
+export default (function (theme) {
+  return "\n  .mu-slider {\n    color: " + theme.primary + ";\n  }\n  .mu-slider-track{\n    background-color: " + theme.track + ";\n  }\n  .mu-slider.disabled .mu-slider-fill{\n    background-color: " + theme.track + ";\n  }\n  .mu-slider.zero .mu-slider-thumb,\n  .mu-slider.disabled .mu-slider-thumb{\n    border-color: " + theme.track + ";\n    color: " + theme.track + ";\n    background-color: " + theme.text.alternate + ";\n  }\n  ";
+});

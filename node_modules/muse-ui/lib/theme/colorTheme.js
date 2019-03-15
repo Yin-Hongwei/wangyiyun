@@ -1,0 +1,9 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function (theme) {
+  return "\n  .mu-primary-color {\n    background-color: " + theme.primary + ";\n  }\n  .mu-secondary-color {\n    background-color: " + theme.secondary + ";\n  }\n  .mu-success-color {\n    background-color: " + theme.success + ";\n  }\n  .mu-warning-color {\n    background-color: " + theme.warning + ";\n  }\n  .mu-info-color {\n    background-color: " + theme.info + ";\n  }\n  .mu-error-color {\n    background-color: " + theme.error + ";\n  }\n  .mu-inverse {\n    color: #fff;\n  }\n  .mu-primary-text-color {\n    color: " + theme.primary + ";\n  }\n  .mu-secondary-text-color {\n    color: " + theme.secondary + ";\n  }\n  .mu-success-text-color {\n    color: " + theme.success + ";\n  }\n  .mu-warning-text-color {\n    color: " + theme.warning + ";\n  }\n  .mu-info-text-color {\n    color: " + theme.info + ";\n  }\n  .mu-error-text-color {\n    color: " + theme.error + ";\n  }\n  ";
+};

@@ -1,0 +1,3 @@
+export default (function (theme) {
+  return "\n  .mu-pagination {\n    color: " + theme.text.primary + ";\n    font-size: 14px;\n  }\n  .mu-pagination__raised .mu-pagination-item.mu-button,\n  .mu-pagination__raised .mu-pagination-btn.mu-button{\n    background-color: " + theme.text.alternate + ";\n  }\n  .mu-pagination-item.mu-button.is-current {\n    background-color: " + theme.primary + ";\n  }\n  ";
+});

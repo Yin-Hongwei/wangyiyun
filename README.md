@@ -1,36 +1,30 @@
+# wangyiyun
 
-vuejs仿写网易云音乐webapp
----
+> A Vue.js project
 
-[API来源](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
-----
+## Build Setup
 
-[项目地址](https://github.com/Yin-Hongwei/vue-wangyiyun)
-----
+``` bash
+# install dependencies
+npm install
 
-项目主要截图：
-----
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun1.png" width="300"/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun2.png" width="300"/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun3.png" width="300"/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun4.png" width="300"/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun5.png" width="300"/>
+# serve with hot reload at localhost:8080
+npm run dev
 
-功能实现
-----
+# build for production with minification
+npm run build
 
-音乐播放，歌词显示，搜索及主要页面的展示。最近轮播图的API出现问题所以轮播图显示不了。。。
+# build for production and view the bundle analyzer report
+npm run build --report
 
-技术栈：
-----
+# run unit tests
+npm run unit
 
-vue + vue-router + vuex + axios + mint-ui
+# run e2e tests
+npm run e2e
 
-如何使用
-----
+# run all tests
+npm test
+```
 
- 1. 下载本项目到本地
- 2. npm install 安装依赖
- 3. npm run dev 启动
----
-
+For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
