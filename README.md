@@ -16,11 +16,11 @@ vue + vue-router + vuex + axios + mint-ui
 
 ## 项目截图：
 
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/img/wangyiyun01.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/img/wangyiyun02.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/img/wangyiyun03.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/img/wangyiyun04.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/img/wangyiyun05.jpg" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun01.jpg" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun02.jpg" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun03.jpg" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun04.jpg" width="400"/><br/>
+<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun05.jpg" width="400"/><br/>
 
 
 
