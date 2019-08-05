@@ -27,8 +27,8 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/banner')
         .then(function (response) {
-          console.log('<---轮播图--->')
-          console.log(response.data.banners)
+          // console.log('<---轮播图--->')
+          // console.log(response.data.banners)
           _this.banners = response.data.banners
         })
         .catch(function (error) {

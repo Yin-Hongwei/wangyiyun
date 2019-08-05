@@ -1,6 +1,6 @@
 <template>
   <div class="song-audio">
-    <audio :src="url" controls="controls" id="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
+    <audio :src="url" controls="controls"  id="player" preload="true"  @canplay="startPlay" @timeupdate="timeupdate" @ended="ended">
       <!--（1）属性：controls，preload（2）事件：canplay，timeupdate，ended（3）方法：play()，pause() -->
       <!--controls：向用户显示音频控件（播放/暂停/进度条/音量）-->
       <!--preload：属性规定是否在页面加载后载入音频-->
@@ -53,8 +53,8 @@ export default {
           id: _this.id
         }
       }).then(function (res) {
-        console.log('<---得到id后获取歌曲--->')
-        console.log(res.data)
+        // console.log('<---得到id后获取歌曲--->')
+        // console.log(res.data)
         _this.$store.commit('setUrl', res.data.data[0].url)
         // 上面这个数据 res.data 出问题了，所以下面换了种方式传入歌曲地址...弄好了
         // let temp = ' http://music.163.com/song/media/outer/url?id=' + _this.$route.params.id
@@ -66,7 +66,7 @@ export default {
         })
     },
     // 开始/暂停
-    togglePlay () {
+    togglePlay (e) {
       let player = document.querySelector('#player')
       if (this.isPlay) {
         player.play()
@@ -77,9 +77,6 @@ export default {
     // 获取歌曲链接后准备播放
     startPlay () {
       let player = document.querySelector('#player')
-      //  记录音乐时长
-      // console.log('-----play-----')
-      // console.log(player)
       this.$store.commit('setDuration', player.duration)
       //  开始播放
       player.play()
@@ -102,6 +99,7 @@ export default {
 
 <style>
   #player {
-    /*display: none;*/
+    display: none;
   }
+
 </style>

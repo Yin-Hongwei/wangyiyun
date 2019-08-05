@@ -222,8 +222,8 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
-        console.log('<---歌曲详情--->')
-        console.log(res.data)
+        // console.log('<---歌曲详情--->')
+        // console.log(res.data)
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
@@ -242,7 +242,7 @@ export default {
         _this.$store.commit('setLyric', res.data.lrc.lyric)
         _this.$store.commit('setLrc', lrc)
         console.log('<---歌词--->')
-        console.log(res.data.lrc)
+        console.log(res.data)
         // console.log(lrc)
       }).catch(function (error) {
         console.log(error)
@@ -325,6 +325,7 @@ export default {
     },
     //  拖拽开始
     touchstart (e) {
+      // console.log(e.touches[0])
       this.touchStartX = e.touches[0].pageX
     },
     //  拖拽ing
@@ -334,7 +335,7 @@ export default {
       }
       // console.log(e.touches)
       let movementX = e.touches[0].pageX - this.touchStartX
-      console.log(movementX)
+      // console.log(movementX)
       let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
       let newPercent = ((curLength + movementX) / this.progressLength) * 100
