@@ -1,34 +1,49 @@
-<h1 align="center">VUE仿网易云音乐WebApp</h1>
+<h1 align="center">Vue 仿网易云音乐 WebApp</h1>
 
-## API source
+## API
 
 [API](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
 
 
 
-## Screenshot
+## 项目截图
 
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun01.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun02.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun03.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun04.jpg" width="400"/><br/>
-<img src="https://github.com/Yin-Hongwei/vue-wangyiyun/blob/master/img/wangyiyun05.jpg" width="400"/><br/>
+<center>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkm44dn7j30l211awjq.jpg" width="300"/>
+</center>
+
+<center>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkpi5gexj30ks118tbl.jpg" width="300">
+</center>
+
+<center>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkr86mxkj30ky112dim.jpg" width="300">
+</center>
+
+<center>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzks6lqotj30kw116dix.jpg" width="300">
+</center>
+
+<center>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzksli7qxj30ky116771.jpg" width="300">
+</center>
+
+## 功能
+
+- 页面的展示，
+- 音乐搜索，
+- 音乐播放
+- 歌词显示
 
 
 
-## Function
-
-音乐来源是调用别人写好的API，前端用vue来实现，具体有页面的展示，音乐搜索，音乐播放及相关控制，歌词显示。
-
-
-
-## Technologies
+## 技术栈
 
 vue + vue-router + vuex + axios + mint-ui
 
 
 
-## Install
+## 安装
 
 下载本项目到本地
 

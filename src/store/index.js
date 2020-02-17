@@ -5,8 +5,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     HOST: 'http://localhost:3000',
-    headIndex: 0,
-    page: 'find',
+    activePage: '发现',
     playing: {
       isPlay: false, // 播放状态
       playButtonUrl: '#icon-bofang', // 播放状态的图标
@@ -26,8 +25,7 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    headIndex: state => state.headIndex,
-    page: state => state.page,
+    activePage: state => state.activePage,
     isPlay: state => state.playing.isPlay,
     playButtonUrl: state => state.playing.playButtonUrl,
     songsList: state => state.playing.songsList,
@@ -39,14 +37,20 @@ const store = new Vuex.Store({
     title: state => state.playing.title,
     artist: state => state.playing.artist,
     picUrl: state => state.playing.picUrl,
+    // picUrl: state => {
+    //   let picUrl = state.playing.picUrl
+    //   if (!picUrl) {
+    //     picUrl = JSON.parse(window.sessionStorage.getItem('picUrl') || null)
+    //   }
+    //   return picUrl
+    // },
     autoNext: state => state.playing.autoNext,
     lyric: state => state.playing.lyric,
     lrc: state => state.playing.lrc,
     listIndex: state => state.playing.listIndex
   },
   mutations: {
-    setHheadIndex: (state, headIndex) => { state.headIndex = headIndex },
-    setPage: (state, page) => { state.page = page },
+    SetActivePage: (state, activePage) => { state.activePage = activePage },
     setIsPlay: (state, isPlay) => { state.playing.isPlay = isPlay },
     setPlayButtonUrl: (state, playButtonUrl) => { state.playing.playButtonUrl = playButtonUrl },
     setSongsList: (state, songsList) => { state.playing.songsList = songsList },
@@ -65,4 +69,5 @@ const store = new Vuex.Store({
     setListIndex: (state, listIndex) => { state.playing.listIndex = listIndex }
   }
 })
+
 export default store

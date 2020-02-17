@@ -1,15 +1,14 @@
 <template>
-  <div class="my">
+  <div class="user">
     <div class="my-head">
       <div>
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-yun"></use>
         </svg>
       </div>
-      <span>我的音乐</span>
     </div>
-    <div class="my-item">
-      <ul>
+    <div class="my-content">
+      <!-- <ul>
         <li>
           <div></div>
           <p>本地音乐</p>
@@ -30,18 +29,18 @@
           <p>我的收藏</p>
           <div> {{shoucang}}＞ </div>
         </li>
-      </ul>
+      </ul> -->
     </div>
-    <foot/>
+    <the-footer/>
   </div>
 </template>
 
 <script>
-import Foot from '../components/foot/Footer'
+import TheFooter from '../components/TheFooter'
 export default {
-  name: 'my',
+  name: 'user',
   components: {
-    Foot
+    TheFooter
   },
   data () {
     return {
@@ -55,36 +54,55 @@ export default {
 </script>
 
 <style scoped>
+.user {
+  background-color: rgb(50, 50, 50);
+}
+
 .my-head {
   width: 100%;
-  height: 60px;
-  background-color: #d7463f;
+  height: 240px;
   color: white;
   line-height: 60px;
   display: flex;
 }
+
 .my-head div {
   width: 50px;
   margin-top: 5px;
   text-align: center;
 }
+
 .my-head span {
   flex-grow: 1;
   padding-left: 30%;
   font-size: 1.2em;
 }
-/*-----------------item------------------------*/
-.my-item ul li{
+/*-----------------content------------------------*/
+.my-content {
+  position: static;
+  top: 55px;
+  bottom: 0;
+  width: 100%;
+  min-height: 400px;
+  background-color: rgb(240, 240, 240);
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  overflow: hidden;
+}
+
+.my-content ul li{
   line-height: 40px;
   background-color: white;
   display: flex;
   width: 100%;
   color: dimgrey;
 }
-.my-item ul li p {
+
+.my-content ul li p {
   width: 90%;
 }
-.my-item ul li:after {
+
+.my-content ul li:after {
   content:"";
   left: 0;
   right: 0;
@@ -94,7 +112,8 @@ export default {
   position:absolute;
   z-index:1;
 }
-.my-item ul li div {
+
+.my-content ul li div {
   width: 40px;
   height: 100%;
   font-size: 0.9em;

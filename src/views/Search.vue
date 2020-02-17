@@ -1,26 +1,28 @@
 <template>
   <div class="search">
     <div class="search-head">
-      <input type="text" placeholder="猜你喜欢，猜不到..." v-model="keywords" @keyup.enter="search"/>
+      <input type="text" :placeholder="placeholder" v-model="keywords" @keyup.enter="search"/>
       <div class="search-cancel" @click="goback(-1)">取消</div>
-      <div class="head-sear">
+      <div class="head-search">
         <svg class="icon" aria-hidden="true">
           <use xlink:href="#icon-fangdajing"></use>
         </svg>
       </div>
     </div>
-    <div class="search-content">
-      <ul v-for="(item, index) in songs" :key="index">
-        <li @click="toplay(item.id, index)" >
-          <div>
-            <p>{{item.name}}</p>
-            <p>{{item.artists[0].name}} - {{item.album.name}}</p>
-          </div>
-          <div class="san-dian">
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-unie6c7"></use>
-            </svg>
-          </div>
+    <div class="search-content" v-if="!isSearch">
+      <h4 class="hot">热搜榜</h4>
+      <ul class="hot-list">
+        <li v-for="(item, index) in searchList" :key="index" @click="toplay(item.url, index)" >
+          <span>{{item.searchWord}}</span>
+          <span>{{item.content}}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="search-content" v-if="isSearch">
+      <ul>
+        <li v-for="(item, index) in songs" :key="index" @click="toplay(item.id, index)" >
+          <span>{{item.name}}</span>
+          <span>{{item.artists[0].name}} - {{item.album.name}}</span>
         </li>
       </ul>
     </div>
@@ -29,36 +31,56 @@
 
 <script>
 import axios from 'axios'
+import { mixin } from '../mixins'
+
 export default {
   name: 'search',
+  mixins: [mixin],
   data () {
     return {
       keywords: '',
+      placeholder: '',
+      searchList: [],
+      isSearch: false,
       songs: []
     }
   },
+  mounted () {
+    this.getShowKeyword()
+    this.getSearchList()
+  },
   methods: {
-    search: function () {
+    search () {
       this.getSearch()
     },
-    getSearch: function () {
+    getSearchList () {
       let _this = this
-      axios.get(_this.$store.state.HOST + '/search?keywords=' + _this.keywords)
+      axios.get(_this.$store.state.HOST + '/search/hot/detail')
         .then(function (res) {
-          // console.log(res.data.result.songs)
-          _this.songs = res.data.result.songs
-          // _this.$store.commit('setTitle', res.data.result.songs)
+          _this.searchList = res.data.data
+          console.log(_this.searchList)
         })
         .catch(function (error) {
           console.log(error)
         })
     },
-    toplay: function (id, index) {
+    getSearch () {
+      let _this = this
+      axios.get(_this.$store.state.HOST + '/search?keywords=' + _this.keywords)
+        .then(function (res) {
+          _this.songs = res.data.result.songs
+          _this.isSearch = true
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    },
+    toplay (id, index) {
       this.$store.commit('setSongsList', this.songs)
       this.$store.commit('setListIndex', index)
       this.$router.push({path: '/player/' + id})
     },
-    goback: function (index) {
+    goback (index) {
       this.$router.go(index)
     }
   }
@@ -67,80 +89,76 @@ export default {
 
 <style scoped>
 .search-head {
-  height: 60px;
-  background-color: #d7463f;
+  position: fixed;
+  z-index: 100;
+  height: 55px;
+  width: 100%;
   display: flex;
   flex-grow: 1;
-  padding-top: 18px;
-  color: white;
+  align-items: center;
+  background-color: #ffffff;
 }
+
 .search-head input {
-  height:28px;
-  width: 85%;
+  height: 30px;
+  width: 80%;
   border-radius: 25px;
   border: 0;
-  margin-left: 10px;
+  margin-left: 15px;
   background-color:rgba(225, 225, 225,0.4);
-  color: white;
   text-indent:30px;
 }
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  color: rgba(255,255,255,0.6);
+  color: rgba(150, 150, 150, 1);
 }
+
 .search-cancel {
   width: 50px;
   text-align: center;
   line-height: 28px;
 }
-.head-sear{
+
+.head-search{
   position: absolute;
-  top: 25px;
-  left:20px;
+  top: 20px;
+  left: 20px;
 }
-.head-sear .icon {
+
+.head-search .icon {
   font-size: 1.2em;
-  opacity: 0.6;
+  color: rgba(130, 130, 130, 1);
 }
-/**/
+
+h4 {
+  padding: 5px 10px;
+  font-weight: 400;
+}
+
+.search-content {
+  position: relative;
+  padding-top: 55px;
+}
+
 .search-content ul li{
   background-color: white;
   width: 100%;
   display: flex;
-  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(230, 230, 230, 1);
 }
-.search-content ul li .san-dian {
-  width: 30px;
-  margin: auto;
-}
-.search-content ul li .san-dian .icon{
-  color: #929294;
-}
-.search-content ul li:after {
-  content:"";
-  width: 100%;
-  height:1px;
-  background-color:#eceae8;
-  position:absolute;
-  z-index:1;
-}
-.search-content ul li div:nth-child(1) {
-  width: 90%;
-}
-.search-content ul li p {
+
+.search-content ul li span {
   padding-left: 20px;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
 }
-.search-content ul li p:nth-child(1) {
-  font-size: 1.1em;
-  color: #6189b4;
-  padding-top: 5px;
+
+.search-content ul li span:nth-child(2) {
+  font-size: 6px;
+  color: rgba(150, 150, 150, 1);
 }
-.search-content ul li p:nth-child(2) {
-  font-size: 0.8em;
-  color: #929294;
-  padding-bottom: 5px;
-}
-/**/
 </style>

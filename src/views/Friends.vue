@@ -1,23 +1,17 @@
 <template>
   <div class="friends">
     <div class="friend-head">
-      <div class="head-top">
+      <div class="head-add">
         <div class="item-icon">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-tianjiahaoyou"></use>
           </svg>
         </div>
-        <div id="head-but">
-          <span @click="dongtai">动态</span>
-          <span @click="fujin">附近</span>
-          <div id="head-item"></div>
-        </div>
-        <div class="item-icon">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
-          </svg>
-        </div>
-
+        <ul class="head-nav">
+          <li @click="getColor(item)" :class="{'active-color': item.name === activeName}" v-for="(item, index) in navList" :key="index">
+            {{item.name}}
+          </li>
+        </ul>
       </div>
       <div class="head-bottom">
         <div class="writer-icon">
@@ -37,31 +31,31 @@
     <div class="friend-content">
       你还没有朋友...
     </div>
-    <foot/>
+    <the-footer/>
   </div>
 </template>
 
 <script>
-import Foot from '../components/foot/Footer'
+import TheFooter from '../components/TheFooter'
+
 export default {
   name: 'friends',
   components: {
-    Foot
+    TheFooter
+  },
+  data () {
+    return {
+      navList: [{
+        name: '广场'
+      }, {
+        name: '动态'
+      }],
+      activeName: '广场'
+    }
   },
   methods: {
-    dongtai: function () {
-      const h = document.getElementById('head-but')
-      const div = document.getElementById('head-item')
-      div.style.left = 0 + '%'
-      h.firstChild.style.color = '#d7463f'
-      h.children[1].style.color = 'white'
-    },
-    fujin: function () {
-      const h = document.getElementById('head-but')
-      const div = document.getElementById('head-item')
-      div.style.left = 50 + '%'
-      h.firstChild.style.color = 'white'
-      h.children[1].style.color = '#d7463f'
+    getColor (val) {
+      this.activeName = val.name
     }
   }
 }
@@ -69,63 +63,57 @@ export default {
 
 <style scoped>
 .friend-head {
-  height: 100px;
-  background-color: #d7463f;
   text-align: center;
-  color: white;
+  color: rgb(33, 33, 33);
 }
 /*------------------head第一行-----------------------*/
-.head-top{
+.head-add{
   width: 100%;
-  height: 40px;
-  line-height: 60px;
-  padding-top: 15px;
+  height: 55px;
+  line-height: 55px;
+  padding-right: 40px;
+  padding-top: 10px;
+  box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
 }
-.head-top .item-icon {
+
+.head-add .item-icon {
   width: 40px;
-  margin-top: -10px;
+  height: 55px;
+  line-height: 70px;
+  margin-left: 10px;
 }
-#head-but {
-  margin: 0 auto;
-  border: 1px solid white;
-  border-radius: 25px;
-  width: 140px;
-  height: 30px;
-  line-height: 30px;
-  position: relative;
-  left: 5%;
-  z-index: 1;
+
+.head-nav{
+  flex: 1;
+  display: flex;
+  justify-content:space-around;
+  align-content: center;
 }
-#head-but span {
-  display: inline-block;
-  margin: 0 16px;
+
+.head-nav li {
+  border-bottom: 2px solid transparent;
 }
-#head-but span:nth-child(1) {
+
+.active-color {
   color: #d7463f;
+  border-bottom: 2px solid #d7463f !important;
 }
 /*-------------------head第二行---------------------*/
 .head-bottom {
   display: flex;
+  justify-content: space-around;
+  text-align: center;
 }
+
 .writer-icon {
-  width: 50%;
   align-items: center;
   display: flex;
-  padding-left: 12%;
-  padding-top: 10px;
+  font-size: 14px;
+  padding-top: 5px;
 }
+
 /*--------------------内容区---------------------*/
-#head-item {
-  width: 70px;
-  height: 30px;
-  border-radius: 25px;
-  background-color: white;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-}
 .friend-content {
   text-align: center;
   margin-top: 100px;

@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import SongAudio from './components/audio/SongAudio'
+import SongAudio from './components/SongAudio'
+
 export default {
-  components: {SongAudio},
   name: 'App',
-  component: {
+  components: {
     SongAudio
   },
   data () {

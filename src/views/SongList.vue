@@ -3,7 +3,7 @@
     <div class="bac-bur" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-head">
       <!--返回-->
-      <router-link :to="{name: 'find'}">
+      <router-link :to="{name: 'index-page'}">
         <div class="back">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-fanhui01"></use>
@@ -112,18 +112,19 @@
         <div class="item-top-wire"></div>
       </div>
     </div>
-    <find/>
+    <the-footer/>
   </div>
 </template>
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { Indicator } from 'mint-ui'
-import Find from '../components/foot/Footer'
+import TheFooter from '../components/TheFooter'
+
 export default {
   name: 'song-list',
   components: {
-    Find
+    TheFooter
   },
   data () {
     return {
@@ -433,5 +434,8 @@ export default {
 }
 .song-list-dic .song-item .icon {
   color: #a1a2a2;
+}
+.icon {
+  color: #ffffff;
 }
 </style>

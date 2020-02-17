@@ -8,16 +8,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'find',
+      name: 'index-page',
       component: function (resolve) {
-        require(['../views/Find'], resolve)
-      }
-    },
-    {
-      path: '/broad',
-      name: 'broad',
-      component: function (resolve) {
-        require(['../views/Broad'], resolve)
+        require(['../views/Indexpage'], resolve)
       }
     },
     {
@@ -44,17 +37,17 @@ export default new Router({
       }
     },
     {
-      path: '/videos',
-      name: 'videos',
+      path: '/the-video',
+      name: 'the-video',
       component: function (resolve) {
-        require(['../views/Videos'], resolve)
+        require(['../views/TheVideo'], resolve)
       }
     },
     {
-      path: '/my',
-      name: 'my',
+      path: '/user',
+      name: 'user',
       component: function (resolve) {
-        require(['../views/My'], resolve)
+        require(['../views/user'], resolve)
       }
     },
     {
@@ -65,10 +58,10 @@ export default new Router({
       }
     },
     {
-      path: '/account',
-      name: 'account',
+      path: '/the-setting',
+      name: 'the-setting',
       component: function (resolve) {
-        require(['../views/Account'], resolve)
+        require(['../views/TheSetting'], resolve)
       }
     }
   ]

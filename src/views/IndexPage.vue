@@ -1,7 +1,7 @@
 <template>
-  <div class="find">
-    <home/>
-    <h3 class="title">推荐歌单 ＞</h3>
+  <div class="index-page">
+    <home-nav/>
+    <h3 class="title">推荐歌单</h3>
     <div class="body-group">
       <div>
         <div class="body-item" v-for="(item,index) in personalized" :key="index">
@@ -13,7 +13,7 @@
       </div>
     </div>
 
-    <h3 class="title">最新音乐 ＞</h3>
+    <h3 class="title">最新音乐</h3>
     <div class="body-group line2">
       <div>
         <div class="body-item" v-for="(item,index) in newsong" :key="index">
@@ -23,26 +23,21 @@
         </div>
       </div>
     </div>
-
-    <h3 class="title">主播电台 ＞</h3>
-    <div class="body-group">
-      <div>
-        <div class="body-item" v-for="(item,index) in dj" :key="index">
-          <img class="item-img" :src="item.picUrl"/>
-          <span class="item-span">{{item.rcmdtext}}</span>
-        </div>
-      </div>
-    </div>
-    <footer-item/>
+    <the-footer/>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import Home from '../components/home/Home'
-import FooterItem from '../components/foot/Footer'
+import HomeNav from '../components/HomeNav'
+import TheFooter from '../components/TheFooter'
+
 export default {
-  name: 'find',
+  name: 'index-page',
+  components: {
+    HomeNav,
+    TheFooter
+  },
   data () {
     return {
       personalized: [],
@@ -50,14 +45,9 @@ export default {
       dj: []
     }
   },
-  components: {
-    Home,
-    FooterItem
-  },
   mounted: function () {
     this.getRec()
     this.getNewSon()
-    this.getSta()
   },
   methods: {
     // 获取推荐歌单
@@ -65,7 +55,9 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/personalized')
         .then(function (response) {
+          console.log('===== 推荐歌单 =====')
           console.log(response.data.result)
+          console.log('===================')
           _this.personalized = response.data.result
         })
         .catch(function (error) {
@@ -83,18 +75,6 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
-    },
-    // 获取主播电台
-    getSta: function () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/dj/recommend')
-        .then(function (response) {
-          // console.log(response.data)
-          _this.dj = response.data.djRadios
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
     }
   }
 }
@@ -106,17 +86,20 @@ export default {
   line-height: 40px;
   margin-left: 3%;
 }
+
 .body-group{
   width: 100%;
   display: flex;
   justify-content: center;
 }
-.body-group>div {
+
+.body-group > div {
   width: 96%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .body-item{
   display: inline-block;
   margin: 0 5px 5px 5px;
@@ -125,6 +108,7 @@ export default {
   flex: 0 0 30%;
   font-size: 14px;
 }
+
 .item-span {
   overflow:hidden;
   text-overflow:ellipsis;
@@ -132,18 +116,25 @@ export default {
   -webkit-box-orient:vertical;
   -webkit-line-clamp:2;
 }
+
 .line2 .item-span {
   font-size: 12px;
   color: rgba(0, 0 ,0 ,0.5);
 }
+
 .line2 .body-item {
   white-space: nowrap;
   text-overflow:ellipsis;
   overflow: hidden;
 }
-.item-img,.item-span{
+
+.item-img,
+.item-span{
   width: 100%;
+  border-radius: 5px;
+  color: rgb(80, 80, 80)
 }
+
 a {
   text-decoration:none;
   color: black;

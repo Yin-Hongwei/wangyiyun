@@ -132,6 +132,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'player',
   data () {
@@ -228,6 +229,7 @@ export default {
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
         _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
+        window.sessionStorage.setItem('picUrl', JSON.stringify(res.data.songs[0].al.picUrl))
       })
     },
     // 获取歌词
@@ -250,15 +252,12 @@ export default {
     },
     // 处理歌词，按行保存到数组
     parseLyric (text) {
-      // console.log(typeof text)
-      var lines = text.split('\n'),
-        pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g,
-        result = []
-      // console.log(lines)
+      var lines = text.split('\n')
+      var pattern = /\[\d{2}:\d{2}.(\d{3}|\d{2})\]/g
+      var result = []
       while (!pattern.test(lines[0])) {
         lines = lines.slice(1)
       };
-      // console.log(lines.length)
       lines[lines.length - 1].length === 0 && lines.pop()
       lines.forEach(function (item) {
         let time = item.match(pattern) // 存前面的时间段
@@ -276,11 +275,9 @@ export default {
           }
         })
       })
-      // console.log(result)
       result.sort(function (a, b) {
         return a[0] - b[0]
       })
-      // console.log(result)
       return result
     },
     //  解析播放时间
@@ -446,7 +443,7 @@ export default {
   color: white;
   text-align: center;
 }
-.playing-header .playing-title>p:nth-child(2) {
+.playing-header .playing-title > p:nth-child(2) {
   font-size: 0.6em;
 }
 .playing-header .back,
@@ -455,19 +452,6 @@ export default {
 }
 .playing-header .icon {
   font-size: 2em;
-}
-.playing-header:after {
-  content: '';
-  position: fixed;
-  left: 0;
-  top: 60px;
-  background: rgba(255,255,255,0.3);
-  width: 100%;
-  height: 1px;
-  -webkit-transform: scaleY(0.5);
-  transform: scaleY(0.5);
-  -webkit-transform-origin: 0 0;
-  transform-origin: 0 0;
 }
 /*-----------------------中间唱片-----------------------------*/
 .fade-enter-active, .fade-leave-active {
@@ -498,8 +482,8 @@ export default {
 .pic-box {
   position: relative;
   display: flex;
-  width: 44vh;
-  height: 44vh;
+  width: 40vh;
+  height: 40vh;
   margin: 0 auto;
   border: 12px solid rgba(255,255,255,0.2);
   border-radius: 50%;
@@ -523,8 +507,8 @@ export default {
   }
 }
 .pic-box>img {
-  width:44vh;
-  height:44vh;
+  width: 40vh;
+  height: 40vh;
   border-radius: 50%;
   margin: 13%;
 }
@@ -572,6 +556,7 @@ export default {
 /*---------------------footer---------------------------*/
 .playing-footer {
   position: fixed;
+  padding-bottom: 10px;
   width: 100%;
   bottom: 0;
 }
@@ -639,5 +624,7 @@ export default {
 .playing-butt>div:nth-child(5) .icon {
   font-size: 1.8em;
 }
-
+.icon {
+  color: #ffffff;
+}
 </style>

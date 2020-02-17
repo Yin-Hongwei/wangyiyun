@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+
 export default {
   name: 'song-audio',
   computed: {
@@ -48,7 +49,7 @@ export default {
       let _this = this
       this.$store.commit('setCurTime', 0)
       this.$store.commit('setIsPlay', false)
-      axios.get(this.$store.state.HOST + '/music/url', {
+      axios.get(this.$store.state.HOST + '/song/url', {
         params: {
           id: _this.id
         }
