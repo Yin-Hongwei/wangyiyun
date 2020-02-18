@@ -6,6 +6,7 @@ const store = new Vuex.Store({
   state: {
     HOST: 'http://localhost:3000',
     activePage: '发现',
+    picUrl: '',
     playing: {
       isPlay: false, // 播放状态
       playButtonUrl: '#icon-bofang', // 播放状态的图标
@@ -38,9 +39,9 @@ const store = new Vuex.Store({
     artist: state => state.playing.artist,
     picUrl: state => state.playing.picUrl,
     // picUrl: state => {
-    //   let picUrl = state.playing.picUrl
+    //   let picUrl = state.picUrl
     //   if (!picUrl) {
-    //     picUrl = JSON.parse(window.sessionStorage.getItem('picUrl') || null)
+    //     picUrl = JSON.parse(window.sessionStorage.getItem('picUrl') || '')
     //   }
     //   return picUrl
     // },
@@ -62,7 +63,7 @@ const store = new Vuex.Store({
     setChangeTime: (state, changeTime) => { state.playing.changeTime = changeTime },
     setTitle: (state, title) => { state.playing.title = title },
     setArtist: (state, artist) => { state.playing.artist = artist },
-    setpicUrl: (state, picUrl) => { state.playing.picUrl = picUrl },
+    setPicUrl: (state, picUrl) => { state.playing.picUrl = picUrl },
     setAutoNext: (state, autoNext) => { state.playing.autoNext = autoNext },
     setLyric: (state, lyric) => { state.playing.lyric = lyric },
     setLrc: (state, lrc) => { state.playing.lrc = lrc },

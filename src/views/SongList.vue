@@ -13,16 +13,10 @@
       <div class="song-title">歌单</div>
       <div class="san-dian">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-unie6c7"></use>
+            <use xlink:href="#icon-gengduoxiao"></use>
           </svg>
       </div>
-      <router-link :to="{path: '/player/' + id}">
-        <div class="song-item4">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
-          </svg>
-        </div>
-        </router-link>
+    <play-small :showIcon="true"/>
     </div>
     <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <!--搜索框-->
@@ -101,12 +95,12 @@
         <!--歌曲-->
         <div class="line-m">
           <span>{{item.name}}</span>
-          <p>{{item.ar[0].name}} - {{item.al.name}}</p>
+          <span>{{item.ar[0].name}} - {{item.al.name}}</span>
         </div>
         <!--三个点-->
         <div class="line-r">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-unie6c7"></use>
+            <use xlink:href="#icon-gengduoxiao"></use>
           </svg>
         </div>
         <div class="item-top-wire"></div>
@@ -119,11 +113,13 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { Indicator } from 'mint-ui'
+import PlaySmall from '../components/PlaySmall'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'song-list',
   components: {
+    PlaySmall,
     TheFooter
   },
   data () {
@@ -169,7 +165,6 @@ export default {
     // 获得滚动高度
     scrollTop () {
       return Math.max(document.body.scrollTop, document.documentElement.scrollTop)
-      // chrome                                 // firefox/IE
     },
     // 获取推荐歌单
     getRec: function () {
@@ -242,36 +237,43 @@ export default {
   filter: blur(10px);
   z-index: 1;
 }
+
 .song-head {
   position: fixed;
-  height:50px;
+  height: 55px;
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   z-index: 2;
 }
+
 .song-head .song-title {
-  flex-grow: 1;
+  flex: 1;
   color: white;
   font-size: 1.3em;
-  padding-left: 10%;
+  padding-left: 50px;
 }
+
 .song-head div{
   width: 50px;
 }
+
 .song-head .icon {
-  font-size: 2em;
+  font-size: 25px;
 }
+
 .song-head .song-item4 .icon {
   font-size: 1.4em;
   color: white
 }
-  /*-----------------搜索框-----------------------*/
+/*-----------------搜索框-----------------------*/
 .song-search {
   padding-top: 60px;
   text-align: center;
 }
+
 .song-search>input {
   width: 90%;
   height: 24px;
@@ -280,6 +282,7 @@ export default {
   text-align: center;
   background-color: rgba(225, 225, 225,0.4);
 }
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color: rgba(255,255,255,0.7);
 }
@@ -289,6 +292,7 @@ export default {
   flex-wrap: wrap;
   width: 100%;
 }
+
 .song-dic {
   display: flex;
   flex-wrap: nowrap;
@@ -299,31 +303,42 @@ export default {
   color: white;
   padding: 0 5%;
 }
+
 .song-dic>.dic-l {
   display: flex;
   justify-content: center;
   width: 40%;
 }
+
 .song-dic>.dic-l>img {
   height: 110px;
 }
+
 .song-dic>.dic-r {
   height: 110px;
 }
+
 .song-dic>.dic-r .song-name {
   margin-top: 5px;
   padding: 0 10%;
 }
+
 .song-dic>.dic-r .song-author {
   padding-left: 20px;
   display: flex;
   align-items: center;
   margin-top: 20px;
 }
+
+.song-dic>.dic-r .song-author .author-pic{
+  margin-right: 10px;
+}
+
 .song-dic>.dic-r .song-author img {
   width: 25px;
   border-radius: 25px;
 }
+
 .song-dic>.dic-r .song-author span {
   color: #dbd6d2;
   font-size: 0.9em;
@@ -336,23 +351,28 @@ export default {
   flex-grow: 1;
   justify-content: center;
 }
+
 .song-box .song-opt {
   margin-top: 10px;
 }
+
 .song-box .opt-detail {
   margin-bottom: 10px;
 }
+
 .song-box .song-opt>div,
 .song-box .opt-detail>div {
   width: 25%;
   text-align: center;
   color: white;
 }
+
 .song-box .song-opt .icon {
   color: white;
   fill: currentColor;
   overflow: hidden;
 }
+
 .song-box .opt-detail>div {
   font-size: 0.8em;
 }
@@ -362,19 +382,22 @@ export default {
   position: sticky;
   display: flex;
   width: 100%;
-  z-index: 10;
+  z-index: 1;
 }
+
 #item-top .item-l,
 #item-top .item-r {
   line-height: 60px;
   vertical-align: middle;
   height: 60px;
 }
+
 #item-top .item-l {
   width: 60%;
   background-color: #fcfdfe;
   border-radius: 20px 0 0 0;
 }
+
 #item-top .item-l>div {
   display: inline-block;
   width: 30px;
@@ -382,9 +405,11 @@ export default {
   margin-left: 15px;
   vertical-align:middle;
 }
+
 #item-top .item-l .icon {
   color: black;
 }
+
 #item-top .item-r {
   width: 40%;
   background-color: #d7463f;
@@ -392,49 +417,53 @@ export default {
   border-radius: 0 20px 0 0;
   text-align:center;
 }
-.item-top-wire {
-  height: 1px;
-  right: 0;
-  left: 0;
-  margin-left: 45px;
-  background-color: #e3e4e5;
-  position: absolute;
-}
 /*--------------------歌曲列表--------------------------*/
 .song-list-dic {
   width: 100%;
   position: relative;
 }
+
 .song-list-dic .song-item {
-  height: 60px;
+  height: 50px;
   width: 100%;
   background-color: white;
   display: flex;
   flex-wrap: nowrap;
   flex-grow: 1;
   justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e3e4e5;
 }
+
 .song-list-dic .song-item .line-l,
 .song-list-dic .song-item .line-r {
-  width: 60px;
+  width: 50px;
+  height: 50px;
   text-align: center;
   color: #a1a2a2;
   line-height: 60px;
 }
+
 .song-list-dic .song-item .line-m {
   width: 80%;
+  height: 50px;
   overflow: hidden;
-  font-size: 1.1em;
-  padding-top: 10px;
+  font-size: 1em;
   white-space: nowrap;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.song-list-dic .song-item .line-m p {
+
+.song-list-dic .song-item .line-m span:last-child {
   font-size: 0.8em;
   color: #959696;
 }
+
 .song-list-dic .song-item .icon {
   color: #a1a2a2;
 }
+
 .icon {
   color: #ffffff;
 }

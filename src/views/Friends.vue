@@ -28,6 +28,7 @@
         </div>
       </div>
     </div>
+    <play-small :showIcon="true"/>
     <div class="friend-content">
       你还没有朋友...
     </div>
@@ -36,11 +37,13 @@
 </template>
 
 <script>
+import PlaySmall from '../components/PlaySmall'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'friends',
   components: {
+    PlaySmall,
     TheFooter
   },
   data () {
@@ -72,7 +75,6 @@ export default {
   height: 55px;
   line-height: 55px;
   padding-right: 40px;
-  padding-top: 10px;
   box-sizing: border-box;
   display: flex;
 }

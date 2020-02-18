@@ -1,28 +1,47 @@
 <template>
   <div class="home-nav">
-    <the-header/>
+    <the-header icon="#icon-tinggeshiqu40x40"/>
+    <play-small :showIcon="true"/>
     <the-swiper/>
-    <div class="tags">
-      <img src="../assets/img/IMG_4224_01.jpg"/>
-      <img src="../assets/img/IMG_4224_02.jpg"/>
-      <img src="../assets/img/IMG_4224_03.jpg"/>
-      <img src="../assets/img/IMG_4224_04.jpg"/>
-    </div>
+    <ul class="tags">
+      <li v-for="(item, index) in imgList" :key="index">
+        <img :src="item.src"/>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import TheHeader from './TheHeader'
+import PlaySmall from './PlaySmall'
 import TheSwiper from './TheSwiper'
 
 export default {
   name: 'home-nav',
   components: {
     TheHeader,
+    PlaySmall,
     TheSwiper
   },
   data () {
-    return {}
+    return {
+      imgList: [{
+        src: require('@/assets/img/IMG_7018_01.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_02.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_03.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_04.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_05.jpg'),
+        path: ''
+      }]
+    }
   }
 }
 </script>
@@ -30,13 +49,13 @@ export default {
 <style scoped>
 .tags{
   position: relative;
+  display: flex;
+  flex-wrap: nowrap;
   margin-top:20vw;
   width: 100%;
-  overflow: hidden;
 }
 
-.tags > img{
-  width: 25%;
-  float: left;
+.tags img{
+  width: 100%;
 }
 </style>

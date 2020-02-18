@@ -1,32 +1,39 @@
 <h1 align="center">Vue 仿网易云音乐 WebApp</h1>
 
-## API
+<br/>
 
-[API](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
+<p align="center">
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
+</p>
+
+## 项目说明
+
+本项目后端调用的接口来源于 [【这里】](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)，前端使用 Vue 框架，实现了一个仿网易云音乐 WebApp。
 
 
 
 ## 项目截图
 
 <center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkm44dn7j30l211awjq.jpg" width="300"/>
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y6q2kk3j30l811ityg.jpg" width="300"/>
 </center>
 
 <center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkpi5gexj30ks118tbl.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y7vi8u7j30l811ik4i.jpg" width="300">
 </center>
 
 <center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzkr86mxkj30ky112dim.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y8h8b8pj30le11kb1e.jpg" width="300">
 </center>
 
 <center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzks6lqotj30kw116dix.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y8v4ntuj30lc11kauu.jpg" width="300">
 </center>
 
 <center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gbzksli7qxj30ky116771.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y87ki7vj30l611edj0.jpg" width="300">
 </center>
+
 
 ## 功能
 
@@ -45,7 +52,27 @@ vue + vue-router + vuex + axios + mint-ui
 
 ## 安装
 
-下载本项目到本地
+####  1、下载后端项目
+
+```
+git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
+```
+
+安装依赖
+
+```
+npm install
+```
+
+启动项目
+
+```
+node app.js
+```
+
+
+
+#### 2、下载本项目到本地
 
 ```
 git clone https://github.com/Yin-Hongwei/vue-wangyiyun.git

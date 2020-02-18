@@ -3,7 +3,7 @@
     <!--听歌识曲，搜索，播放-->
     <div class="head-icon">
       <svg class="icon" aria-hidden="true">
-        <use xlink:href="#icon-tinggeshiqu40x40"></use>
+        <use :xlink:href="icon"></use>
       </svg>
     </div>
     <!--搜索框-->
@@ -15,23 +15,18 @@
         </svg>
       </div>
     </div>
-    <!--播放界面-->
-    <div class="head-icon" @click="getPath('play')">
-      <!-- <img :src="picUrl ? picUrl : '@/assets/img/coverall.png'" alt=""/> -->
-    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import { mixin } from '../mixins'
 
 export default {
   name: 'the-header',
-  ...mapGetters([
-    'picUrl' // 歌曲图片
-  ]),
   mixins: [mixin],
+  props: {
+    icon: ''
+  },
   data () {
     return {
       placeholder: ''
@@ -39,18 +34,6 @@ export default {
   },
   mounted () {
     this.getShowKeyword()
-  },
-  methods: {
-    getPath (path) {
-      switch (path) {
-        case 'search':
-          this.$router.push({path: '/search'})
-          break
-        case 'play':
-          this.$router.push({path: '/player'})
-          break
-      }
-    }
   }
 }
 </script>
@@ -66,39 +49,41 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
-.head-icon{
-  margin-top: 10px;
-  width: 40px;
+
+.the-header .head-icon {
+  margin-left: 6px;
+  width: 50px;
+  height: 30px;
   text-align: center;
 }
-.head-icon img {
-  width: 100%;
-}
+
 /*搜索框*/
-.search{
-  flex-grow: 1;
-  margin-top: 10px;
+.search {
+  flex: 1;
   position: relative;
 }
+
 .search > input{
   height: 30px;
-  width: 100%;
+  width: 73vw;
   border-radius: 25px;
   border: 0;
   background-color:rgba(225, 225, 225,0.4);
   text-indent:40px;
 }
+
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color: rgba(150, 150, 150, 1);
 }
-.head-search{
+
+.head-search {
   position: absolute;
   top: 6px;
-  left:17px;
+  left: 17px;
 }
+
 .head-search .icon {
   color: rgb(33, 33, 33);
-  font-size: 1.2em;
-  opacity: 0.6;
+  font-size: 1em;
 }
 </style>

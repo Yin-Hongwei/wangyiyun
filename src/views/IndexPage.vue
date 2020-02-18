@@ -2,26 +2,23 @@
   <div class="index-page">
     <home-nav/>
     <h3 class="title">推荐歌单</h3>
-    <div class="body-group">
-      <div>
-        <div class="body-item" v-for="(item,index) in personalized" :key="index">
+    <div class="body-content">
+      <ul class="body-group">
+        <li class="body-item" v-for="(item,index) in personalized" :key="index">
           <router-link :to="{name: 'songlist', params:{id:item.id}}">
             <img class="item-img" :src="item.picUrl"/>
             <span class="item-span">{{item.name}}</span>
           </router-link>
-        </div>
-      </div>
-    </div>
-
-    <h3 class="title">最新音乐</h3>
-    <div class="body-group line2">
-      <div>
-        <div class="body-item" v-for="(item,index) in newsong" :key="index">
+        </li>
+      </ul>
+      <h3 class="title">最新音乐</h3>
+      <ul class="body-group line2">
+        <li class="body-item" v-for="(item,index) in newsong" :key="index">
           <img class="item-img" :src="item.song.album.picUrl"/>
           <p class="item-title">{{ item.name }}</p>
           <span class="item-span">{{item.song.artists[0].name}}</span>
-        </div>
-      </div>
+        </li>
+      </ul>
     </div>
     <the-footer/>
   </div>
@@ -69,7 +66,6 @@ export default {
       let _this = this
       axios.get(_this.$store.state.HOST + '/personalized/newsong')
         .then(function (response) {
-          // console.log(response.data.result)
           _this.newsong = response.data.result
         })
         .catch(function (error) {
@@ -81,28 +77,29 @@ export default {
 </script>
 
 <style scoped>
-.title{
+.title {
   height:40px;
   line-height: 40px;
-  margin-left: 3%;
+  margin-left: 3vw;
 }
 
-.body-group{
+.body-content {
   width: 100%;
-  display: flex;
-  justify-content: center;
+  margin: auto;
 }
 
-.body-group > div {
-  width: 96%;
+.body-group {
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
 .body-item{
+  width: 30%;
   display: inline-block;
-  margin: 0 5px 5px 5px;
   margin-bottom: 15px;
   height: auto;
   flex: 0 0 30%;
@@ -110,11 +107,11 @@ export default {
 }
 
 .item-span {
-  overflow:hidden;
-  text-overflow:ellipsis;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  -webkit-line-clamp:2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .line2 .item-span {
@@ -124,7 +121,7 @@ export default {
 
 .line2 .body-item {
   white-space: nowrap;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 
@@ -136,7 +133,7 @@ export default {
 }
 
 a {
-  text-decoration:none;
+  text-decoration: none;
   color: black;
 }
 </style>

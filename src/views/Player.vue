@@ -228,8 +228,8 @@ export default {
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
-        _this.$store.commit('setpicUrl', res.data.songs[0].al.picUrl)
-        window.sessionStorage.setItem('picUrl', JSON.stringify(res.data.songs[0].al.picUrl))
+        _this.$store.commit('setPicUrl', res.data.songs[0].al.picUrl)
+        window.sessionStorage.setItem('setPicUrl', res.data.songs[0].al.picUrl)
       })
     },
     // 获取歌词

@@ -1,6 +1,7 @@
 <template>
   <div class="the-setting">
     <div class="setting-head"></div>
+    <play-small :showIcon="true"/>
     <div class="setting-content">
       <div class="login">
         <p>手机电脑多端同步，尽享海量高品质音乐</p>
@@ -30,11 +31,13 @@
 </template>
 
 <script>
+import PlaySmall from '../components/PlaySmall'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'the-setting',
   components: {
+    PlaySmall,
     TheFooter
   },
   data () {

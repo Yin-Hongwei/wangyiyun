@@ -7,19 +7,28 @@ figure, figcaption, footer, header{
   margin: 0;
   padding: 0;
 }
+
 body{
   background-color: #fcfdfe;
 }
+
 ul {
   list-style: none;
 }
+
 .icon {
   width: 1em;
   height: 1em;
   fill: currentColor;
   font-size: 1.6em;
 }
+
 a {
   text-decoration:none;
   color: black;
+}
+
+.mint-indicator-wrapper {
+  z-index: 100 !important;
+  top: -100px;
 }

@@ -33,19 +33,19 @@ export default {
       }, {
         name: '视频',
         pic: '#icon-shiping',
-        path: 'the-video'
+        path: '/the-video'
       }, {
         name: '我的',
         pic: '#icon-yinyue',
-        path: 'user'
+        path: '/user'
       }, {
         name: '云村',
         pic: '#icon-pengyou',
-        path: 'friends'
+        path: '/friends'
       }, {
         name: '账号',
         pic: '#icon-zhanghaoguanli',
-        path: 'the-setting'
+        path: '/the-setting'
       }]
     }
   },

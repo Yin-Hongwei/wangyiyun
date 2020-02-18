@@ -1,22 +1,8 @@
 <template>
-  <div class="videos">
-    <div class="video-head">
-      <div class="shiping-icon">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-shipin"></use>
-        </svg>
-      </div>
-      <span>
-      <input type="text" placeholder="猜你喜欢，猜不到..."/>
-      </span>
-      <router-link to="/player">
-        <div>
-          <!-- <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-p7zhengzaibofangzhong"></use>
-          </svg> -->
-        </div>
-      </router-link>
-    </div>
+  <div class="the-video">
+    <the-header icon="#icon-shipin"/>
+    <play-small :showIcon="true"/>
+    <div class="kong"></div>
     <div class="video-tags">
       <ul>
         <li v-for="(item, index) in videoTagList" :key="index">
@@ -32,21 +18,29 @@
 </template>
 
 <script>
+import { mixin } from '../mixins'
 import axios from 'axios'
+import TheHeader from '../components/TheHeader'
+import PlaySmall from '../components/PlaySmall'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'videos',
   components: {
+    TheHeader,
+    PlaySmall,
     TheFooter
   },
+  mixins: [mixin],
   data () {
     return {
+      placeholder: '',
       videoTagList: [],
       videoList: []
     }
   },
   mounted () {
+    this.getShowKeyword()
     this.getVideoTagList()
   },
   methods: {
@@ -76,45 +70,11 @@ export default {
 </script>
 
 <style scoped>
-.video-head {
+.kong {
   width: 100%;
   height: 55px;
-  background-color: #ffffff;
-  color: white;
-  line-height: 60px;
-  display: flex;
-  align-items: center;
 }
 
-.video-head span {
-  flex-grow: 1;
-}
-
-.video-head input {
-  height:28px;
-  width: 100%;
-  border-radius: 25px;
-  border: 0;
-  background-color:rgba(225, 225, 225,0.4);
-  text-indent:30px;
-}
-
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  color: rgba(150, 150, 150, 1);
-}
-
-.video-head div {
-  margin-top: 5px;
-  width: 40px;
-  text-align: center;
-  height: 50px;
-}
-
-.video-head .shiping-icon {
-  color: rgb(33, 33, 33);
-  font-size: 1.1em;
-}
-/*-----------------------------------------------------------------*/
 .video-tags{
   overflow-x: auto;
 }
