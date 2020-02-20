@@ -54,39 +54,27 @@ vue + vue-router + vuex + axios + mint-ui
 
 ####  1、下载后端项目
 
-```
+```bash
+# 下载后端项目
 git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git
-```
 
-安装依赖
-
-```
+# 安装依赖
 npm install
-```
 
-启动项目
-
-```
+# 启动项目
 node app.js
 ```
 
-
-
 #### 2、下载本项目到本地
 
-```
+```bash
+# 下载项目
 git clone https://github.com/Yin-Hongwei/vue-wangyiyun.git
-```
 
-安装依赖
-
-```
+# 安装依赖
 npm install
-```
 
-启动项目
-
-```
+# 启动项目
 npm run dev
 ```
 
