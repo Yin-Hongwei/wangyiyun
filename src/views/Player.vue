@@ -29,32 +29,7 @@
           <div></div>
         </div>
         <!--第一行控件-->
-        <div class="playing-item">
-          <!--收藏-->
-          <div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-shoucang"></use>
-            </svg>
-          </div>
-          <!--下载-->
-          <div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-xiazai"></use>
-            </svg>
-          </div>
-          <!--评论-->
-          <div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-pinglunguanli"></use>
-            </svg>
-          </div>
-          <!--编辑-->
-          <div>
-            <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-sandiancaidan"></use>
-            </svg>
-          </div>
-        </div>
+        <the-icon :iconList="iconList" class="icon-list"></the-icon>
       </div>
     </transition>
     <!--歌词-->
@@ -71,7 +46,6 @@
           </ul>
         </div>
     </transition>
-    <!--歌词 end -->
     <div class="playing-footer">
       <div class="playing-speed">
         <!--播放开始时间-->
@@ -80,10 +54,8 @@
           <div ref="progress" class="progress">
             <!--进度条-->
             <div ref="curProgress" class="cur-progress" :style="{width: curLength+'%'}"></div>
-            <!--进度条 end -->
             <!--拖动的点点-->
             <div class="idot" :style="{left: curLength+'%'}" @touchstart="touchstart" @touchmove="touchmove"></div>
-            <!--拖动的点点 end -->
           </div>
         </div>
         <!--播放结束时间-->
@@ -130,11 +102,15 @@
 </template>
 
 <script>
+import TheIcon from '../components/TheIcon'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'player',
+  components: {
+    TheIcon
+  },
   data () {
     return {
       showLrc: false, // 切换唱片和歌词
@@ -143,7 +119,32 @@ export default {
       songTime: '00.00', // 播放结束时间
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条长度
-      touchStartX: 0 // 拖拽开始位置
+      touchStartX: 0, // 拖拽开始位置
+      iconList: [{
+        text: '',
+        icon: '#icon-shoucang',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '',
+        icon: '#icon-xiazai',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '',
+        icon: '#icon-pinglunguanli',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '',
+        icon: '#icon-sandiancaidan',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }]
     }
   },
   computed: {
@@ -223,13 +224,13 @@ export default {
           ids: _this.id
         }
       }).then(function (res) {
-        // console.log('<---歌曲详情--->')
-        // console.log(res.data)
+        console.log('<---歌曲详情--->')
+        console.log(res.data)
         _this.getLyric()
         _this.$store.commit('setTitle', res.data.songs[0].name)
         _this.$store.commit('setArtist', res.data.songs[0].ar[0].name)
         _this.$store.commit('setPicUrl', res.data.songs[0].al.picUrl)
-        window.sessionStorage.setItem('setPicUrl', res.data.songs[0].al.picUrl)
+        window.sessionStorage.setItem('picUrl', res.data.songs[0].al.picUrl)
       })
     },
     // 获取歌词
@@ -245,7 +246,6 @@ export default {
         _this.$store.commit('setLrc', lrc)
         console.log('<---歌词--->')
         console.log(res.data)
-        // console.log(lrc)
       }).catch(function (error) {
         console.log(error)
       })
@@ -266,10 +266,6 @@ export default {
         // console.log(value) // 歌词数据
         time.forEach(function (item1) {
           var t = item1.slice(1, -1).split(':')
-          // 测试
-          // console.log(item1)
-          // console.log(item1.slice(1, -1))
-          // console.log(t)
           if (value !== '') {
             result.push([parseInt(t[0], 10) * 60 + parseFloat(t[1]), value])
           }
@@ -322,7 +318,6 @@ export default {
     },
     //  拖拽开始
     touchstart (e) {
-      // console.log(e.touches[0])
       this.touchStartX = e.touches[0].pageX
     },
     //  拖拽ing
@@ -330,9 +325,7 @@ export default {
       if (!this.duration) {
         return false
       }
-      // console.log(e.touches)
       let movementX = e.touches[0].pageX - this.touchStartX
-      // console.log(movementX)
       let curLength = this.$refs.curProgress.getBoundingClientRect().width
       //  计算出百分比
       let newPercent = ((curLength + movementX) / this.progressLength) * 100
@@ -491,6 +484,7 @@ export default {
   top: 8%;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 .circle {
   animation:rotate 16s linear infinite 0.1s;
@@ -508,7 +502,6 @@ export default {
 }
 .pic-box>img {
   width: 40vh;
-  height: 40vh;
   border-radius: 50%;
   margin: 13%;
 }
@@ -521,19 +514,11 @@ export default {
   border-radius: 50%;
 }
 /*----------------------第一行控件----------------------------------*/
-.playing-item {
-  height:60px;
-  width: 100%;
-  display: flex;
+.icon-list {
   position: absolute;
   bottom: 130px;
   left: 0;
-  justify-content: center;
-  align-items: center;
-}
-.playing-item>div {
-  width: 30%;
-  margin: 0 10%;
+  width: 100%;
 }
 /*-----------------------------歌词-------------------------*/
 .showLrc-box {
@@ -551,7 +536,7 @@ export default {
   font-size: 16px;
   line-height: 30px;
   transition: all 0.5s;
-  color:rgba(155,155,155,0.7);
+  color:rgba(185,185,185,1);
 }
 /*---------------------footer---------------------------*/
 .playing-footer {

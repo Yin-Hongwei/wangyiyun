@@ -1,22 +1,13 @@
 <template>
   <div class="the-setting">
-    <div class="setting-head"></div>
-    <play-small :showIcon="true"/>
+    <the-header icon="#icon-im_erweimasaomiao" iconColor="#ffffff"></the-header>
+    <div class="vip"></div>
     <div class="setting-content">
       <div class="login">
         <p>手机电脑多端同步，尽享海量高品质音乐</p>
         <div>立即登录</div>
       </div>
-      <ul class="msg-list">
-        <li v-for="(item, index) in msgList" :key="index">
-          <span>
-            <svg class="icon" aria-hidden="true">
-              <use :xlink:href="item.icon"></use>
-            </svg>
-          </span>
-          <span>{{item.name}}</span>
-        </li>
-      </ul>
+      <the-icon :iconList="msgList" class="msg-list"></the-icon>
       <h5>小工具</h5>
       <ul class="setting-item">
         <li v-for="(item, index) in setList" :key="index">
@@ -31,29 +22,39 @@
 </template>
 
 <script>
-import PlaySmall from '../components/PlaySmall'
+import TheHeader from '../components/TheHeader'
+import TheIcon from '../components/TheIcon'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'the-setting',
   components: {
-    PlaySmall,
+    TheHeader,
+    TheIcon,
     TheFooter
   },
   data () {
     return {
       msgList: [{
         icon: '#icon-xiaoxi',
-        name: '我的消息'
+        textColor: '#000000',
+        iconColor: '#d7463f',
+        text: '我的消息'
       }, {
         icon: '#icon-iconfont31haoyou1',
-        name: '我的好友'
+        textColor: '#000000',
+        iconColor: '#d7463f',
+        text: '我的好友'
       }, {
         icon: '#icon-zhuye',
-        name: '个人主页'
+        textColor: '#000000',
+        iconColor: '#d7463f',
+        text: '个人主页'
       }, {
         icon: '#icon-pifugexinghuazhuti-xianxing',
-        name: '个性装扮'
+        textColor: '#000000',
+        iconColor: '#d7463f',
+        text: '个性装扮'
       }],
       setList: [{
         icon: '',
@@ -107,6 +108,28 @@ export default {
         path: ''
       }]
     }
+  },
+  beforeRouteEnter (to, form, next) {
+    next(function (vm) {
+      window.onscroll = function () {
+        let domComponent = document.getElementsByClassName('setting-content')[0]
+        if (vm.scrollTop() >= 100) {
+          domComponent.style.overflow = 'scroll'
+        } else {
+          domComponent.style.overflow = 'hidden'
+        }
+      }
+    })
+  },
+  beforeRouteLeave (to, from, next) {
+    window.onscroll = null
+    next()
+  },
+  methods: {
+    // 获得滚动高度
+    scrollTop () {
+      return Math.max(document.body.scrollTop, document.documentElement.scrollTop)
+    }
   }
 }
 </script>
@@ -114,16 +137,12 @@ export default {
 <style scoped>
 .the-setting {
   width: 100%;
-  background-image: linear-gradient(to bottom right, rgb(130, 130, 130), rgb(30, 30, 30));
+  background-image: linear-gradient(45deg, rgb(130, 130, 130), rgb(30, 30, 30));
 }
 
-.setting-head {
-  height: 160px;
+.vip {
   width: 100%;
-  color: white;
-  text-align: center;
-  line-height: 60px;
-  font-size: 1.2em;
+  height: 160px;
 }
 /*--------------------content---------------------------*/
 .setting-content {
@@ -131,6 +150,9 @@ export default {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   overflow: hidden;
+  top:60px;
+  height: calc(100vh - 55px);
+  position: sticky;
 }
 
 .login {
@@ -157,18 +179,7 @@ export default {
 }
 
 .msg-list {
-  display: flex;
-  flex-wrap: nowrap;
   background-color: #ffffff;
-  margin-bottom: 5px;
-}
-
-.msg-list li {
-  width: 25%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  padding: 10px 0;
 }
 
 h5 {
@@ -194,14 +205,5 @@ h5 {
 .setting-content .setting-item li div {
   width: 40px;
   height: 100%;
-}
-
-.icon {
-  width: 100%;
-  height: 30px;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  color: #d7463f;
-  overflow: hidden;
 }
 </style>

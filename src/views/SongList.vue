@@ -1,6 +1,7 @@
 <template>
   <div class="song-list">
     <div class="bac-bur" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
+    <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <div class="song-head">
       <!--返回-->
       <router-link :to="{name: 'index-page'}">
@@ -18,7 +19,6 @@
       </div>
     <play-small :showIcon="true"/>
     </div>
-    <div class="bu-kong" :style="{backgroundImage: 'url(' + coverImgUrl + ')' }"></div>
     <!--搜索框-->
     <div class="song-search">
       <input type="text" placeholder="搜索歌单内歌曲"/>
@@ -41,39 +41,8 @@
           </div>
         </div>
       </div>
-      <div class="song-opt">
-        <!--评论-->
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-pinglunguanli"></use>
-          </svg>
-        </div>
-        <!--分享-->
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-zhuanfa"></use>
-          </svg>
-        </div>
-        <!--下载-->
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-xiazai"></use>
-          </svg>
-        </div>
-        <!--多选-->
-        <div>
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-duoxuankuang"></use>
-          </svg>
-        </div>
-      </div>
-      <div class="opt-detail">
-        <div>{{commentCount}}</div>
-        <div>{{shareCount}}</div>
-        <div>下载</div>
-        <div>多选</div>
-      </div>
     </div>
+    <the-icon :iconList="iconList"></the-icon>
     <!--歌单列表的头-->
     <div id="item-top">
       <div class="item-l">
@@ -87,7 +56,6 @@
       </div>
       <div class="item-r">+收藏({{collect}})</div>
     </div>
-    <div class="item-top-wire"></div>
     <div class="song-list-dic">
       <div class="song-item" v-for="(item,index) in songslist" :key="index" @click="toplay(item.id, index)" >
         <!--序号-->
@@ -103,7 +71,6 @@
             <use xlink:href="#icon-gengduoxiao"></use>
           </svg>
         </div>
-        <div class="item-top-wire"></div>
       </div>
     </div>
     <the-footer/>
@@ -113,13 +80,15 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import { Indicator } from 'mint-ui'
-import PlaySmall from '../components/PlaySmall'
+import PlaySmall from '../components/PlayIcon'
+import TheIcon from '../components/TheIcon'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'song-list',
   components: {
     PlaySmall,
+    TheIcon,
     TheFooter
   },
   data () {
@@ -128,11 +97,34 @@ export default {
       name: '', // 歌单名称
       avatarUrl: null, // 作者头像
       nickname: '', // 作者昵称
-      commentCount: 0, // 评论数
-      shareCount: 0, // 转发数
       playnum: '0', // 歌曲数量
       collect: '0', // 收藏数
-      songslist: [] // 歌曲
+      songslist: [], // 歌曲
+      iconList: [{
+        text: '',
+        icon: '#icon-pinglunguanli',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '',
+        icon: '#icon-zhuanfa',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '下载',
+        icon: '#icon-xiazai',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }, {
+        text: '多选',
+        icon: '#icon-duoxuankuang',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
+        path: ''
+      }]
     }
   },
   computed: {
@@ -141,31 +133,10 @@ export default {
       'id'
     ])
   },
-  // beforeRouteEnter (to, form, next) {
-  //   next(function (vm) {
-  //     window.onscroll = function () {
-  //       let rHead = document.getElementById('item-top')
-  //       if (vm.scrollTop() >= 250) {
-  //         rHead.style.position = 'fixed'
-  //         rHead.style.top = 60 + 'px'
-  //       } else {
-  //         rHead.style.position = 'static'
-  //       }
-  //     }
-  //   })
-  // },
-  // beforeRouteLeave (to, from, next) {
-  //   window.onscroll = null
-  //   next()
-  // },
   mounted: function () {
     this.getRec()
   },
   methods: {
-    // 获得滚动高度
-    scrollTop () {
-      return Math.max(document.body.scrollTop, document.documentElement.scrollTop)
-    },
     // 获取推荐歌单
     getRec: function () {
       let _this = this
@@ -185,8 +156,8 @@ export default {
           _this.name = res.data.playlist.name
           _this.avatarUrl = res.data.playlist.creator.avatarUrl
           _this.nickname = res.data.playlist.creator.nickname
-          _this.commentCount = res.data.playlist.commentCount
-          _this.shareCount = res.data.playlist.shareCount
+          _this.iconList[0].text = res.data.playlist.commentCount
+          _this.iconList[1].text = res.data.playlist.shareCount
           _this.playnum = res.data.playlist.trackCount
           _this.collect = res.data.playlist.subscribedCount
           _this.songslist = res.data.playlist.tracks
@@ -224,7 +195,7 @@ export default {
 /*--------------header------------------*/
 .bu-kong {
   position: fixed;
-  height:60px;
+  height: 55px;
   width: 100%;
   overflow: hidden;
   top: 0;
@@ -342,39 +313,6 @@ export default {
 .song-dic>.dic-r .song-author span {
   color: #dbd6d2;
   font-size: 0.9em;
-}
-/*---------------------评论，分享，下载，多选------------------------------*/
-.song-box .song-opt,
-.song-box .opt-detail {
-  display: flex;
-  width: 100%;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-.song-box .song-opt {
-  margin-top: 10px;
-}
-
-.song-box .opt-detail {
-  margin-bottom: 10px;
-}
-
-.song-box .song-opt>div,
-.song-box .opt-detail>div {
-  width: 25%;
-  text-align: center;
-  color: white;
-}
-
-.song-box .song-opt .icon {
-  color: white;
-  fill: currentColor;
-  overflow: hidden;
-}
-
-.song-box .opt-detail>div {
-  font-size: 0.8em;
 }
 /*------------------白红框框----------------------*/
 #item-top {

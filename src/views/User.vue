@@ -1,30 +1,15 @@
 <template>
   <div class="user">
-    <div class="user-head">
-      <div>
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-yun"></use>
-        </svg>
-      </div>
-    </div>
-    <play-small :showIcon="true"/>
+    <the-header icon="#icon-yun" iconColor="#ffffff" backgroundColor="#323232"></the-header>
+    <play-icon :showIcon="true"/>
     <div class="user-nav">
       <div class="user-img">
         <img src="../assets/img/user.jpeg" alt="">
       </div>
-      <div>登录立即多端同步</div>
+      <div>登录立享多端同步</div>
       <div class="user-login">立即登录</div>
     </div>
-    <ul class="user-list">
-      <li v-for="(item, index) in userList" :key="index">
-        <span>
-          <svg class="icon" aria-hidden="true">
-            <use :xlink:href="item.icon"></use>
-          </svg>
-        </span>
-        <span>{{item.name}}</span>
-      </li>
-    </ul>
+    <the-icon :iconList="userList"></the-icon>
     <div class="user-content">
       <h4>我的音乐</h4>
     </div>
@@ -33,32 +18,44 @@
 </template>
 
 <script>
-import PlaySmall from '../components/PlaySmall'
+import TheHeader from '../components/TheHeader'
+import PlayIcon from '../components/PlayIcon'
+import TheIcon from '../components/TheIcon'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'user',
   components: {
-    PlaySmall,
+    TheHeader,
+    PlayIcon,
+    TheIcon,
     TheFooter
   },
   data () {
     return {
       userList: [{
-        name: '本地音乐',
+        text: '本地音乐',
         icon: '#icon-iconfontzhizuobiaozhun023146',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
         path: ''
       }, {
-        name: '我的电台',
+        text: '我的电台',
         icon: '#icon-yinfu',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
         path: ''
       }, {
-        name: '我的收藏',
+        text: '我的收藏',
         icon: '#icon-shoucang',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
         path: ''
       }, {
-        name: '关注新歌',
+        text: '关注新歌',
         icon: '#icon-guanzhu',
+        textColor: '#ffffff',
+        iconColor: '#ffffff',
         path: ''
       }],
       bendi: '0',
@@ -75,32 +72,13 @@ export default {
   background-color: rgb(50, 50, 50);
 }
 
-.user-head {
-  width: 100%;
-  height: 80px;
-  color: white;
-  line-height: 60px;
-  display: flex;
-}
-
-.user-head div {
-  width: 50px;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.user-head span {
-  flex-grow: 1;
-  padding-left: 30%;
-  font-size: 1.2em;
-}
-
 .user-nav {
   display: flex;
   flex-wrap: nowrap;
   color: #ffffff;
   align-items: center;
   justify-content: space-around;
+  padding-top: 80px;
   margin-bottom: 40px;
 }
 
@@ -127,26 +105,6 @@ export default {
   padding: 5px 10px;
   font-size: 14px;
 }
-
-.user-list {
-  display: flex;
-  flex-wrap: nowrap;
-  margin-bottom: 20px;
-}
-
-.user-list li {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
-  width: 25%;
-}
-
-.user-list span {
-  display: inline-block;
-  padding: 3px 0;
-}
 /*-----------------content------------------------*/
 .user-content {
   position: static;
@@ -162,13 +120,5 @@ export default {
 
 h4 {
   padding: 20px 15px;
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
 }
 </style>

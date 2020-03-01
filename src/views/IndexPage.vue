@@ -1,8 +1,15 @@
 <template>
   <div class="index-page">
-    <home-nav/>
-    <h3 class="title">推荐歌单</h3>
+    <the-header icon="#icon-tinggeshiqu40x40" :show="true" backgroundColor="#ffffff"></the-header>
+    <the-swiper></the-swiper>
+    <!-- <the-icon :iconList="iconList" class="icon-list"></the-icon> -->
+    <ul class="tags">
+      <li v-for="(item, index) in imgList" :key="index">
+        <img :src="item.src"/>
+      </li>
+    </ul>
     <div class="body-content">
+      <h3 class="title">推荐歌单</h3>
       <ul class="body-group">
         <li class="body-item" v-for="(item,index) in personalized" :key="index">
           <router-link :to="{name: 'songlist', params:{id:item.id}}">
@@ -26,20 +33,55 @@
 
 <script>
 import axios from 'axios'
-import HomeNav from '../components/HomeNav'
+import TheHeader from '../components/TheHeader'
+import TheSwiper from '../components/TheSwiper'
+import TheIcon from '../components/TheIcon'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'index-page',
   components: {
-    HomeNav,
+    TheHeader,
+    TheSwiper,
+    TheIcon,
     TheFooter
   },
   data () {
     return {
       personalized: [],
       newsong: [],
-      dj: []
+      imgList: [{
+        src: require('@/assets/img/IMG_7018_01.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_02.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_03.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_04.jpg'),
+        path: ''
+      }, {
+        src: require('@/assets/img/IMG_7018_05.jpg'),
+        path: ''
+      }],
+      iconList: [{
+        icon: '#icon-rili-cuxiantiao-fill',
+        text: '每日推荐'
+      }, {
+        icon: '#icon-gedan',
+        text: '歌单'
+      }, {
+        icon: '#icon-paihangbang',
+        text: '排行榜'
+      }, {
+        icon: '#icon-diantai',
+        text: '电台'
+      }, {
+        icon: '#icon-shipinzhibo',
+        text: '直播'
+      }]
     }
   },
   mounted: function () {
@@ -54,7 +96,6 @@ export default {
         .then(function (response) {
           console.log('===== 推荐歌单 =====')
           console.log(response.data.result)
-          console.log('===================')
           _this.personalized = response.data.result
         })
         .catch(function (error) {
@@ -77,8 +118,25 @@ export default {
 </script>
 
 <style scoped>
+.icon-list {
+  position: relative;
+  margin-top:20vw;
+}
+
+.tags{
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  margin-top:20vw;
+  width: 100%;
+}
+
+.tags img{
+  width: 100%;
+}
+
 .title {
-  height:40px;
+  height: 40px;
   line-height: 40px;
   margin-left: 3vw;
 }

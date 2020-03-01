@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div class="banner">
-      <mt-swipe :atuo="4000" class="swiper">
-        <mt-swipe-item v-for="(item,index) in banners" :key="index">
-          <img :src="item.pic"/>
-        </mt-swipe-item>
-      </mt-swipe>
-    </div>
+  <div class="banner">
+    <mt-swipe :atuo="4000" class="swiper">
+      <mt-swipe-item v-for="(item,index) in banners" :key="index">
+        <img :src="item.pic"/>
+      </mt-swipe-item>
+    </mt-swipe>
   </div>
 </template>
 
@@ -30,7 +28,6 @@ export default {
         .then(function (response) {
           console.log('===== 轮播图 =====')
           console.log(response.data.banners)
-          console.log('=================')
           _this.banners = response.data.banners
         })
         .catch(function (error) {
@@ -49,6 +46,7 @@ export default {
   display: flex;
   justify-content: center;
 }
+
 .swiper{
   position: absolute;
   height: 40vw;
@@ -56,6 +54,7 @@ export default {
   border-radius: 8px;
   overflow: hidden;
 }
+
 .swiper img{
   width:100%;
   height: 100%;

@@ -1,8 +1,7 @@
 <template>
   <div class="the-video">
-    <the-header icon="#icon-shipin"/>
-    <play-small :showIcon="true"/>
-    <div class="kong"></div>
+    <the-header icon="#icon-shipin" :show="true" backgroundColor="#ffffff"></the-header>
+    <play-icon :showIcon="true"></play-icon>
     <div class="video-tags">
       <ul>
         <li v-for="(item, index) in videoTagList" :key="index">
@@ -18,23 +17,22 @@
 </template>
 
 <script>
+import TheHeader from '../components/TheHeader'
+import PlayIcon from '../components/PlayIcon'
+import TheFooter from '../components/TheFooter'
 import { mixin } from '../mixins'
 import axios from 'axios'
-import TheHeader from '../components/TheHeader'
-import PlaySmall from '../components/PlaySmall'
-import TheFooter from '../components/TheFooter'
 
 export default {
-  name: 'videos',
+  name: 'the-video',
   components: {
     TheHeader,
-    PlaySmall,
+    PlayIcon,
     TheFooter
   },
   mixins: [mixin],
   data () {
     return {
-      placeholder: '',
       videoTagList: [],
       videoList: []
     }
@@ -56,10 +54,8 @@ export default {
     },
     getVideoList (id) {
       let _this = this
-      console.log('id====>', id)
       axios.get(_this.$store.state.HOST + '/video/group?id=' + id).then((res) => {
         this.videoList = res.data.data
-        console.log('video ====>', this.videoList)
       }
       ).catch(function (error) {
         console.log(error)
@@ -70,12 +66,8 @@ export default {
 </script>
 
 <style scoped>
-.kong {
-  width: 100%;
-  height: 55px;
-}
-
 .video-tags{
+  padding-top: 55px;
   overflow-x: auto;
 }
 
@@ -96,9 +88,5 @@ export default {
 .video-content {
   text-align: center;
   margin-top: 100px;
-}
-
-.icon {
-  font-size: 25px;
 }
 </style>

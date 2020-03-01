@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <play-small :showIcon="true"/>
+    <play-icon :showIcon="true"/>
     <div class="friend-content">
       你还没有朋友...
     </div>
@@ -37,13 +37,13 @@
 </template>
 
 <script>
-import PlaySmall from '../components/PlaySmall'
+import PlayIcon from '../components/PlayIcon'
 import TheFooter from '../components/TheFooter'
 
 export default {
   name: 'friends',
   components: {
-    PlaySmall,
+    PlayIcon,
     TheFooter
   },
   data () {

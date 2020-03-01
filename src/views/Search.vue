@@ -9,12 +9,18 @@
         </svg>
       </div>
     </div>
-    <div class="search-content" v-if="!isSearch">
+    <div class="hot-content" v-if="!isSearch">
       <h4 class="hot">热搜榜</h4>
       <ul class="hot-list">
         <li v-for="(item, index) in searchList" :key="index" @click="toplay(item.url, index)" >
-          <span>{{item.searchWord}}</span>
-          <span>{{item.content}}</span>
+          <div class="song-index"> {{index + 1}} </div>
+          <div class="song-info">
+            <div class="song-title">
+              <span class="song-name">{{item.searchWord}}</span>
+              <span class="song-icon"><img :src="item.iconUrl" alt=""></span>
+            </div>
+            <div class="song-introduce">{{item.content}}</div>
+          </div>
         </li>
       </ul>
     </div>
@@ -58,6 +64,7 @@ export default {
       axios.get(_this.$store.state.HOST + '/search/hot/detail')
         .then(function (res) {
           _this.searchList = res.data.data
+          console.log('=====搜索====')
           console.log(_this.searchList)
         })
         .catch(function (error) {
@@ -88,20 +95,22 @@ export default {
 </script>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
 .search-head {
   position: fixed;
   z-index: 100;
   height: 55px;
   width: 100%;
   display: flex;
-  flex-grow: 1;
   align-items: center;
   background-color: #ffffff;
 }
 
 .search-head input {
   height: 30px;
-  width: 80%;
+  flex-grow: 1;
   border-radius: 25px;
   border: 0;
   margin-left: 15px;
@@ -135,6 +144,73 @@ h4 {
   font-weight: 400;
 }
 
+.hot-content {
+  position: relative;
+  padding-top: 55px;
+}
+
+.hot-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hot-list li {
+  width: 50%;
+  display: flex;
+  flex-wrap: nowrap;
+  margin: 10px 0;
+}
+
+.hot-list :nth-child(-n+4) .song-index{
+  color: #d73e39;
+}
+
+.hot-list :nth-child(n+5) .song-index,
+.hot-list :nth-child(n+5) .song-name{
+  color: rgba(80, 80, 80, 1);
+}
+
+.hot-list li .song-index{
+  width: 10vw;
+  height: 47px;
+  line-height: 47px;
+  text-align: center;
+}
+
+.hot-list li .song-info {
+  width: 40vw;
+  flex: 1;
+}
+
+.hot-list li .song-title{
+  display: flex;
+  height: 30px;
+}
+
+.song-title .song-name {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.song-title .song-icon {
+  height: 16px;
+  margin-left: 8px;
+}
+
+.song-title .song-icon img {
+  height: 100%;
+}
+
+.hot-list li .song-introduce{
+  font-size: 6px;
+  color: rgba(170, 170, 170, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .search-content {
   position: relative;
   padding-top: 55px;
@@ -146,12 +222,13 @@ h4 {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 5px 0;
+  padding: 10px 0;
   border-bottom: 1px solid rgba(230, 230, 230, 1);
 }
 
 .search-content ul li span {
   padding-left: 20px;
+  /* color: #527EAD; */
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;

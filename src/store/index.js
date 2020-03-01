@@ -38,13 +38,6 @@ const store = new Vuex.Store({
     title: state => state.playing.title,
     artist: state => state.playing.artist,
     picUrl: state => state.playing.picUrl,
-    // picUrl: state => {
-    //   let picUrl = state.picUrl
-    //   if (!picUrl) {
-    //     picUrl = JSON.parse(window.sessionStorage.getItem('picUrl') || '')
-    //   }
-    //   return picUrl
-    // },
     autoNext: state => state.playing.autoNext,
     lyric: state => state.playing.lyric,
     lrc: state => state.playing.lrc,
