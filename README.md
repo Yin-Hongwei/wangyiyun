@@ -3,8 +3,9 @@
 <br/>
 
 <p align="center">
-  <a href=""><img alt="license" src="https://img.shields.io/github/license/mashape/apistatus.svg?style=flat"></a>
+  <a href=""><img alt="license" src="https://img.shields.io/github/license/Yin-Hongwei/vue-wangyiyun"></a>
 </p>
+
 
 ## 项目说明
 
@@ -22,23 +23,25 @@
   <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y7vi8u7j30l811ik4i.jpg" width="300">
 </center>
 <center>
-  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcep3669pvj30gy106aw0.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcffgqim2tj30lc11kkhw.jpg" width="300">
 </center>
+
 
 
 <center>
   <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y8v4ntuj30lc11kauu.jpg" width="300">
 </center>
 <center>
-  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcep1484caj30gu1020xj.jpg" width="300">
+  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcffkc8wntj30lg11mwjt.jpg" width="300">
 </center>
+
 
 
 
 ## 功能
 
-- 页面的展示，
-- 音乐搜索，
+- 页面的展示
+- 音乐搜索
 - 音乐播放
 - 歌词显示
 
