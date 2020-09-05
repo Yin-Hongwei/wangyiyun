@@ -2,10 +2,15 @@
   <div class="the-footer">
     <div class="kong"></div>
     <ul class="item-page">
-      <li v-for="(item, index) in nameList" :key="index" :class="{'avtive-page': item.name === activePage}" @click="goPage(item)">
-        <span>
+      <li
+        v-for="(item, index) in nameList"
+        :key="index"
+        :class="{'avtive-page': item.name === activePage}"
+        @click="goPage(item)"
+      >
+        <span :class="{'avtive-icon': item.name === activePage}">
           <svg class="icon" aria-hidden="true">
-            <use :xlink:href="item.pic"></use>
+            <use :xlink:href="item.icon" />
           </svg>
         </span>
         <span>{{item.name}}</span>
@@ -15,47 +20,26 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
+import { nameList } from "../assets/js/icon";
 
 export default {
-  name: 'the-footer',
-  computed: {
-    ...mapGetters([
-      'activePage'
-    ])
-  },
-  data () {
+  name: "the-footer",
+  data() {
     return {
-      nameList: [{
-        name: '发现',
-        pic: '#icon-wangyiyunyinle',
-        path: '/'
-      }, {
-        name: '视频',
-        pic: '#icon-shiping',
-        path: '/the-video'
-      }, {
-        name: '我的',
-        pic: '#icon-yinyue',
-        path: '/user'
-      }, {
-        name: '云村',
-        pic: '#icon-pengyou',
-        path: '/friends'
-      }, {
-        name: '账号',
-        pic: '#icon-zhanghaoguanli',
-        path: '/the-setting'
-      }]
-    }
+      nameList: nameList,
+    };
+  },
+  computed: {
+    ...mapGetters(["activePage"]),
   },
   methods: {
-    goPage (val) {
-      this.$store.commit('SetActivePage', val.name)
-      this.$router.push({path: val.path})
-    }
-  }
-}
+    goPage(val) {
+      this.$store.commit("SetActivePage", val.name);
+      this.$router.push({ path: val.path });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -63,7 +47,7 @@ export default {
   width: 100%;
   height: 60px;
 }
-.item-page{
+.item-page {
   position: fixed;
   width: 100%;
   height: 60px;
@@ -75,7 +59,7 @@ export default {
   align-items: center;
 }
 
-.item-page li{
+.item-page li {
   width: 20%;
   height: 50px;
   display: flex;
@@ -83,10 +67,22 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 8px;
+  color: #959595;
 }
 
 .avtive-page {
   color: #d73e39 !important;
+}
+
+.avtive-icon {
+  background: linear-gradient(to right, #ff5a4c, #ff1d11);
+  color: #ffffff;
+  border-radius: 100%;
+  min-width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .icon {

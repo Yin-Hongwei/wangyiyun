@@ -1,13 +1,17 @@
 <template>
   <div class="the-setting">
-    <the-header icon="#icon-im_erweimasaomiao" iconColor="#ffffff"></the-header>
+    <div class="setting-header">
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-im_erweimasaomiao" />
+      </svg>
+    </div>
     <div class="vip"></div>
     <div class="setting-content">
       <div class="login">
         <p>手机电脑多端同步，尽享海量高品质音乐</p>
         <div>立即登录</div>
       </div>
-      <the-icon :iconList="msgList" class="msg-list"></the-icon>
+      <yin-icon class="msg-list" fontSize="14px" iconColor="#d7463f" :data="msgList"></yin-icon>
       <h5>小工具</h5>
       <ul class="setting-item">
         <li v-for="(item, index) in setList" :key="index">
@@ -17,132 +21,71 @@
         </li>
       </ul>
     </div>
-    <the-footer/>
+    <yin-footer></yin-footer>
   </div>
 </template>
 
 <script>
-import TheHeader from '../components/TheHeader'
-import TheIcon from '../components/TheIcon'
-import TheFooter from '../components/TheFooter'
+import { msgList, setList } from "../assets/js/icon";
+import YinIcon from "../components/TheIcon";
+import YinFooter from "../components/TheFooter";
 
 export default {
-  name: 'the-setting',
+  name: "the-setting",
   components: {
-    TheHeader,
-    TheIcon,
-    TheFooter
+    YinIcon,
+    YinFooter,
   },
-  data () {
+  data() {
     return {
-      msgList: [{
-        icon: '#icon-xiaoxi',
-        textColor: '#000000',
-        iconColor: '#d7463f',
-        text: '我的消息'
-      }, {
-        icon: '#icon-iconfont31haoyou1',
-        textColor: '#000000',
-        iconColor: '#d7463f',
-        text: '我的好友'
-      }, {
-        icon: '#icon-zhuye',
-        textColor: '#000000',
-        iconColor: '#d7463f',
-        text: '个人主页'
-      }, {
-        icon: '#icon-pifugexinghuazhuti-xianxing',
-        textColor: '#000000',
-        iconColor: '#d7463f',
-        text: '个性装扮'
-      }],
-      setList: [{
-        icon: '',
-        name: '设置',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '夜间模式',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '定时关闭',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '音乐黑名单',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '鲸云音效',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '添加 Siri 捷径',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '音乐闹钟',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '青少年模式',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '分享网易云音乐',
-        pic: '>',
-        path: ''
-      }, {
-        icon: '',
-        name: '关于',
-        pic: '>',
-        path: ''
-      }]
-    }
+      msgList: msgList,
+      setList: setList,
+    };
   },
-  beforeRouteEnter (to, form, next) {
+  beforeRouteEnter(to, form, next) {
     next(function (vm) {
       window.onscroll = function () {
-        let domComponent = document.getElementsByClassName('setting-content')[0]
+        let domComponent = document.getElementsByClassName(
+          "setting-content"
+        )[0];
         if (vm.scrollTop() >= 100) {
-          domComponent.style.overflow = 'scroll'
+          domComponent.style.overflow = "scroll";
         } else {
-          domComponent.style.overflow = 'hidden'
+          domComponent.style.overflow = "hidden";
         }
-      }
-    })
+      };
+    });
   },
-  beforeRouteLeave (to, from, next) {
-    window.onscroll = null
-    next()
+  beforeRouteLeave(to, from, next) {
+    window.onscroll = null;
+    next();
   },
   methods: {
     // 获得滚动高度
-    scrollTop () {
-      return Math.max(document.body.scrollTop, document.documentElement.scrollTop)
-    }
-  }
-}
+    scrollTop() {
+      return Math.max(
+        document.body.scrollTop,
+        document.documentElement.scrollTop
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
 .the-setting {
-  width: 100%;
-  background-image: linear-gradient(45deg, rgb(130, 130, 130), rgb(30, 30, 30));
+  background-image: linear-gradient(90deg, rgb(150, 150, 150), rgb(50, 50, 50));
+}
+
+.setting-header {
+  padding: 10px;
+  color: #ffffff;
+  height: 50px;
 }
 
 .vip {
   width: 100%;
-  height: 160px;
+  height: 100px;
 }
 /*--------------------content---------------------------*/
 .setting-content {
@@ -150,7 +93,8 @@ export default {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
   overflow: hidden;
-  top:60px;
+  top: 60px;
+  margin-bottom: 60px;
   height: calc(100vh - 55px);
   position: sticky;
 }
@@ -172,7 +116,7 @@ export default {
   line-height: 40px;
   text-align: center;
   color: #ffffff;
-  background-color: #d7463f;
+  background: linear-gradient(to right, #ff5a4c, #ff1d11);
   margin: auto;
   border-radius: 30px;
   font-size: 16px;
@@ -188,7 +132,7 @@ h5 {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.setting-content .setting-item li{
+.setting-content .setting-item li {
   height: 50px;
   line-height: 50px;
   background-color: #ffffff;

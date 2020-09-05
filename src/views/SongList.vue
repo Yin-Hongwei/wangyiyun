@@ -7,57 +7,60 @@
       <router-link :to="{name: 'index-page'}">
         <div class="back">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-fanhui01"></use>
+            <use xlink:href="#icon-fanhui01" />
           </svg>
         </div>
       </router-link>
       <div class="song-title">歌单</div>
       <div class="san-dian">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-gengduoxiao"></use>
-          </svg>
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-gengduoxiao" />
+        </svg>
       </div>
-    <play-small :showIcon="true"/>
+      <yin-play-icon :showIcon="id !== null"></yin-play-icon>
     </div>
     <!--搜索框-->
     <div class="song-search">
-      <input type="text" placeholder="搜索歌单内歌曲"/>
+      <input type="text" placeholder="搜索歌单内歌曲" />
     </div>
     <!--歌单信息-->
     <div class="song-box">
       <div class="song-dic">
         <!--左侧图片-->
         <div class="dic-l">
-          <img :src="coverImgUrl" alt="">
+          <img :src="coverImgUrl" alt />
         </div>
         <!--右侧信息-->
         <div class="dic-r">
-          <div class="song-name">
-            {{name}}
-          </div>
+          <div class="song-name">{{name}}</div>
           <div class="song-author">
-            <img class='author-pic' :src="avatarUrl" alt="">
+            <img class="author-pic" :src="avatarUrl" alt />
             <span class="author-name">{{ nickname }}</span>
           </div>
         </div>
       </div>
     </div>
-    <the-icon :iconList="iconList"></the-icon>
+    <yin-icon textColor="#ffffff" iconColor="#ffffff" fontSize="12px" :data="songListIcon"></yin-icon>
     <!--歌单列表的头-->
     <div id="item-top">
       <div class="item-l">
         <!--播放-->
         <div>
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-bofang"></use>
+            <use xlink:href="#icon-shipin" />
           </svg>
         </div>
         播放全部(共{{playnum - 1}}首)
       </div>
-      <div class="item-r">+收藏({{collect}})</div>
+      <div class="item-r">+ 收藏({{collect}})</div>
     </div>
     <div class="song-list-dic">
-      <div class="song-item" v-for="(item,index) in songslist" :key="index" @click="toplay(item.id, index)" >
+      <div
+        class="song-item"
+        v-for="(item,index) in songslist"
+        :key="index"
+        @click="toplay(item.id, index)"
+      >
         <!--序号-->
         <div class="line-l">{{index + 1}}</div>
         <!--歌曲-->
@@ -68,112 +71,87 @@
         <!--三个点-->
         <div class="line-r">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-gengduoxiao"></use>
+            <use xlink:href="#icon-gengduoxiao" />
           </svg>
         </div>
       </div>
     </div>
-    <the-footer/>
+    <yin-footer></yin-footer>
   </div>
 </template>
 <script>
-import axios from 'axios'
-import { mapGetters } from 'vuex'
-import { Indicator } from 'mint-ui'
-import PlaySmall from '../components/PlayIcon'
-import TheIcon from '../components/TheIcon'
-import TheFooter from '../components/TheFooter'
+import axios from "axios";
+import { songListIcon } from "../assets/js/icon";
+import { mapGetters } from "vuex";
+import { Indicator } from "mint-ui";
+import YinIcon from "../components/TheIcon";
+import YinFooter from "../components/TheFooter";
+import YinPlayIcon from "../components/PlayIcon";
 
 export default {
-  name: 'song-list',
+  name: "song-list",
   components: {
-    PlaySmall,
-    TheIcon,
-    TheFooter
+    YinIcon,
+    YinFooter,
+    YinPlayIcon,
   },
-  data () {
+  data() {
     return {
       coverImgUrl: null, // 左侧图片 / 背景图片
-      name: '', // 歌单名称
+      name: "", // 歌单名称
       avatarUrl: null, // 作者头像
-      nickname: '', // 作者昵称
-      playnum: '0', // 歌曲数量
-      collect: '0', // 收藏数
+      nickname: "", // 作者昵称
+      playnum: "0", // 歌曲数量
+      collect: "0", // 收藏数
       songslist: [], // 歌曲
-      iconList: [{
-        text: '',
-        icon: '#icon-pinglunguanli',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '',
-        icon: '#icon-zhuanfa',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '下载',
-        icon: '#icon-xiazai',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '多选',
-        icon: '#icon-duoxuankuang',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }]
-    }
+      songListIcon: songListIcon,
+    };
   },
   computed: {
-    ...mapGetters([
-      'songsList',
-      'id'
-    ])
+    ...mapGetters(["songsList", "id"]),
   },
   mounted: function () {
-    this.getRec()
+    this.getRec();
   },
   methods: {
     // 获取推荐歌单
     getRec: function () {
-      let _this = this
+      let _this = this;
       Indicator.open({
-        text: '加载中...',
-        spinnerType: 'fading-circle'
-      })
-      axios.get(_this.$store.state.HOST + '/playlist/detail', {
-        params: {
-          id: _this.$route.params.id
-        }
-      })
+        text: "加载中...",
+        spinnerType: "fading-circle",
+      });
+      axios
+        .get(_this.$store.state.HOST + "/playlist/detail", {
+          params: {
+            id: _this.$route.params.id,
+          },
+        })
         .then(function (res) {
-          console.log('<--- 一个歌的信息 --->')
-          console.log(res.data.playlist.tracks)
-          _this.coverImgUrl = res.data.playlist.coverImgUrl
-          _this.name = res.data.playlist.name
-          _this.avatarUrl = res.data.playlist.creator.avatarUrl
-          _this.nickname = res.data.playlist.creator.nickname
-          _this.iconList[0].text = res.data.playlist.commentCount
-          _this.iconList[1].text = res.data.playlist.shareCount
-          _this.playnum = res.data.playlist.trackCount
-          _this.collect = res.data.playlist.subscribedCount
-          _this.songslist = res.data.playlist.tracks
-          Indicator.close()
+          console.log("=== 一首歌的信息 ===");
+          console.log(res.data.playlist.tracks);
+          _this.coverImgUrl = res.data.playlist.coverImgUrl;
+          _this.name = res.data.playlist.name;
+          _this.avatarUrl = res.data.playlist.creator.avatarUrl;
+          _this.nickname = res.data.playlist.creator.nickname;
+          _this.songListIcon[0].name = res.data.playlist.commentCount;
+          _this.songListIcon[1].name = res.data.playlist.shareCount;
+          _this.playnum = res.data.playlist.trackCount;
+          _this.collect = res.data.playlist.subscribedCount;
+          _this.songslist = res.data.playlist.tracks;
+          Indicator.close();
         })
-        .catch(function (error) {
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     toplay: function (id, index) {
-      this.$store.commit('setSongsList', this.songslist)
-      this.$store.commit('setListIndex', index)
-      this.$router.push({path: '/player/' + id})
-    }
-  }
-}
+      this.$store.commit("setSongsList", this.songslist);
+      this.$store.commit("setListIndex", index);
+      this.$router.push({ path: "/player/" + id });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -224,11 +202,11 @@ export default {
   flex: 1;
   color: white;
   font-size: 1.3em;
-  padding-left: 50px;
+  padding: 0 20px;
 }
 
-.song-head div{
-  width: 50px;
+.song-head div {
+  width: 40px;
 }
 
 .song-head .icon {
@@ -237,7 +215,7 @@ export default {
 
 .song-head .song-item4 .icon {
   font-size: 1.4em;
-  color: white
+  color: white;
 }
 /*-----------------搜索框-----------------------*/
 .song-search {
@@ -245,17 +223,18 @@ export default {
   text-align: center;
 }
 
-.song-search>input {
+.song-search > input {
   width: 90%;
   height: 24px;
   border: 0;
   border-radius: 25px;
   text-align: center;
-  background-color: rgba(225, 225, 225,0.4);
+  background-color: rgba(225, 225, 225, 0.4);
 }
 
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  color: rgba(255,255,255,0.7);
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: rgba(255, 255, 255, 0.7);
 }
 /*-----------------歌单信息显示区-----------------------*/
 .song-box {
@@ -275,48 +254,48 @@ export default {
   padding: 0 5%;
 }
 
-.song-dic>.dic-l {
+.song-dic > .dic-l {
   display: flex;
   justify-content: center;
   width: 40%;
 }
 
-.song-dic>.dic-l>img {
+.song-dic > .dic-l > img {
   height: 110px;
 }
 
-.song-dic>.dic-r {
+.song-dic > .dic-r {
   height: 110px;
 }
 
-.song-dic>.dic-r .song-name {
+.song-dic > .dic-r .song-name {
   margin-top: 5px;
   padding: 0 10%;
 }
 
-.song-dic>.dic-r .song-author {
+.song-dic > .dic-r .song-author {
   padding-left: 20px;
   display: flex;
   align-items: center;
   margin-top: 20px;
 }
 
-.song-dic>.dic-r .song-author .author-pic{
+.song-dic > .dic-r .song-author .author-pic {
   margin-right: 10px;
 }
 
-.song-dic>.dic-r .song-author img {
+.song-dic > .dic-r .song-author img {
   width: 25px;
   border-radius: 25px;
 }
 
-.song-dic>.dic-r .song-author span {
+.song-dic > .dic-r .song-author span {
   color: #dbd6d2;
   font-size: 0.9em;
 }
 /*------------------白红框框----------------------*/
 #item-top {
-  top:60px;
+  top: 60px;
   position: sticky;
   display: flex;
   width: 100%;
@@ -336,12 +315,12 @@ export default {
   border-radius: 20px 0 0 0;
 }
 
-#item-top .item-l>div {
+#item-top .item-l > div {
   display: inline-block;
   width: 30px;
   height: 49px;
   margin-left: 15px;
-  vertical-align:middle;
+  vertical-align: middle;
 }
 
 #item-top .item-l .icon {
@@ -353,7 +332,7 @@ export default {
   background-color: #d7463f;
   color: white;
   border-radius: 0 20px 0 0;
-  text-align:center;
+  text-align: center;
 }
 /*--------------------歌曲列表--------------------------*/
 .song-list-dic {

@@ -1,124 +1,150 @@
 <template>
   <div class="user">
-    <the-header icon="#icon-yun" iconColor="#ffffff" backgroundColor="#323232"></the-header>
-    <play-icon :showIcon="true"/>
     <div class="user-nav">
       <div class="user-img">
-        <img src="../assets/img/user.jpeg" alt="">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-yonghu" />
+        </svg>
       </div>
-      <div>登录立享多端同步</div>
-      <div class="user-login">立即登录</div>
+      <div class="user-login">立即登录 ></div>
     </div>
-    <the-icon :iconList="userList"></the-icon>
-    <div class="user-content">
-      <h4>我的音乐</h4>
+    <div class="nav-tool">
+      <yin-icon iconColor="#FC3B34" textColor="#666666" fontSize="12px" :data="userIconTop"></yin-icon>
+      <yin-icon iconColor="#FC3B34" textColor="#666666" fontSize="12px" :data="userIconBottom"></yin-icon>
     </div>
-    <the-footer/>
+    <div class="my-love-song">
+      <div class="love-img">
+        <svg class="icon" aria-hidden="true">
+          <use xlink:href="#icon-chuangyikongjianICON_fuzhi-" />
+        </svg>
+      </div>
+      <div class="love-msg">
+        <span class="love-title">我喜欢的音乐</span>
+        <span>{{collection}}首</span>
+      </div>
+    </div>
+    <div class="user-section-title">
+      <span>创建歌单</span>
+      <span>收藏歌单</span>
+    </div>
+    <div class="create-songlist">
+      <div class="songlist-content-title">
+        <span>创建歌单</span>
+      </div>
+    </div>
+    <div class="collection-songlist">
+      <div class="songlist-content-title">
+        <span>收藏歌单</span>
+      </div>
+    </div>
+    <yin-footer></yin-footer>
   </div>
 </template>
 
 <script>
-import TheHeader from '../components/TheHeader'
-import PlayIcon from '../components/PlayIcon'
-import TheIcon from '../components/TheIcon'
-import TheFooter from '../components/TheFooter'
+import { userIconTop, userIconBottom } from "../assets/js/icon";
+import YinPlayIcon from "../components/PlayIcon";
+import YinIcon from "../components/TheIcon";
+import YinFooter from "../components/TheFooter";
 
 export default {
-  name: 'user',
+  name: "user",
   components: {
-    TheHeader,
-    PlayIcon,
-    TheIcon,
-    TheFooter
+    YinPlayIcon,
+    YinIcon,
+    YinFooter,
   },
-  data () {
+  data() {
     return {
-      userList: [{
-        text: '本地音乐',
-        icon: '#icon-iconfontzhizuobiaozhun023146',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '我的电台',
-        icon: '#icon-yinfu',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '我的收藏',
-        icon: '#icon-shoucang',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '关注新歌',
-        icon: '#icon-guanzhu',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }],
-      bendi: '0',
-      zuijin: '0',
-      diantai: '0',
-      shoucang: '0'
-    }
-  }
-}
+      userIconTop: userIconTop,
+      userIconBottom: userIconBottom,
+      collection: "0",
+    };
+  },
+};
 </script>
 
 <style scoped>
-.user {
-  background-color: rgb(50, 50, 50);
-}
-
 .user-nav {
+  padding: 0 12px;
   display: flex;
-  flex-wrap: nowrap;
-  color: #ffffff;
   align-items: center;
-  justify-content: space-around;
-  padding-top: 80px;
-  margin-bottom: 40px;
+  padding-top: 30px;
 }
 
 .user-img {
-  width: 16vw;
-  height: 16vw;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   overflow: hidden;
-  margin: 0 5px;
-}
-
-.user-img img {
-  width: 100%;
-}
-
-.user-nav > div:nth-child(2) {
-  position: relative;
-  left: -30px;
+  color: #f8dada;
+  background-color: #f7f1f1;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-left: 4px;
 }
 
 .user-login {
-  border: 1px solid #ffffff;
-  border-radius: 50px;
-  padding: 5px 10px;
-  font-size: 14px;
-}
-/*-----------------content------------------------*/
-.user-content {
-  position: static;
-  top: 55px;
-  bottom: 0;
-  width: 100%;
-  min-height: 400px;
-  background-color: rgb(240, 240, 240);
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  overflow: hidden;
+  padding-left: 10px;
+  font-weight: 600;
 }
 
-h4 {
-  padding: 20px 15px;
+/* 图标 */
+.nav-tool,
+.my-love-song,
+.create-songlist,
+.collection-songlist {
+  background-color: #ffffff;
+  box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.my-love-song {
+  display: flex;
+  height: 50px;
+}
+
+.my-love-song .love-img {
+  color: #fc6464;
+  background-color: #fee8e8;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.love-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10px;
+  font-size: 9px;
+  color: #666666;
+}
+
+.love-title {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.user-section-title {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px 10px;
+}
+
+.create-songlist,
+.collection-songlist {
+  min-height: 70px;
+}
+
+.songlist-content-title {
+  font-size: 9px;
 }
 </style>

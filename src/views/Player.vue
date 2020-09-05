@@ -16,7 +16,7 @@
       <!--分享-->
       <div class="forwarding">
         <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-zhuanfa"></use>
+          <use xlink:href="#icon-fenxiang"></use>
         </svg>
       </div>
     </div>
@@ -29,7 +29,7 @@
           <div></div>
         </div>
         <!--第一行控件-->
-        <the-icon :iconList="iconList" class="icon-list"></the-icon>
+        <yin-icon textColor='#ffffff' iconColor='#ffffff' :data="playIcon" class="icon-list"></yin-icon>
       </div>
     </transition>
     <!--歌词-->
@@ -102,14 +102,15 @@
 </template>
 
 <script>
-import TheIcon from '../components/TheIcon'
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import { playIcon } from "../assets/js/icon";
+import YinIcon from '../components/TheIcon'
 
 export default {
   name: 'player',
   components: {
-    TheIcon
+    YinIcon
   },
   data () {
     return {
@@ -120,31 +121,7 @@ export default {
       curLength: 0, // 进度条的位置
       progressLength: 0, // 进度条长度
       touchStartX: 0, // 拖拽开始位置
-      iconList: [{
-        text: '',
-        icon: '#icon-shoucang',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '',
-        icon: '#icon-xiazai',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '',
-        icon: '#icon-pinglunguanli',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }, {
-        text: '',
-        icon: '#icon-sandiancaidan',
-        textColor: '#ffffff',
-        iconColor: '#ffffff',
-        path: ''
-      }]
+      playIcon: playIcon
     }
   },
   computed: {
@@ -169,7 +146,7 @@ export default {
       if (val) {
         this.$store.commit('setPlayButtonUrl', '#icon-zanting')
       } else {
-        this.$store.commit('setPlayButtonUrl', '#icon-bofang')
+        this.$store.commit('setPlayButtonUrl', '#icon-shipin')
       }
     },
     // 播放时间的开始和结束
@@ -422,7 +399,8 @@ export default {
 }
 /*-------------------------header--------------------*/
 .playing-header {
-  height:60px;
+  height: 60px;
+  padding: 0 10px;
   display: flex;
   flex-grow: 1;
   justify-content: center;

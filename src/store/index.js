@@ -9,7 +9,7 @@ const store = new Vuex.Store({
     picUrl: '',
     playing: {
       isPlay: false, // 播放状态
-      playButtonUrl: '#icon-bofang', // 播放状态的图标
+      playButtonUrl: '#icon-shipin', // 播放状态的图标
       songsList: [], // 当前歌单列表
       id: null, // 音乐ID
       url: '', // 歌曲URL

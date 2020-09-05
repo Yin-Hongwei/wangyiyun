@@ -15,25 +15,25 @@
 
 ## 项目截图
 
-<center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y6q2kk3j30l811ityg.jpg" width="300"/>
-</center>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gig131mn4uj30le11mx3m.jpg" width="300"/>
 
-<center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y7vi8u7j30l811ik4i.jpg" width="300">
-</center>
-<center>
-  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcffgqim2tj30lc11kkhw.jpg" width="300">
-</center>
+<br/>
 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gig155k0y0j30lg11s7j8.jpg" width="300">
 
+<br/>
 
-<center>
-  <img src="https://tva1.sinaimg.cn/large/0082zybply1gc0y8v4ntuj30lc11kauu.jpg" width="300">
-</center>
-<center>
-  <img src="https://tva1.sinaimg.cn/large/00831rSTly1gcffkc8wntj30lg11mwjt.jpg" width="300">
-</center>
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gig15js344j30lk11sqt8.jpg" width="300">
+
+<br/>
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gig15udj01j30lm11sh66.jpg" width="300">
+
+<br/>
+
+<img src="https://tva1.sinaimg.cn/large/00831rSTly1gcffkc8wntj30lg11mwjt.jpg" width="300">
+
+<br/>
 
 
 
@@ -41,6 +41,7 @@
 ## 功能
 
 - 页面的展示
+- 歌单详情
 - 音乐搜索
 - 音乐播放
 - 歌词显示

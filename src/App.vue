@@ -1,9 +1,7 @@
 <template>
   <div id="app">
     <song-audio/>
-    <!--<keep-alive>-->
-      <router-view/>
-    <!--</keep-alive>-->
+    <router-view/>
   </div>
 </template>
 
@@ -14,11 +12,6 @@ export default {
   name: 'App',
   components: {
     SongAudio
-  },
-  data () {
-    return {
-      selected: 0
-    }
   }
 }
 </script>

@@ -2,44 +2,43 @@
   <div class="banner">
     <mt-swipe :atuo="4000" class="swiper">
       <mt-swipe-item v-for="(item,index) in banners" :key="index">
-        <img :src="item.pic"/>
+        <img :src="item.pic" />
       </mt-swipe-item>
     </mt-swipe>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-  name: 'the-swiper',
-  data () {
+  name: "the-swiper",
+  data() {
     return {
-      banners: []
-    }
+      banners: [],
+    };
   },
-  mounted: function () {
-    this.getBanner()
+  mounted() {
+    this.getBanner();
   },
   methods: {
-    getBanner: function () {
-      let _this = this
-      axios.get(_this.$store.state.HOST + '/banner?type=2')
-        .then(function (response) {
-          console.log('===== 轮播图 =====')
-          console.log(response.data.banners)
-          _this.banners = response.data.banners
+    getBanner() {
+      let _this = this;
+      axios.get(_this.$store.state.HOST + "/banner?type=2")
+        .then((response) => {
+          console.log("轮播图 ===> ", response.data.banners);
+          _this.banners = response.data.banners;
         })
-        .catch(function (error) {
-          console.log(error)
-        })
-    }
-  }
-}
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-.banner{
+.banner {
   position: relative;
   height: 40vw;
   top: 70px;
@@ -47,7 +46,7 @@ export default {
   justify-content: center;
 }
 
-.swiper{
+.swiper {
   position: absolute;
   height: 40vw;
   width: 92vw;
@@ -55,8 +54,8 @@ export default {
   overflow: hidden;
 }
 
-.swiper img{
-  width:100%;
+.swiper img {
+  width: 100%;
   height: 100%;
 }
 </style>

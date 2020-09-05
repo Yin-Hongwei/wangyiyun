@@ -7,7 +7,7 @@
       </svg>
     </div>
     <!--搜索框-->
-    <div class="search" v-if="show">
+    <div class="search" v-if="showInput">
       <input type="text" :placeholder="placeholder" @click="getPath('search')"/>
       <div class="head-search">
         <svg class="icon" aria-hidden="true">
@@ -15,7 +15,7 @@
         </svg>
       </div>
     </div>
-    <play-icon class="play" :showIcon="true"></play-icon>
+    <play-icon class="play" :showIcon="showIcon"></play-icon>
   </div>
 </template>
 
@@ -31,16 +31,20 @@ export default {
   mixins: [mixin],
   props: {
     backgroundColor: {
-      type: [String]
+      type: String
     },
-    icon: [String],
+    icon: String,
     iconColor: {
-      type: [String],
+      type: String,
       default: '#1E1E1E'
     },
-    show: {
-      type: [Boolean],
+    showInput: {
+      type: Boolean,
       default: false
+    },
+    showIcon: {
+      type: Boolean,
+      default: true
     }
   },
   data () {
